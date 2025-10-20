@@ -1,0 +1,94 @@
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.intro-text h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.intro-text h2 {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+/* 👋 Waving animation */
+.wave {
+  display: inline-block;
+  animation: wave 2s infinite ease-in-out;
+  animation-delay: 3s;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 20% { transform: rotate(20deg); }
+  30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+  40%, 60%, 80% { transform: rotate(10deg); }
+}
+
+/* Glow effect for rotating text */
+.rotating-text {
+  font-weight: 600;
+  text-shadow: 0 0 0.5px var(--accent-blue), 0 0 20px var(--accent-blue);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.contact-btn {
+  margin-top: 1.5rem;
+  padding: 0.55rem 1.5rem; /* smaller, tighter */
+  font-family: "Fira Code", monospace;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  background: transparent;
+  border: 1.5px solid var(--accent-blue);
+  border-radius: 0; /* 👈 sharp 90° corners */
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 0 4px rgba(0, 191, 255, 0.25); /* subtle, soft glow */
+  position: relative;
+}
+
+/* Clean, subtle hover effect */
+.contact-btn:hover {
+  color: var(--accent-blue);
+  text-shadow: 0 0 4px rgba(0, 191, 255, 0.5);
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Gentle breathing glow animation */
+@keyframes borderPulse {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(0, 191, 255, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
+  }
+}
+
+.contact-btn {
+  animation: borderPulse 4s infinite ease-in-out;
+}
+
+/* Typing cursor animation */
+.cursor {
+  display: inline-block;
+  width: 1px;
+  background-color: var(--accent-blue);
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

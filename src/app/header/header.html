@@ -1,0 +1,18 @@
+<header class="app-header">
+  <div class="header-container">
+    <div class="logo">
+      <span class="brand">
+        <span class="hash">/</span><span class="slash">Prateesh</span>
+      </span>
+    </div>
+
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+
+    <nav class="nav-links" [class.open]="menuOpen">
+      <a href="#home" class="nav-item" (click)="scrollTo('home')"><span class="hash">#</span>Home</a>
+      <a href="#about" class="nav-item" (click)="scrollTo('about')"><span class="hash">#</span>About</a>
+      <a href="#projects" class="nav-item" (click)="scrollTo('projects')"><span class="hash">#</span>Projects</a>
+      <a href="#contact" class="nav-item" (click)="scrollTo('contact')"><span class="hash">#</span>Contact</a>
+    </nav>
+  </div>
+</header>

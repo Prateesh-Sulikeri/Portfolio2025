@@ -1,0 +1,48 @@
+.social-bar {
+  position: fixed;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
+
+/* The vertical line */
+.line {
+  width: 2px;
+  height: 120px;
+  background-color: var(--accent-blue);
+  opacity: 0.7;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 0 8px var(--accent-blue);
+}
+
+/* Icons */
+.icons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.icons a {
+  color: var(--text-light);
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.icons a:hover {
+  color: var(--accent-blue);
+  text-shadow: 0 0 8px var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+/* =============== Responsive =============== */
+/* Hide the social bar on smaller screens */
+@media (max-width: 768px) {
+  .social-bar {
+    display: none;
+  }
+}
+

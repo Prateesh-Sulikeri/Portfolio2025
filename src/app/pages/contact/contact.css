@@ -1,0 +1,52 @@
+.contact-section {
+  min-height: 100vh;
+  padding: 10rem 2rem 5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  position: relative;
+
+}
+
+.section-title {
+  font-size: 2rem;
+  color: var(--accent-blue);
+  margin-bottom: 2rem;
+  text-align: left; /* 👈 makes only the title left-aligned */
+}
+
+.contact-content p {
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+}
+
+.contact-form-btn {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--accent-blue);
+  background: transparent;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.contact-form-btn:hover {
+  color: var(--accent-blue);
+  box-shadow: 0 0 6px var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.head-text {
+  color: var(--text-light);
+}
+
+.hash {
+  color: var(--accent-blue);
+  margin-right: 2px; /* tiny spacing for nice visual gap */
+  text-shadow: 0 0 3px var(--accent-blue);
+}

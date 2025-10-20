@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  background: transparent;
+  font-family: "Fira Code", monospace;
+  color: var(--text-light);
+  box-sizing: border-box;
+}
+
+.page-section {
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2.2rem;
+  color: var(--accent-blue);
+  text-shadow: 0 0 6px var(--accent-blue);
+  margin-bottom: 1rem;
+}

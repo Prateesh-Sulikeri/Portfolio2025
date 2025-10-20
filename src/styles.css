@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+/* Global Dark Theme */
+:root {
+  --background-dark: #0a0f1f;
+  --surface-dark: #111827;
+  --text-light: #e6edf3;
+  --accent-blue: #00bfff; /* 🔥 Bright neon blue (was #3b82f6) */
+  --accent-blue-glow: 0 0 1px #00bfff, 0 0 0px #00bfff, 0 0 36px #0090ff;
+}
+
+/* Apply global theme */
+body {
+  background: linear-gradient(135deg, var(--background-dark), var(--surface-dark));
+  color: var(--text-light);
+  font-family: "Inter", "Roboto", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Fira Code", monospace;
+}
+
+/* Optional: style links and buttons */
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background-color: var(--accent-blue);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2563eb; /* slightly brighter blue */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.menu-open::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 99;
+}

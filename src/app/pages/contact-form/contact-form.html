@@ -1,0 +1,57 @@
+<section class="contact-form-section">
+  <h1 class="section-title"><span class="hash">/</span><span class="head-text">get-in-touch</span></h1>
+
+  <p class="intro">
+    Feel free to reach out! Fill out the form below and I’ll get back to you as soon as possible 🚀
+  </p>
+
+<!-- Social links only visible on mobile -->
+<div class="mobile-socials">
+  <a href="https://www.linkedin.com/in/prateesh-sulikeri" target="_blank" aria-label="LinkedIn">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+  <a href="https://www.x.com/" target="_blank" aria-label="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+</div>
+
+  <form class="contact-form" (ngSubmit)="sendEmail()" #contactForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        [(ngModel)]="formData.name"
+        placeholder="Your name"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        [(ngModel)]="formData.email"
+        placeholder="Your email"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        required
+        [(ngModel)]="formData.message"
+        placeholder="Write your message..."
+      ></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">Send Message</button>
+  </form>
+</section>

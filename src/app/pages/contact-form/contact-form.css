@@ -1,0 +1,202 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Section wrapper — keep consistent with other sections but not huge */
+.contact-form-section {
+  min-height: 100vh;
+  padding: 10rem 1.5rem;         /* smaller top padding to avoid huge gaps */
+  display: flex;
+  flex-direction: column;
+  align-items: center;           /* center horizontally */
+  justify-content: flex-start;   /* start from top so title is not vertically centered */
+  font-family: "Fira Code", monospace;
+  color: var(--text-light);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+/* Title — keep it visually aligned with the box on desktop, left-align on large screens */
+.section-title {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 0 1.25rem 0;
+  padding: 0 0.75rem;            /* small horizontal padding so it aligns with the inner box */
+  font-size: 1.9rem;
+  color: var(--accent-blue);
+  text-align: center;              /* keep title left-aligned like your contact section */
+}
+
+/* Intro text centered above box */
+.intro {
+  max-width: 640px;
+  margin: 0 0 1.5rem 0;
+  padding: 0 0.5rem;
+  text-align: center;
+  line-height: 1.6;
+  color: var(--text-light);
+  opacity: 0.95;
+}
+
+/* Compact box for the form */
+.contact-form {
+  width: 100%;
+  max-width: 520px;              /* compact width you asked for */
+  background: rgba(17, 24, 39, 0.75);
+  border: 1.25px solid rgba(0, 191, 255, 0.18);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), 0 0 10px rgba(0, 178, 255, 0.06);
+  backdrop-filter: blur(8px);
+  padding: 1.5rem;               /* comfortable inner padding */
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  box-sizing: border-box;
+  border-radius: 0;              /* sharp corners */
+  align-items: stretch;
+}
+
+/* Each labeled field */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Labels */
+label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  opacity: 0.95;
+}
+
+/* Inputs/textarea */
+input,
+textarea {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  background: rgba(255,255,255,0.02);
+  border: 1.25px solid rgba(0, 191, 255, 0.12);
+  box-sizing: border-box;
+  resize: vertical;
+  outline: none;
+  border-radius: 0;
+  transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(230,235,243,0.35);
+}
+
+/* Focus states — subtle */
+input:focus,
+textarea:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+/* Submit button — compact and centered */
+.submit-btn {
+  align-self: center;
+  padding: 0.6rem 1.6rem;
+  border: 1.5px solid var(--accent-blue);
+  background: transparent;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+}
+
+.submit-btn:hover {
+  color: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(0, 178, 255, 0.14);
+  transform: translateY(-2px);
+}
+
+/* smaller screens: tighten spacing, full width box */
+@media (max-width: 768px) {
+  .contact-form-section {
+    padding: 4.5rem 1rem;
+    align-items: center;
+  }
+
+  .section-title {
+    padding: 3rem 0.5rem;
+    font-size: 1.6rem;
+    text-align: left;
+  }
+
+  .intro {
+    padding: 0 0.5rem;
+  }
+
+  .contact-form {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .submit-btn {
+    align-self: stretch; /* full width on mobile is nicer */
+  }
+}
+
+.hash {
+  color: var(--accent-blue);
+  margin-right: 2px; /* tiny spacing for nice visual gap */
+}
+
+.head-text {
+  color: var(--text-light);
+}
+
+/* Mobile-only social icons container */
+.mobile-socials {
+  display: none; /* hidden by default */
+  justify-content: center;
+  gap: 2rem;           /* decent spacing between icons */
+  margin-top: 2rem;    /* visually separated from the form */
+}
+
+/* Icon links */
+.mobile-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;          /* comfortable tappable area */
+  height: 44px;         /* square button */
+  border-radius: 50%;   /* circular shape */
+  background: rgba(0, 191, 255, 0.08); /* subtle background to fit form style */
+  color: var(--text-light);
+  font-size: 1.2rem;    /* slightly smaller than default FA for balance */
+  transition: all 0.2s ease;
+  margin: 0 0 1.5rem 0;
+
+}
+
+/* Hover effect */
+.mobile-socials a:hover {
+  background: rgba(0, 191, 255, 0.18); /* slightly stronger hover background */
+  color: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+/* Only show on mobile screens */
+@media (max-width: 768px) {
+  .mobile-socials {
+    display: flex;
+  }
+
+  .intro {
+    margin: 0;
+  }
+}
+
+

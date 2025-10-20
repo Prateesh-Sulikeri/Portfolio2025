@@ -1,0 +1,15 @@
+<section class="home">
+  <div class="intro-text">
+    <h1>
+      Hi! Prateesh here 
+      <span class="wave" role="img" aria-label="wave">👋</span>
+    </h1>
+    <h2>
+      I am a 
+      <span class="rotating-text" [style.color]="accentColor">
+        {{ currentRole }}<span class="cursor">|</span>
+      </span>
+    </h2>
+    <button class="contact-btn" (click)="scrollTo('contact')" >Contact Me!!</button>
+  </div>
+</section>
