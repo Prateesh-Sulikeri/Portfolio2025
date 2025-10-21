@@ -1,4 +1,21 @@
-<section class="page-section">
-  <h1>Projects & Skills</h1>
-  <p>Placeholder: this will later showcase your full-stack projects and your tech stack.</p>
+<section id="projects" class="projects-section">
+  <div class="projects-header">
+  <h1 class="section-title">#<span class="head-text">my-projects</span></h1>
+    <div class="projects-line"></div>
+    <button class="view-all-btn" (click)="viewMore()">View all Projects-></button>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card" *ngFor="let project of projects">
+      <img [src]="project.image" alt="{{ project.title }}" class="project-image" />
+      <div class="project-content">
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-description">{{ project.description }}</p>
+        <div class="project-buttons">
+          <button class="project-btn" (click)="openLink(project.live)">Live</button>
+          <button class="project-btn" (click)="openLink(project.github)">GitHub</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
