@@ -1,0 +1,133 @@
+.know-more-section {
+  min-height: 100vh;
+  padding: 8rem 2rem 5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: var(--accent-blue);
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.resume-btn {
+  margin-bottom: 3rem;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--accent-blue);
+  background: transparent;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.resume-btn:hover {
+  color: var(--accent-blue);
+  box-shadow: 0 0 6px var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+/* Summary */
+.summary p {
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+
+/* Skills Section - Top-to-Bottom, Side-by-Side Columns */
+.skills-section h2 {
+  color: var(--accent-blue);
+  margin-bottom: 1rem;
+}
+
+.skills-columns {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap; /* allows responsiveness */
+}
+
+.skill-column {
+  background: var(--surface-dark);
+  border-left: 4px solid var(--accent-blue);
+  display: flex;
+  flex-direction: column;
+  min-width: 140px; /* adjust width as needed */
+  padding: 1rem 0.5rem;
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.3);
+}
+
+.skill-category {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.skill-items {
+  display: flex;
+  flex-direction: column; /* top-to-bottom layout */
+  gap: 0.5rem;
+}
+
+.skill {
+  background: rgba(0, 191, 255, 0.1);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.95rem;
+}
+
+
+/* Work Experience Section - Lined Style */
+.work-experience-section h2 {
+  color: var(--accent-blue);
+  margin-bottom: 1rem;
+}
+
+.experience-item {
+  background: var(--surface-dark);
+  border-left: 4px solid var(--accent-blue); /* the line you liked */
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-item h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.experience-item ul {
+  padding-left: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.experience-item li {
+  list-style-type: disc;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  background: rgba(0, 191, 255, 0.05); /* subtle highlight for each point */
+  padding: 0.3rem 0.5rem;
+}
+
+
+.hash {
+  color: var(--accent-blue);
+  margin-right: 2px; /* tiny spacing for nice visual gap */
+}
+
+.head-text {
+  color: var(--text-light);
+}
