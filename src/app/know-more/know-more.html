@@ -1,0 +1,38 @@
+<section id="know-more" class="know-more-section">
+  <h1 class="section-title">/<span class="head-text">know-more</span></h1>
+
+  <!-- Resume Download Button -->
+  <button class="resume-btn" (click)="downloadResume()">Download Resume</button>
+
+  <!-- Summary Section -->
+  <div class="summary">
+    <p>
+      I am a full-stack software developer with expertise in backend development using Java, cloud services (AWS & GCP),
+      and an interest in Machine Learning & Data Science. I enjoy building scalable applications and learning new technologies.
+    </p>
+  </div>
+
+<!-- Skills Section -->
+<div class="skills-section">
+  <h2><span class="hash">#</span><span class="head-text">skills</span></h2>
+  <div class="skills-columns">
+    <div class="skill-column" *ngFor="let item of skills">
+      <div class="skill-category">{{ item.category }}</div>
+      <div class="skill-items">
+        <div class="skill" *ngFor="let skill of item.skills">{{ skill }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Work Experience Section -->
+<div class="work-experience-section">
+  <h2><span class="hash">#</span><span class="head-text">work-experience</span></h2>
+  <div class="experience-item" *ngFor="let work of workExperiences">
+    <h3>{{ work.role }} | {{ work.company }}</h3>
+    <ul>
+      <li *ngFor="let detail of work.details">{{ detail }}</li>
+    </ul>
+  </div>
+</div>
