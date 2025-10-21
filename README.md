@@ -2,3 +2,7 @@
 - Email Received verification to sender 
 - X.com integration 
 - Env Vars Setup
+
+
+# Completed in feature_branch:
+1. EmailJS full integration with feedback mechanism
