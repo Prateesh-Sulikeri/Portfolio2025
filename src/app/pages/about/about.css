@@ -9,21 +9,41 @@
   position: relative;
 }
 
+/* Header Row (Title + Line + Button) */
+.about-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .section-title {
   font-size: 2rem;
   color: var(--accent-blue);
-  margin-bottom: 2rem;
-  text-align: left;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  margin: 0;
 }
 
-.about-content p {
-  margin-bottom: 1.2rem;
-  line-height: 1.7;
+/* Blue accent line */
+.about-line {
+  flex: 1;
+  height: 3px;
+  background-color: var(--accent-blue);
+  opacity: 0.6;
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+  margin: 0 0.1rem;
+  position: relative;
+  top: 1px;
 }
 
-.about-btn {
-  margin-top: 2rem;
-  padding: 0.75rem 2rem;
+/* Header Button (same style as projects’ View All) */
+.about-btn-header {
+  padding: 0.4rem 1.2rem;
+  font-size: 0.9rem;
   border: 2px solid var(--accent-blue);
   background: transparent;
   color: var(--text-light);
@@ -32,12 +52,37 @@
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 0;
+  letter-spacing: 0.5px;
 }
 
-.about-btn:hover {
+.about-btn-header:hover {
   color: var(--accent-blue);
   box-shadow: 0 0 6px var(--accent-blue);
   transform: translateY(-2px);
+}
+
+/* Content */
+.about-content p {
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .about-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .about-line {
+    display: none;
+  }
+
+  .about-btn-header {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
 }
 
 .head-text {
@@ -46,6 +91,6 @@
 
 .hash {
   color: var(--accent-blue);
-  margin-right: 2px; /* tiny spacing for nice visual gap */
+  margin-right: 2px;
   text-shadow: 0 0 3px var(--accent-blue);
 }
