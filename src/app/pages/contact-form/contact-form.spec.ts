@@ -1,23 +1,73 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+<section class="contact-form-section">
+  <h1 class="section-title"><span class="hash">/</span><span class="head-text">get-in-touch</span></h1>
 
-import { ContactForm } from './contact-form';
+  <p class="intro">
+    Feel free to reach out! Fill out the form below and I’ll get back to you as soon as possible 🚀
+  </p>
 
-describe('ContactForm', () => {
-  let component: ContactForm;
-  let fixture: ComponentFixture<ContactForm>;
+<!-- Social links only visible on mobile -->
+<div class="mobile-socials">
+  <a href="https://www.linkedin.com/in/prateesh-sulikeri" target="_blank" aria-label="LinkedIn">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+  <a href="https://www.x.com/" target="_blank" aria-label="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+</div>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ContactForm]
-    })
-    .compileComponents();
+<form class="contact-form" (ngSubmit)="sendEmail(contactForm)" #contactForm="ngForm">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      [(ngModel)]="formData.name"
+      placeholder="Your name"
+      [disabled]="loading"
+    />
+  </div>
 
-    fixture = TestBed.createComponent(ContactForm);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      email
+      [(ngModel)]="formData.email"
+      #emailCtrl="ngModel"
+      placeholder="Your email"
+      [disabled]="loading"
+    />
+    <!-- Error messages -->
+    <div class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.invalid">
+      <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
+      <span *ngIf="emailCtrl.errors?.['email']">Please enter a valid email.</span>
+    </div>
+  </div>
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  <div class="form-group">
+    <label for="message">Message</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      required
+      [(ngModel)]="formData.message"
+      placeholder="Write your message..."
+      [disabled]="loading"
+    ></textarea>
+  </div>
+
+  <button type="submit" class="submit-btn" [disabled]="loading">
+    <span class="btn-text" [class.hidden]="loading">Send Message</span>
+    <span *ngIf="loading" class="spinner"></span>
+  </button>
+
+
+</form>
+
+</section>

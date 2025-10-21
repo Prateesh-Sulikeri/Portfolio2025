@@ -200,3 +200,46 @@ textarea:focus {
 }
 
 
+.submit-btn {
+  position: relative;       /* needed for absolute spinner positioning */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.6rem;
+  border: 1.5px solid var(--accent-blue);
+  background: transparent;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.btn-text.hidden {
+  visibility: hidden;       /* keep button width intact */
+}
+
+.spinner {
+  position: absolute;       /* center inside button */
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-msg {
+  color: #ff6b6b;          /* red-ish error color */
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  font-family: "Fira Code", monospace;
+}
