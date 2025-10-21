@@ -1,0 +1,92 @@
+<section id="all-projects" class="projects-page">
+  <!-- Main Header -->
+  <div class="section-header">
+    <h1 class="section-title">#<span class="head-text">all-projects</span></h1>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="intro-text">
+    Here’s a comprehensive overview of my professional and personal projects — organized by category and experience.
+    Each project expands to reveal my specific roles, impact, and technical details.
+  </p>
+
+  <!-- =================== PROFESSIONAL PROJECTS =================== -->
+  <div class="project-category">
+    <div class="section-header sub-header">
+      <h2 class="section-title">#<span class="head-text">professional-projects</span></h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div *ngFor="let company of professionalProjects" class="company-section">
+      <h3 class="company-title">{{ company.name }}</h3>
+
+      <div *ngFor="let project of company.projects" class="project-card">
+        <div class="project-summary">
+          <h4 class="project-title">{{ project.title }}</h4>
+          <p class="project-description">{{ project.description }}</p>
+
+          <button class="view-btn" (click)="toggleExpand(project)">
+            {{ expandedProject === project ? 'Hide Details' : 'View More Details' }}
+          </button>
+        </div>
+
+        <!-- Expanded Details -->
+        <div class="project-details" [class.expanded]="expandedProject === project">
+          <ul>
+            <li><strong>Team Size:</strong> {{ project.teamSize }}</li>
+            <li><strong>Roles & Contributions:</strong> {{ project.roles }}</li>
+            <li><strong>Responsibilities:</strong> {{ project.responsibilities }}</li>
+            <li><strong>Impact:</strong> {{ project.impact }}</li>
+            <li><strong>Status:</strong> {{ project.status }}</li>
+          </ul>
+
+          <!-- Conditional Live/GitHub Buttons -->
+          <div class="project-links" *ngIf="project.live || project.github">
+            <a *ngIf="project.live" [href]="project.live" target="_blank" class="link-btn">Live</a>
+            <a *ngIf="project.github" [href]="project.github" target="_blank" class="link-btn">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== PERSONAL PROJECTS =================== -->
+  <div class="project-category">
+    <div class="section-header sub-header">
+      <h2 class="section-title">#<span class="head-text">personal-projects</span></h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div *ngFor="let section of personalProjects" class="personal-section">
+      <h3 class="company-title">{{ section.section }}</h3>
+
+      <div *ngFor="let project of section.projects" class="project-card">
+        <div class="project-summary">
+          <h4 class="project-title">{{ project.title }}</h4>
+          <p class="project-description">{{ project.description }}</p>
+
+          <button class="view-btn" (click)="toggleExpand(project)">
+            {{ expandedProject === project ? 'Hide Details' : 'View More Details' }}
+          </button>
+        </div>
+
+        <!-- Expanded Details -->
+        <div class="project-details" [class.expanded]="expandedProject === project">
+          <ul>
+            <li><strong>Team Size:</strong> {{ project.teamSize }}</li>
+            <li><strong>Roles & Contributions:</strong> {{ project.roles }}</li>
+            <li><strong>Responsibilities:</strong> {{ project.responsibilities }}</li>
+            <li><strong>Impact:</strong> {{ project.impact }}</li>
+            <li><strong>Status:</strong> {{ project.status }}</li>
+          </ul>
+
+          <!-- Conditional Live/GitHub Buttons -->
+          <div class="project-links" *ngIf="project.live || project.github">
+            <a *ngIf="project.live" [href]="project.live" target="_blank" class="link-btn">Live</a>
+            <a *ngIf="project.github" [href]="project.github" target="_blank" class="link-btn">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

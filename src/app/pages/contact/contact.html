@@ -1,5 +1,9 @@
 <section id="contact" class="contact-section">
-  <h1 class="section-title">#<span class="head-text">contact-me</span></h1>
+  <div class="contact-header">
+    <h1 class="section-title">#<span class="head-text">contact-me</span></h1>
+    <div class="contact-line"></div>
+    <button class="contact-header-btn" (click)="navigateToForm()">Contact Me Form -></button>
+  </div>
 
   <div class="contact-content">
     <p>
@@ -8,12 +12,13 @@
       However, I am also eager to explore <strong>Machine Learning</strong> and <strong>Data Science</strong>!
     </p>
 
-    <p>Feel free to contact me on my socials provided <span class="note">(<span class="hash">*</span>to the left of ur screen on desktop)</span>.</p>
+    <p>
+      Feel free to contact me on my socials provided
+      <span class="note">(<span class="hash">*</span>to the left of your screen on desktop)</span>.
+    </p>
 
     <p>
       If you have other requests or questions, don’t hesitate to contact me through this form.
     </p>
-
-    <button class="contact-form-btn" (click)="navigateToForm()">Contact Me Form</button>
   </div>
 </section>

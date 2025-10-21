@@ -1,30 +1,49 @@
 .contact-section {
   min-height: 100vh;
-  padding: 10rem 2rem 5rem;
+  padding: 10rem 2rem 3rem;
   max-width: 900px;
   margin: 0 auto;
   text-align: left;
   color: var(--text-light);
   font-family: "Fira Code", monospace;
   position: relative;
+}
 
+/* Header Row (Title + Line + Button) */
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .section-title {
   font-size: 2rem;
   color: var(--accent-blue);
-  margin-bottom: 2rem;
-  text-align: left; /* 👈 makes only the title left-aligned */
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  margin: 0;
 }
 
-.contact-content p {
-  margin-bottom: 1.2rem;
-  line-height: 1.7;
+/* Blue accent line */
+.contact-line {
+  flex: 1;
+  height: 3px;
+  background-color: var(--accent-blue);
+  opacity: 0.6;
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+  margin: 0 0.1rem;
+  position: relative;
+  top: 1px;
 }
 
-.contact-form-btn {
-  margin-top: 2rem;
-  padding: 0.75rem 2rem;
+/* Header button (Contact Form) */
+.contact-header-btn {
+  padding: 0.4rem 1.2rem;
+  font-size: 0.9rem;
   border: 2px solid var(--accent-blue);
   background: transparent;
   color: var(--text-light);
@@ -33,12 +52,37 @@
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 0;
+  letter-spacing: 0.5px;
 }
 
-.contact-form-btn:hover {
+.contact-header-btn:hover {
   color: var(--accent-blue);
   box-shadow: 0 0 6px var(--accent-blue);
   transform: translateY(-2px);
+}
+
+/* Content */
+.contact-content p {
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+}
+
+/* Responsive behavior — matches Projects and About */
+@media (max-width: 768px) {
+  .contact-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .contact-line {
+    display: none;
+  }
+
+  .contact-header-btn {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
 }
 
 .head-text {
@@ -47,6 +91,6 @@
 
 .hash {
   color: var(--accent-blue);
-  margin-right: 2px; /* tiny spacing for nice visual gap */
+  margin-right: 2px;
   text-shadow: 0 0 3px var(--accent-blue);
 }

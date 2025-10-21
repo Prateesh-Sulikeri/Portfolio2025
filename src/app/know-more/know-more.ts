@@ -31,7 +31,7 @@ export class KnowMore implements AfterViewInit {
     { category: 'Languages', skills: ['Java', 'Python', 'C++'] },
     { category: 'Tools', skills: ['VSCode', 'Nvim'] },
     { category: 'OS', skills: ['Linux', 'Windows'] },
-    { category: 'Databases', skills: ['MongoDB', 'MySQL', 'PostGreSQL'] },
+    { category: 'Databases', skills: ['MongoDB', 'MySQL', 'PostGreSQL', 'asidjioasjdioajsdiojsdiojsdadiojsiojdiasjdio'] },
     { category: 'Frameworks', skills: ['Angular', 'SpringBOOT'] },
     { category: 'UI', skills: ['ReactJS'] },
     { category: 'Misc', skills: ['Tomato pasta']}
@@ -63,8 +63,8 @@ export class KnowMore implements AfterViewInit {
   downloadResume() {
     // Provide the path to your resume file in assets folder
     const link = document.createElement('a');
-    link.href = 'assets/YourResume.pdf';
-    link.download = 'My_Resume.pdf';
+    link.href = 'resume-sample.pdf';
+    link.download = 'Prateesh-Sulikeri_Resume.pdf';
     link.click();
   }
 }
