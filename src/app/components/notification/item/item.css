@@ -1,0 +1,113 @@
+:root {
+  --notif-bg: #1e2a38; /* darker for contrast */
+  --notif-text: #e6edf3;
+  --notif-border: rgba(128,161,186,0.35);
+  --notif-shadow: 0 4px 16px rgba(0,191,255,0.15);
+  --accent-blue: #00bfff;
+  --accent-success: #00d4a1;
+  --accent-error: #ff5577;
+}
+
+.notification-item {
+  background: var(--notif-bg);
+  color: var(--notif-text);
+  border: 1px solid var(--notif-border);
+  box-shadow: var(--notif-shadow);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  min-width: 260px;
+  max-width: 360px;
+  font-size: 0.95rem;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateY(-12px) scale(0.985);
+  animation: slideIn 300ms cubic-bezier(.2,.9,.2,1) forwards;
+  pointer-events: auto; /* allow clicks */
+  position: relative;
+  overflow: hidden;
+}
+
+.notification-item.info { border-left: 4px solid var(--accent-blue); }
+.notification-item.success { border-left: 4px solid var(--accent-success); }
+.notification-item.error { border-left: 4px solid var(--accent-error); }
+
+.msg {
+  flex: 1;
+  margin-right: 8px;
+  word-break: break-word;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--notif-text);
+  opacity: 0.85;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0 6px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover { 
+  opacity: 1; 
+  transform: scale(1.1); 
+}
+
+.notification-item.clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+.notification-item.clickable:hover {
+  transform: translateY(-3px) scale(1.01);
+  opacity: 0.95;
+}
+
+/* Progress bar */
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  animation: progressShrink linear forwards;
+}
+
+.notification-item.info  .progress-bar { background: var(--accent-blue); }
+.notification-item.success .progress-bar { background: var(--accent-success); }
+.notification-item.error .progress-bar { background: var(--accent-error); }
+
+/* Animations */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fade-out {
+  animation: fadeOut 200ms ease forwards;
+}
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes progressShrink {
+  from { width: 100%; opacity: 1; }
+  90% { opacity: 1; }
+  to { width: 0%; opacity: 0.2; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .notification-item {
+    width: 90vw;
+    max-width: 350px;
+    font-size: 0.9rem;
+    padding: 0.75rem 0.9rem;
+  }
+}

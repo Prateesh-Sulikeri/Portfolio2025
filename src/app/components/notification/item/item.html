@@ -1,0 +1,9 @@
+<div
+  class="notification-item {{ notification.type }}"
+  [class.clickable]="notification.link"
+  role="status"
+  (click)="handleClick()"
+>
+  <div class="msg">{{ notification.message }}</div>
+  <button class="close-btn" (click)="handleCloseButton($event)" aria-label="close notification">×</button>
+</div>

@@ -1,0 +1,7 @@
+<div class="notification-container" aria-live="polite" aria-atomic="true">
+  <app-item
+    *ngFor="let n of notifications$ | async; trackBy: trackById"
+    [notification]="n"
+    (close)="handleClose($event)">
+  </app-item>
+</div>

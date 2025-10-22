@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, NgZone } from '@angular/core';
+import { Notification } from '../services/notification';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home implements OnInit, OnDestroy {
+export class Home implements OnInit, OnDestroy, AfterViewInit {
   roles = [
     'Full Stack Developer 💻',
     'Cloud Architect Associate ☁️',
@@ -25,13 +26,46 @@ export class Home implements OnInit, OnDestroy {
   private typingInterval: any;
   private deletingInterval: any;
 
+  private hasScrolled = false;
+  private scrollListener?: () => void;
+  private timer?: ReturnType<typeof setTimeout>;
+
+  constructor(private notify: Notification, private ngZone: NgZone) { }
+
+  notification_caller() {
+    // 🔄 Reset notification flag every time the Home component loads
+    sessionStorage.removeItem('homeHintShown');
+
+    this.scrollListener = () => (this.hasScrolled = true);
+    window.addEventListener('scroll', this.scrollListener, { passive: true });
+
+    console.log("in notif_caller");
+
+    this.timer = setTimeout(() => {
+      this.ngZone.run(() => {
+        if (!this.hasScrolled && !sessionStorage.getItem('homeHintShown')) {
+          console.log("triggered");
+          this.notify.info("Psst! You can scroll down to know more about me!", 6500);
+          sessionStorage.setItem('homeHintShown', '1'); // mark as shown
+        }
+      });
+    }, 7000);
+  }
+
+
   ngOnInit(): void {
     this.typeRole();
+  }
+
+  ngAfterViewInit(): void {
+    this.notification_caller();
   }
 
   ngOnDestroy(): void {
     clearInterval(this.typingInterval);
     clearInterval(this.deletingInterval);
+    if (this.scrollListener) window.removeEventListener('scroll', this.scrollListener);
+    if (this.timer) clearTimeout(this.timer);
   }
 
   private typeRole(): void {

@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Notification } from '../services/notification';
+import { Router } from '@angular/router';
 
 interface SkillCategory {
   category: string;
@@ -19,7 +21,46 @@ interface WorkExperience {
   templateUrl: './know-more.html',
   styleUrl: './know-more.css'
 })
-export class KnowMore implements AfterViewInit {
+export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
+  private stayTimer: any;
+
+  constructor(private notify: Notification, private router: Router) { }
+
+  notification_caller() {
+    this.stayTimer = setTimeout(() => {
+      this.showeasterEggNotification();
+    }, 1500);
+  }
+
+  showeasterEggNotification() {
+    this.notify.info(
+      "Appreciate you sticking around! Wanna peek into The Developer’s Thoughts? Click Here! (It’s me, btw 😅)",
+      15000, '/dev-thoughts'
+    );
+
+    setTimeout(() => {
+      const link = document.getElementById('devThoughtsLink');
+      if (link) {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          this.router.navigateByUrl('/dev-thoughts'); // opens in the same tab
+        });
+      }
+    }, 100);
+  }
+
+
+
+  ngOnDestroy() {
+    // Clear the timer when leaving page or component destroyed
+    if (this.stayTimer) {
+      clearTimeout(this.stayTimer);
+    }
+  }
+
+  ngOnInit(): void {
+    this.notification_caller();
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -34,10 +75,10 @@ export class KnowMore implements AfterViewInit {
     { category: 'Databases', skills: ['MongoDB', 'MySQL', 'PostGreSQL', 'asidjioasjdioajsdiojsdiojsdadiojsiojdiasjdio'] },
     { category: 'Frameworks', skills: ['Angular', 'SpringBOOT'] },
     { category: 'UI', skills: ['ReactJS'] },
-    { category: 'Misc', skills: ['Tomato pasta']}
+    { category: 'Misc', skills: ['Tomato pasta'] }
   ];
 
-    workExperiences: WorkExperience[] = [
+  workExperiences: WorkExperience[] = [
     {
       role: 'Software Developer',
       company: 'Company A',
