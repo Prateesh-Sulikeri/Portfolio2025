@@ -1,113 +1,155 @@
 :root {
-  --notif-bg: #1e2a38; /* darker for contrast */
+  --notif-bg: #121829;
   --notif-text: #e6edf3;
-  --notif-border: rgba(128,161,186,0.35);
-  --notif-shadow: 0 4px 16px rgba(0,191,255,0.15);
-  --accent-blue: #00bfff;
-  --accent-success: #00d4a1;
-  --accent-error: #ff5577;
 }
 
+/* ────────────────────────────────
+   🔹 Base Notification
+   ──────────────────────────────── */
 .notification-item {
-  background: var(--notif-bg);
-  color: var(--notif-text);
-  border: 1px solid var(--notif-border);
-  box-shadow: var(--notif-shadow);
-  border-radius: 12px;
-  padding: 0.85rem 1rem;
-  min-width: 260px;
-  max-width: 360px;
-  font-size: 0.95rem;
+  position: relative;
   display: flex;
-  gap: 12px;
   align-items: center;
   justify-content: space-between;
-  opacity: 0;
-  transform: translateY(-12px) scale(0.985);
-  animation: slideIn 300ms cubic-bezier(.2,.9,.2,1) forwards;
-  pointer-events: auto; /* allow clicks */
-  position: relative;
+  gap: 12px;
+  min-width: 260px;
+  max-width: 360px;
+  padding: 0.75rem 1rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--notif-text);
+  background: var(--notif-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
   overflow: hidden;
+
+  transform: translateY(-6px) scale(0.98);
+  animation: slideIn 240ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
-.notification-item.info { border-left: 4px solid var(--accent-blue); }
-.notification-item.success { border-left: 4px solid var(--accent-success); }
-.notification-item.error { border-left: 4px solid var(--accent-error); }
+/* Sharp edges — minimalist aesthetic */
+.notification-item,
+.notification-item * {
+  border-radius: 0 !important;
+}
 
+/* ────────────────────────────────
+   🔹 Accent Bar
+   ──────────────────────────────── */
+.notification-item::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--accent-color);
+  transition: background 0.3s ease;
+}
+
+/* ────────────────────────────────
+   🔹 Hover / Interaction
+   ──────────────────────────────── */
+.notification-item.clickable:hover {
+  transform: translateY(-2px) scale(1.012);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ────────────────────────────────
+   🔹 Message
+   ──────────────────────────────── */
 .msg {
   flex: 1;
   margin-right: 8px;
   word-break: break-word;
 }
 
+/* ────────────────────────────────
+   🔹 Close Button
+   ──────────────────────────────── */
 .close-btn {
-  background: transparent;
+  background: none;
   border: none;
   color: var(--notif-text);
-  opacity: 0.85;
-  cursor: pointer;
-  font-size: 1.1rem;
-  padding: 0 6px;
+  font-size: 1.2rem;
   line-height: 1;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.close-btn:hover { 
-  opacity: 1; 
-  transform: scale(1.1); 
-}
-
-.notification-item.clickable {
+  padding: 0.2rem;
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.2s ease;
-}
-.notification-item.clickable:hover {
-  transform: translateY(-3px) scale(1.01);
-  opacity: 0.95;
+  opacity: 0.6;
+  transition: opacity 0.15s ease, transform 0.2s ease;
 }
 
-/* Progress bar */
+.close-btn:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/* ────────────────────────────────
+   🔹 Progress Bar
+   ──────────────────────────────── */
 .progress-bar {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 3px;
+  height: 2px;
   width: 100%;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  background: linear-gradient(to right, var(--accent-color), transparent);
   animation: progressShrink linear forwards;
 }
 
-.notification-item.info  .progress-bar { background: var(--accent-blue); }
-.notification-item.success .progress-bar { background: var(--accent-success); }
-.notification-item.error .progress-bar { background: var(--accent-error); }
-
-/* Animations */
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-12px) scale(0.985); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.fade-out {
-  animation: fadeOut 200ms ease forwards;
-}
-@keyframes fadeOut {
-  to { opacity: 0; transform: translateY(-6px); }
-}
-
 @keyframes progressShrink {
-  from { width: 100%; opacity: 1; }
-  90% { opacity: 1; }
-  to { width: 0%; opacity: 0.2; }
+  from {
+    width: 100%;
+    opacity: 1;
+  }
+  to {
+    width: 0%;
+    opacity: 0.3;
+  }
 }
 
-/* Mobile responsiveness */
+/* ────────────────────────────────
+   🔹 Animations
+   ──────────────────────────────── */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+.notification-item.closing {
+  animation: slideOutRight 280ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ────────────────────────────────
+   🔹 Responsive
+   ──────────────────────────────── */
 @media (max-width: 768px) {
   .notification-item {
     width: 90vw;
     max-width: 350px;
     font-size: 0.9rem;
-    padding: 0.75rem 0.9rem;
+    padding: 0.65rem 0.85rem;
   }
 }

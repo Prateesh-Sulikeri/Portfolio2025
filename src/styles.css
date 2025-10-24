@@ -6,11 +6,11 @@
   --text-light: #e6edf3;
   --accent-blue: #00bfff; /* 🔥 Bright neon blue (was #3b82f6) */
   --accent-blue-glow: 0 0 1px #00bfff, 0 0 0px #00bfff, 0 0 36px #0090ff;
-  --notif-bg: #495c6a; 
+  --notif-bg: #111827; /* matches surface-dark, slightly lifted with shadow */
   --notif-bg-opaque: rgba(128, 161, 186, 0.12);
   --notif-text: var(--text-light);
-  --notif-border: rgba(128, 161, 186, 0.25);
-  --notif-shadow: 0 0 12px rgba(0, 191, 255, 0.12);
+  --notif-border: rgba(128,161,186,0.15);
+  --notif-shadow: 0 2px 10px rgba(0,191,255,0.08);
 }
 
 /* Apply global theme */

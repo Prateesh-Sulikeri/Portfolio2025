@@ -49,7 +49,7 @@ export class Home implements OnInit, OnDestroy, AfterViewInit {
           sessionStorage.setItem('homeHintShown', '1'); // mark as shown
         }
       });
-    }, 7000);
+    }, 6000);
   }
 
 

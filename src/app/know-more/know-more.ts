@@ -29,7 +29,7 @@ export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
   notification_caller() {
     this.stayTimer = setTimeout(() => {
       this.showeasterEggNotification();
-    }, 1500);
+    }, 15000);
   }
 
   showeasterEggNotification() {
