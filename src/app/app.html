@@ -1,5 +1,7 @@
 <app-header></app-header>
 <app-social-bar></app-social-bar>
+<app-container></app-container>
 
-
-<router-outlet></router-outlet>
+<div class="route-wrapper" [class.fade-out]="isNavigating">
+  <router-outlet></router-outlet>
+</div>

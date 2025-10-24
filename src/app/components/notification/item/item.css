@@ -1,0 +1,155 @@
+:root {
+  --notif-bg: #121829;
+  --notif-text: #e6edf3;
+}
+
+/* ────────────────────────────────
+   🔹 Base Notification
+   ──────────────────────────────── */
+.notification-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 260px;
+  max-width: 360px;
+  padding: 0.75rem 1rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--notif-text);
+  background: var(--notif-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+  overflow: hidden;
+
+  transform: translateY(-6px) scale(0.98);
+  animation: slideIn 240ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+/* Sharp edges — minimalist aesthetic */
+.notification-item,
+.notification-item * {
+  border-radius: 0 !important;
+}
+
+/* ────────────────────────────────
+   🔹 Accent Bar
+   ──────────────────────────────── */
+.notification-item::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--accent-color);
+  transition: background 0.3s ease;
+}
+
+/* ────────────────────────────────
+   🔹 Hover / Interaction
+   ──────────────────────────────── */
+.notification-item.clickable:hover {
+  transform: translateY(-2px) scale(1.012);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ────────────────────────────────
+   🔹 Message
+   ──────────────────────────────── */
+.msg {
+  flex: 1;
+  margin-right: 8px;
+  word-break: break-word;
+}
+
+/* ────────────────────────────────
+   🔹 Close Button
+   ──────────────────────────────── */
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--notif-text);
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0.2rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s ease, transform 0.2s ease;
+}
+
+.close-btn:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/* ────────────────────────────────
+   🔹 Progress Bar
+   ──────────────────────────────── */
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(to right, var(--accent-color), transparent);
+  animation: progressShrink linear forwards;
+}
+
+@keyframes progressShrink {
+  from {
+    width: 100%;
+    opacity: 1;
+  }
+  to {
+    width: 0%;
+    opacity: 0.3;
+  }
+}
+
+/* ────────────────────────────────
+   🔹 Animations
+   ──────────────────────────────── */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+.notification-item.closing {
+  animation: slideOutRight 280ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ────────────────────────────────
+   🔹 Responsive
+   ──────────────────────────────── */
+@media (max-width: 768px) {
+  .notification-item {
+    width: 90vw;
+    max-width: 350px;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.85rem;
+  }
+}

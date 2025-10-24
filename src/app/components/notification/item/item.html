@@ -1,0 +1,25 @@
+<div
+  class="notification-item"
+  [attr.data-id]="notification.id"
+  [style.--accent-color]="
+    notification.type === 'info'
+      ? '#00bfff'
+      : notification.type === 'success'
+      ? '#00d4a1'
+      : '#ff5577'
+  "
+  [class.clickable]="notification.link"
+  role="status"
+  (click)="handleClick()"
+>
+  <div class="msg">{{ notification.message }}</div>
+  <button
+    class="close-btn"
+    (click)="handleCloseButton($event)"
+    aria-label="close notification"
+  >
+    ×
+  </button>
+
+  <div class="progress-bar" [style.animationDuration.ms]="notification.timeout"></div>
+</div>

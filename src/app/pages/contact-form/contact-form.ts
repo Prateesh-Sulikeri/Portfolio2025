@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import emailjs from '@emailjs/browser';
+import { Notification } from '../../services/notification';
 
 @Component({
   selector: 'app-contact-form',
@@ -15,6 +16,8 @@ export class ContactForm implements OnInit {
     email: '',
     message: ''
   };
+
+  constructor(private notify: Notification) {}
 
   loading = false;
 
@@ -48,7 +51,8 @@ export class ContactForm implements OnInit {
 
         setTimeout(() => {
           this.loading = false;
-          alert('Thanks for reaching out! Your message has been sent.');
+          // alert('Thanks for reaching out! Your message has been sent.');
+          this.notify.success("Hey! Thanks for reaching out!! Looking forward to connect with you!", 7000);
           this.formData = { name: '', email: '', message: '' };
           contactForm.resetForm();
         }, 1000);
@@ -56,7 +60,7 @@ export class ContactForm implements OnInit {
       .catch((error) => {
         setTimeout(() => {
           this.loading = false;
-          alert('Oops! Something went wrong. Please try again.');
+          this.notify.error("Oops! Looks like something went wrong. Don’t worry — I’ll look into it. You can try sending your message again! or contact me on my socials", 10000);
         }, 1000);
         console.error(error);
       });
