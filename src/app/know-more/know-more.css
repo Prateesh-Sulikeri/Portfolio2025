@@ -33,13 +33,11 @@
   transform: translateY(-2px);
 }
 
-/* Summary */
 .summary p {
   margin-bottom: 3rem;
   line-height: 1.8;
 }
 
-/* Skills Section - Top-to-Bottom, Side-by-Side Columns */
 .skills-section h2 {
   color: var(--accent-blue);
   margin-bottom: 1rem;
@@ -49,7 +47,7 @@
   display: flex;
   gap: 1.5rem;
   margin-bottom: 3rem;
-  flex-wrap: wrap; /* allows responsiveness */
+  flex-wrap: wrap;
 }
 
 .skill-column {
@@ -57,7 +55,7 @@
   border-left: 4px solid var(--accent-blue);
   display: flex;
   flex-direction: column;
-  min-width: 140px; /* adjust width as needed */
+  min-width: 140px;
   padding: 1rem 0.5rem;
   box-shadow: 0 0 6px rgba(0, 191, 255, 0.3);
 }
@@ -72,7 +70,7 @@
 
 .skill-items {
   display: flex;
-  flex-direction: column; /* top-to-bottom layout */
+  flex-direction: column;
   gap: 0.5rem;
 }
 
@@ -82,50 +80,14 @@
   font-size: 0.95rem;
 }
 
-
-/* Work Experience Section - Lined Style */
 .work-experience-section h2 {
   color: var(--accent-blue);
   margin-bottom: 1rem;
 }
 
-.experience-item {
-  background: var(--surface-dark);
-  border-left: 4px solid var(--accent-blue); /* the line you liked */
-  padding: 1rem;
-  margin-bottom: 1.2rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.experience-item h3 {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--accent-blue);
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-}
-
-.experience-item ul {
-  padding-left: 1rem;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.experience-item li {
-  list-style-type: disc;
-  font-size: 0.95rem;
-  color: var(--text-light);
-  background: rgba(0, 191, 255, 0.05); /* subtle highlight for each point */
-  padding: 0.3rem 0.5rem;
-}
-
-
 .hash {
   color: var(--accent-blue);
-  margin-right: 2px; /* tiny spacing for nice visual gap */
+  margin-right: 2px;
 }
 
 .head-text {
@@ -141,25 +103,14 @@
   box-sizing: border-box;
 }
 
-/* Force consistent vertical alignment for all heading levels */
 .section-header .section-title {
   display: flex;
-  align-items: center;     /* centers the text within its own box */
-  line-height: 1;          /* eliminates extra vertical spacing */
+  align-items: center;
+  line-height: 1;
   margin: 0;
   padding: 0;
 }
 
-.section-title {
-  font-size: 2rem;
-  color: var(--accent-blue);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  margin: 0;
-}
-
-/* Optional small tweak to visually nudge it perfectly */
 .section-line {
   flex: 1;
   height: 3px;
@@ -168,30 +119,7 @@
   box-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
   margin: 0 0.1rem;
   position: relative;
-  top: 0; /* make sure this is 0 or slightly negative if needed */
-}
-
-/* Responsive tweak */
-@media (max-width: 768px) {
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
-  }
-
-  .section-line {
-    display: none;
-  }
-}
-
-.head-text {
-  color: var(--text-light);
-}
-
-.hash {
-  color: var(--accent-blue);
-  margin-right: 2px;
-  text-shadow: 0 0 3px var(--accent-blue);
+  top: 0;
 }
 
 .section-header h1.section-title {
@@ -208,4 +136,528 @@
 
 .section-header h4.section-title {
   font-size: 1.1rem;
+}
+
+.experience-card {
+  background: var(--surface-dark);
+  border-left: 3px solid var(--accent-blue);
+  margin-bottom: 1.8rem;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.15);
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.experience-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.experience-summary h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.experience-summary .view-btn {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid var(--accent-blue);
+  background: transparent;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  font-size: 0.95rem;
+}
+
+.experience-summary .view-btn:hover {
+  color: var(--accent-blue);
+  box-shadow: 0 0 6px var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.experience-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  opacity: 0;
+  padding-left: 0.5rem;
+  border-left: 2px dashed rgba(0, 191, 255, 0.3);
+  margin-top: 0.5rem;
+}
+
+.experience-details.expanded {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.experience-details ul {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.experience-details li {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  background: rgba(0, 191, 255, 0.05);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+}
+
+.cert-card {
+  background: var(--surface-dark);
+  border-left: 4px solid var(--accent-blue);
+  margin-bottom: 2rem;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 3px 15px rgba(0, 191, 255, 0.15);
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.cert-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 191, 255, 0.25);
+}
+
+.cert-top {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cert-image-container {
+  flex: 0 0 220px;
+  max-width: 220px;
+  position: relative;
+  cursor: pointer;
+}
+
+.cert-image {
+  width: 100%;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,191,255,0.25);
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  border-radius: 6px;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.cert-image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.cert-summary {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cert-summary h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+  margin: 0;
+}
+
+.view-btn {
+  padding: 0.45rem 1rem;
+  border: 2px solid var(--accent-blue);
+  background: transparent;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  font-size: 0.9rem;
+}
+
+.view-btn:hover {
+  color: var(--accent-blue);
+  box-shadow: 0 0 6px var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.cert-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  opacity: 0;
+  margin-top: 0.5rem;
+  border-left: 2px dashed rgba(0, 191, 255, 0.3);
+  padding-left: 0.5rem;
+}
+
+.cert-details.expanded {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.cert-content {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.cert-description {
+  flex: 1;
+  min-width: 250px;
+}
+
+.cert-description p {
+  margin: 0.3rem 0;
+}
+
+.cert-description .link-btn {
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* MODAL STYLES - CRITICAL FIX */
+.modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 999999 !important;
+  background: rgba(0, 0, 0, 0.95) !important;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.modal-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 95vw;
+  max-height: 95vh;
+  padding: 20px;
+}
+
+.modal-image {
+  max-width: 90vw;
+  max-height: 85vh;
+  min-width: 60vw;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.5);
+  display: block;
+}
+
+/* Make images even bigger on desktop */
+@media (min-width: 769px) {
+  .modal-image {
+    max-width: 85vw;
+    max-height: 88vh;
+    min-width: 70vw;
+  }
+  
+  .modal-inner {
+    max-width: 90vw;
+    max-height: 92vh;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #00bfff;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(20, 20, 30, 0.9);
+  padding: 10px 20px;
+  border: 2px solid #00bfff;
+  border-radius: 50%;
+  z-index: 3;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.close-btn:hover {
+  background: #00bfff;
+  color: #14141e;
+  transform: rotate(90deg);
+}
+
+.caption {
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .know-more-section {
+    padding: 6rem 1.5rem 3rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Fix for /know-more heading overlap */
+  .section-header:first-child {
+    margin-top: 2rem;
+  }
+
+  .section-line {
+    display: none;
+  }
+
+  .resume-btn {
+    width: 100%;
+    margin-bottom: 2rem;
+    padding: 0.7rem 1.5rem;
+  }
+
+  .summary p {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Fix skill cards overflow */
+  .skills-columns {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .skill-column {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .skill-items {
+    width: 100%;
+  }
+
+  .skill {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .experience-card {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .experience-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .experience-summary h3 {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .experience-summary .view-btn {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .experience-details.expanded {
+    max-height: 800px;
+  }
+
+  .experience-details li {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .cert-card {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cert-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cert-image-container {
+    width: 100%;
+    max-width: none;
+    flex: none;
+  }
+
+  .cert-summary h3 {
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+
+  .view-btn {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .cert-details.expanded {
+    max-height: 600px;
+  }
+
+  .cert-content {
+    flex-direction: column;
+  }
+
+  .cert-description {
+    min-width: unset;
+  }
+
+  .cert-description p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .close-btn {
+    font-size: 2rem;
+    top: 10px;
+    right: 10px;
+    padding: 8px 16px;
+  }
+
+  .modal-inner {
+    padding: 15px;
+  }
+  
+  .modal-image {
+    max-width: 90vw;
+    max-height: 70vh;
+    min-width: unset;
+  }
+
+  .caption {
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .know-more-section {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .section-header h1.section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-header h2.section-title {
+    font-size: 1.3rem;
+  }
+
+  /* Extra margin for first heading on very small screens */
+  .section-header:first-child {
+    margin-top: 1.5rem;
+  }
+
+  .resume-btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .summary p {
+    font-size: 0.9rem;
+  }
+
+  .skill-category {
+    font-size: 1rem;
+  }
+
+  .skill {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .experience-summary h3 {
+    font-size: 0.95rem;
+  }
+
+  .experience-details li {
+    font-size: 0.85rem;
+  }
+
+  .cert-summary h3 {
+    font-size: 1rem;
+  }
+
+  .cert-description p {
+    font-size: 0.85rem;
+  }
+
+  .close-btn {
+    font-size: 1.8rem;
+    padding: 6px 14px;
+  }
 }
