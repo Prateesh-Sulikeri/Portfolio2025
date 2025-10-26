@@ -122,25 +122,25 @@ export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
     {
       title: 'Oracle Certified Java SE 8 Developer Associate (1Z0-808)',
       description: 'Java SE 8 certification focusing on core Java programming, object-oriented design, and basic API usage. Achieved 93% completion.',
-      image: 'images/project3.jpg',
+      image: 'images/oracle_java_cert.jpg',
       link: 'https://education.oracle.com/java-se-8-developer/overview/pls/psp/portal'
     },
     {
       title: 'Oracle Cloud & AI Platforms Associate Engineer',
       description: 'Covers cloud architecture, AI services, and platform-specific tools on Oracle Cloud. Completion 95%.',
-      image: 'assets/certs/oracle-cloud.png',
+      image: 'images/oracle_ai_cert.jpg',
       link: 'https://education.oracle.com/oracle-cloud-ai-associate/overview/pls/psp/portal'
     },
     {
       title: 'DeepLearning.AI: GenAI, LangChain, Prompt Engineering, ChatGPT API Apps',
       description: 'Focused on Generative AI applications, building LLM pipelines, and prompt engineering for real-world AI tools.',
-      image: 'assets/certs/deeplearning-ai.png',
+      image: 'images/deeplearning_cert.png',
       link: 'https://www.deeplearning.ai/certifications/'
     },
     {
       title: 'AWS Certified Developer Associate (DVA-C02)',
       description: 'Certification on AWS core services, application deployment, and development best practices. Currently in progress.',
-      image: 'assets/certs/aws-dev-assoc.png'
+      image: 'images/AWS.jpg'
     },
   ];
 
