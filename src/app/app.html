@@ -5,3 +5,15 @@
 <div class="route-wrapper" [class.fade-out]="isNavigating">
   <router-outlet></router-outlet>
 </div>
+
+<app-footer></app-footer>
+
+<!-- Back to Top Button -->
+<button 
+  class="back-to-top" 
+  [class.show]="showBackToTop" 
+  (click)="scrollToTop()"
+  aria-label="Back to Top"
+>
+  <i class="fas fa-arrow-up"></i>
+</button>

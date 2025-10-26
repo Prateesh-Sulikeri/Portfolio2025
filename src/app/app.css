@@ -13,3 +13,49 @@ main {
   opacity: 0;
   transform: translateY(8px);
 }
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface-dark);
+  color: var(--accent-blue);
+  border: 2px solid var(--accent-blue);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.4s ease, transform 0.3s ease;
+  z-index: 999;
+  font-size: 1.2rem;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--accent-blue);
+  color: var(--surface-dark);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 0 12px var(--accent-blue);
+}
+
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 1rem;
+    left: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}

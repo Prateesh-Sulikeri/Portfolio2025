@@ -20,32 +20,34 @@ export class Projects {
   projects = [
     {
       image: 'images/project1.jpg',
-      title: 'Portfolio Website',
-      description: 'A modern personal portfolio built with Angular and a custom dark theme.',
-      live: '#',
-      github: '#'
+      title: 'Clone Catch',
+      description: 'ML-powered tool for automatic person, place, and object detection, sorting, and removing blurry/duplicate images.',
+      live: '#',      // Replace with actual live demo URL if available
+      github: '#'     // Replace with actual GitHub repo URL
     },
     {
       image: 'images/project2.jpg',
-      title: 'Task Manager API',
-      description: 'Spring Boot REST API for managing tasks with JWT authentication.',
+      title: 'JinBo',
+      description: 'Personal portfolio chat bot for interactive communication and dynamic content display.',
       live: '#',
       github: '#'
     },
     {
       image: 'images/project3.jpg',
-      title: 'ML Model Dashboard',
-      description: 'Data visualization dashboard for machine learning models.',
+      title: 'FinBo',
+      description: 'AI-based financial advisor bot for expenditure analysis, investment portfolio guidance, spend control, and general finance advice.',
       live: '#',
       github: '#'
-    }
+    },
   ];
+
+
 
   openLink(url: string) {
     window.open(url, '_blank');
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   viewMore() {
     this.router.navigateByUrl('/all-projects');
