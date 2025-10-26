@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -9,18 +11,37 @@ import { Component } from '@angular/core';
 export class Header {
   menuOpen = false;
 
+  constructor(private router: Router) {}
+
   toggleMenu() {
-  this.menuOpen = !this.menuOpen;
-  document.body.classList.toggle('menu-open', this.menuOpen);
+    this.menuOpen = !this.menuOpen;
+    document.body.classList.toggle('menu-open', this.menuOpen);
   }
 
   closeMenu() {
-  this.menuOpen = false;
-  document.body.classList.remove('menu-open');
-  } 
+    this.menuOpen = false;
+    document.body.classList.remove('menu-open');
+  }
 
   scrollTo(sectionId: string) {
     this.closeMenu();
+    
+    // Check if we're on the main route
+    if (this.router.url !== '/' && this.router.url !== '') {
+      // Navigate to main route first, then scroll
+      this.router.navigate(['/']).then(() => {
+        // Wait for navigation and rendering to complete
+        setTimeout(() => {
+          this.scrollToSection(sectionId);
+        }, 100);
+      });
+    } else {
+      // Already on main route, just scroll
+      this.scrollToSection(sectionId);
+    }
+  }
+
+  private scrollToSection(sectionId: string) {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });

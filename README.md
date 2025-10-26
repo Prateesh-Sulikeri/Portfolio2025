@@ -12,3 +12,5 @@
 5. all-projects page completed -- Content to be added 
 6. about and contact page overhauled to be closer to the projects page 
 7. Adding notification now
+8. Updated the know-more to add certifications view 
+9. Apparent fix to the navigation issue needs further investigation
