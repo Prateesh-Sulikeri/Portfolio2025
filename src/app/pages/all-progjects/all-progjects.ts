@@ -29,7 +29,7 @@ interface PersonalSection {
   templateUrl: './all-progjects.html',
   styleUrls: ['./all-progjects.css']
 })
-export class AllProgjects implements AfterViewInit{
+export class AllProgjects implements AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -42,51 +42,79 @@ export class AllProgjects implements AfterViewInit{
   // =================== PROFESSIONAL PROJECTS ===================
   professionalProjects: CompanyProjects[] = [
     {
-      name: 'Company-A',
+      name: 'Persistent Systems',
       projects: [
         {
-          title: 'Employee Management Portal',
+          title: 'Employee Management System',
           description:
-            'A scalable internal tool for managing employees, attendance, and payroll workflows.',
-          teamSize: '6',
+            'FAST API-based Employee Management System for internal HR and operations.',
+          teamSize: '3',
           roles: 'Backend Developer',
           responsibilities:
-            'Designed REST APIs, integrated AWS S3 for document storage, optimized query performance.',
+            'Built REST APIs using Python, integrated MySQL, optimized data access using DSA principles, and deployed on Linux.',
           impact:
-            'Reduced manual operations by 40% and improved internal workflow efficiency.',
-          status: 'Deployed & Maintained',
-          live: 'https://google.com', // optional
-          github: 'https://github.com/company-a/emp-portal'
-        },
-        {
-          title: 'Customer Data Platform',
-          description:
-            'A microservice-based system that unified customer profiles across multiple touchpoints.',
-          teamSize: '8',
-          roles: 'Java Developer',
-          responsibilities:
-            'Developed core services in Java Spring Boot, integrated Kafka pipelines, and led CI/CD automation.',
-          impact:
-            'Enhanced customer data accuracy by 25%, reducing data redundancy.',
-          status: 'Production (active)',
-          live: 'https://company-a.com/cdp',
+            'Streamlined HR workflows and improved data consistency and retrieval speed.',
+          status: 'Internship Project',
+          live: '',
           github: ''
-        },
+        }
       ],
     },
     {
-      name: 'Company-B',
+      name: 'Xoriant Technologies',
       projects: [
         {
-          title: 'Cloud Infrastructure Dashboard',
+          title: 'Inbound Message Gateway RTM Task',
           description:
-            'An observability dashboard to monitor AWS and GCP cloud services in real-time.',
+            'Automated handling of inbound message gateway messages in a global FX settlement platform.',
           teamSize: '5',
+          roles: 'Associate Software Engineer',
+          responsibilities:
+            'Handled message processing pipelines, integrated AWS services (Lambda, S3, DynamoDB), automated regression testing, and optimized C++ & Java microservices.',
+          impact:
+            'Reduced manual processing effort by 65%, improved reliability, and ensured high audit compliance.',
+          status: 'Production',
+          live: '',
+          github: ''
+        },
+        {
+          title: 'C++ v11 → v23 Upgrade & Java Microservices POCs',
+          description:
+            'Modernized legacy C++ components to C++23 and created new Java microservices for critical components.',
+          teamSize: '4',
+          roles: 'Software Engineer',
+          responsibilities:
+            'Refactored large components into smaller, testable Java microservices including InputQueue Drainer and PD Setter; implemented automatic test generation scripts.',
+          impact:
+            'Enhanced code maintainability, performance, and test coverage.',
+          status: 'Delivered',
+          live: '',
+          github: ''
+        },
+        {
+          title: 'Custom CI/CD Monitoring Dashboard',
+          description:
+            'Angular + Spring Boot dashboard to monitor build, test, and deployment pipelines.',
+          teamSize: '2',
           roles: 'Full Stack Engineer',
           responsibilities:
-            'Developed backend metrics collector and frontend data visualizations using Angular.',
+            'Developed UI, backend services, and monitoring scripts; integrated alerts and visualizations.',
           impact:
-            'Reduced downtime detection time by 60% and improved DevOps visibility.',
+            'Enabled proactive issue detection and faster release visibility for operations teams.',
+          status: 'Delivered',
+          live: '',
+          github: ''
+        },
+        {
+          title: 'Automatic Static Code Analysis Tool for C++',
+          description:
+            'Automated tool for detecting memory leaks and performance issues in C++ components.',
+          teamSize: '2',
+          roles: 'Software Engineer',
+          responsibilities:
+            'Integrated RATS, Flawfinder, and Valgrind to identify issues and generate reports.',
+          impact:
+            'Improved code quality and reduced manual debugging time.',
           status: 'Delivered',
           live: '',
           github: ''
@@ -98,40 +126,60 @@ export class AllProgjects implements AfterViewInit{
   // =================== PERSONAL PROJECTS ===================
   personalProjects: PersonalSection[] = [
     {
-      section: 'Open Source Contributions',
+      section: 'Portfolio & Web Tools',
       projects: [
         {
-          title: 'Portfolio 2025',
+          title: 'Clone Catch',
           description:
-            'My personal website showcasing projects, design, and development work — built with Angular & custom CSS.',
+            'ML-powered tool for automatic person, place, and object detection, sorting, and removing blurry/duplicate images.',
           teamSize: '1',
-          roles: 'Developer & Designer',
+          roles: 'Developer',
           responsibilities:
-            'Designed UI/UX, implemented SPA routing, and optimized performance.',
-          impact: 'Improved personal branding and outreach.',
+            'Implemented image processing pipeline using ML models, built UI for viewing results, and automated clone detection.',
+          impact: 'Saved hours of manual image curation, improved dataset quality.',
           status: 'Active',
-          live: 'https://portfolio2025.com',
-          github: 'https://github.com/myusername/portfolio2025'
-        },
-      ],
-    },
-    {
-      section: 'Experimental Projects',
-      projects: [
-        {
-          title: 'AI-Powered Resume Analyzer',
-          description:
-            'A machine learning model that evaluates resumes and suggests improvements.',
-          teamSize: '1',
-          roles: 'ML Engineer',
-          responsibilities:
-            'Built NLP pipeline using Python, deployed via FastAPI and integrated into Angular UI.',
-          impact:
-            'Enhanced resume evaluation accuracy and saved HR review time.',
-          status: 'In Progress',
           live: '',
-          github: 'https://github.com/myusername/ai-resume-analyzer'
+          github: ''
         },
+        {
+          title: 'JinBo',
+          description:
+            'Chat bot integrated into personal portfolio website for interactive communication.',
+          teamSize: '1',
+          roles: 'Developer',
+          responsibilities:
+            'Developed chatbot backend and frontend interactions, integrated Angular frontend.',
+          impact: 'Enhanced interactivity of personal portfolio and user engagement.',
+          status: 'Active',
+          live: '',
+          github: ''
+        },
+        {
+          title: 'FinBo',
+          description:
+            'AI-based financial advisor bot for expenditure analysis, investment portfolio guidance, spend control, and general finance advice.',
+          teamSize: '1',
+          roles: 'Developer',
+          responsibilities:
+            'Developed AI models to track expenses, analyze investments, and provide recommendations.',
+          impact: 'Helped users make better financial decisions and manage spending efficiently.',
+          status: 'Active',
+          live: '',
+          github: ''
+        },
+        {
+          title: 'CalBo',
+          description:
+            'WhatsApp-based calorie tracker to monitor daily calorie intake.',
+          teamSize: '1',
+          roles: 'Developer',
+          responsibilities:
+            'Integrated Twilio API with backend logic for calorie tracking.',
+          impact: 'Simplified health tracking via WhatsApp interface.',
+          status: 'Active',
+          live: '',
+          github: ''
+        }
       ],
     },
   ];

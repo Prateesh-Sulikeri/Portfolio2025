@@ -1,0 +1,66 @@
+.footer {
+  background-color: var(--surface-dark);
+  color: var(--text-light);
+  padding: 2rem 1.5rem;
+  font-family: 'Fira Code', monospace;
+  border-top: 2px solid var(--accent-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+/* ===== Top Layer: Icons ===== */
+.footer-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 191, 255, 0.1);
+  color: var(--text-light);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: var(--accent-blue);
+  color: var(--surface-dark);
+  transform: scale(1.2);
+}
+
+/* ===== Middle Layer: Tagline ===== */
+.footer-tagline {
+  font-size: 0.9rem;
+  color: rgba(0, 191, 255, 0.7);
+  letter-spacing: 0.5px;
+  max-width: 600px;
+}
+
+/* ===== Bottom Layer: Copyright ===== */
+.footer-copyright {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .footer-icons {
+    gap: 0.8rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.8rem;
+  }
+}

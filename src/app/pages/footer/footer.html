@@ -1,0 +1,18 @@
+<footer class="footer">
+  <!-- Top Layer: Social Icons -->
+  <div class="footer-icons">
+    <a *ngFor="let link of socialLinks" [href]="link.url" target="_blank" class="social-link">
+      <i [class]="link.icon"></i>
+    </a>
+  </div>
+
+  <!-- Middle Layer: Tagline -->
+  <div class="footer-tagline">
+    Crafted with ❤️ and Angular, fueled by coffee & curiosity ☕
+  </div>
+
+  <!-- Bottom Layer: Copyright -->
+  <div class="footer-copyright">
+    © {{ currentYear }} Prateesh Sulikeri. All Rights Reserved.
+  </div>
+</footer>
