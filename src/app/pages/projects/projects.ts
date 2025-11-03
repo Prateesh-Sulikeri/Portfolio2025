@@ -29,8 +29,8 @@ export class Projects {
       image: 'images/project2.jpg',
       title: 'JinBo',
       description: 'Personal portfolio chat bot for interactive communication and dynamic content display.',
-      live: '#',
-      github: '#'
+      live: 'https://jinbo.onrender.com/',
+      github: 'https://github.com/Prateesh-Sulikeri/JinBo/tree/main'
     },
     {
       image: 'images/project3.jpg',
