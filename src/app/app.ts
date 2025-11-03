@@ -5,10 +5,11 @@ import { SocialBar } from './components/social-bar/social-bar';
 import { Container } from './components/notification/container/container';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from "./pages/footer/footer";
+import { ChatWidget } from "./components/chat-widget/chat-widget";
 
 @Component({
   selector: 'app-root',
-  imports: [Header, SocialBar, RouterOutlet, Container, Footer],
+  imports: [Header, SocialBar, RouterOutlet, Container, Footer, ChatWidget],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

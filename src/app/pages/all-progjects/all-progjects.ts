@@ -151,8 +151,8 @@ export class AllProgjects implements AfterViewInit {
             'Developed chatbot backend and frontend interactions, integrated Angular frontend.',
           impact: 'Enhanced interactivity of personal portfolio and user engagement.',
           status: 'Active',
-          live: '',
-          github: ''
+          live: 'https://jinbo.onrender.com/',
+          github: 'https://github.com/Prateesh-Sulikeri/JinBo/tree/main'
         },
         {
           title: 'FinBo',
