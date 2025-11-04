@@ -265,7 +265,7 @@
   .chat-button svg {
     width: 26px;
     height: 26px;
-    /* fill: #08101f; */
+    fill: #08101f;
     transition: fill 0.2s ease;
   }
 
