@@ -1,134 +1,3 @@
-// import {
-//   Component,
-//   ElementRef,
-//   ViewChild,
-//   AfterViewChecked,
-//   HostListener,
-// } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule } from '@angular/forms';
-// import { HttpClient } from '@angular/common/http';
-
-// interface ChatMessage {
-//   sender: 'user' | 'bot';
-//   text: string;
-//   ts?: number;
-// }
-
-// const STORAGE_KEY = 'jinbo_chat_history_v1';
-
-// @Component({
-//   selector: 'app-chat-widget',
-//   standalone: true,
-//   imports: [CommonModule, FormsModule],
-//   templateUrl: './chat-widget.html',
-//   styleUrls: ['./chat-widget.css'],
-// })
-// export class ChatWidget implements AfterViewChecked {
-//   @ViewChild('chatBody') chatBody!: ElementRef<HTMLDivElement>;
-//   @ViewChild('inputEl') inputEl!: ElementRef<HTMLInputElement>;
-
-//   isOpen = false;
-//   isMinimized = false;
-//   isLoading = false;
-//   userInput = '';
-//   messages: ChatMessage[] = [];
-
-//   readonly apiUrl = 'https://jinbo.onrender.com/api/chat';
-
-//   constructor(private http: HttpClient) {
-//     this.loadFromStorage();
-//   }
-
-//   ngAfterViewChecked(): void {
-//     this.scrollToBottom();
-//   }
-
-//   toggleChat(): void {
-//     this.isOpen = !this.isOpen;
-//     if (this.isOpen) {
-//       setTimeout(() => this.inputEl?.nativeElement?.focus(), 250);
-//     }
-//   }
-
-//   toggleMinimize(): void {
-//     this.isMinimized = !this.isMinimized;
-//   }
-
-//   closeChat(): void {
-//     this.isOpen = false;
-//   }
-
-//   sendMessage(): void {
-//     const input = this.userInput.trim();
-//     if (!input) return;
-
-//     this.messages.push({ sender: 'user', text: input, ts: Date.now() });
-//     this.userInput = '';
-//     this.isLoading = true;
-//     this.saveToStorage();
-
-//     this.http
-//       .post<{ success: boolean; response: string }>(this.apiUrl, { message: input })
-//       .subscribe({
-//         next: (res) => {
-//           this.messages.push({
-//             sender: 'bot',
-//             text: res?.success ? res.response : 'Sorry — no response.',
-//             ts: Date.now(),
-//           });
-//           this.isLoading = false;
-//           this.saveToStorage();
-//         },
-//         error: () => {
-//           this.messages.push({
-//             sender: 'bot',
-//             text: '⚠️ JinBo could not be reached. Try again later.',
-//             ts: Date.now(),
-//           });
-//           this.isLoading = false;
-//           this.saveToStorage();
-//         },
-//       });
-//   }
-
-//   private scrollToBottom(): void {
-//     try {
-//       const el = this.chatBody?.nativeElement;
-//       if (el) el.scrollTop = el.scrollHeight;
-//     } catch {}
-//   }
-
-//   private saveToStorage(): void {
-//     try {
-//       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.messages));
-//     } catch {}
-//   }
-
-//   private loadFromStorage(): void {
-//     try {
-//       const raw = localStorage.getItem(STORAGE_KEY);
-//       if (raw) {
-//         const parsed = JSON.parse(raw);
-//         if (Array.isArray(parsed)) this.messages = parsed;
-//       }
-//     } catch {
-//       this.messages = [];
-//     }
-//   }
-
-//   formatTime(ts?: number): string {
-//     if (!ts) return '';
-//     const d = new Date(ts);
-//     return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-//   }
-
-//   @HostListener('window:keydown', ['$event'])
-//   onKeydown(e: KeyboardEvent) {
-//     if (e.key === 'Escape') this.closeChat();
-//   }
-// }
-
 import {
   Component,
   ElementRef,
@@ -165,38 +34,29 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
   isLoading = false;
   userInput = '';
   messages: ChatMessage[] = [];
+  botOnline = false;
 
-  // scrolling helpers
   private prevMessagesLen = 0;
-  private userScrolledAway = false; // true when user scrolls up away from bottom
-  private readonly nearBottomThreshold = 140; // px from bottom considered "at bottom"
+  private userScrolledAway = false;
+  private readonly nearBottomThreshold = 140;
 
   readonly apiUrl = 'https://jinbo.onrender.com/api/chat';
+  readonly healthUrl = 'https://jinbo.onrender.com/health';
 
   constructor(private http: HttpClient) {
     this.loadFromStorage();
+    this.checkHealth();
   }
 
-  // attach scroll listener after view init
   ngAfterViewInit(): void {
-    try {
-      const el = this.chatBody?.nativeElement;
-      if (el) {
-        el.addEventListener('scroll', () => this.onChatScroll());
-      }
-    } catch {}
+    const el = this.chatBody?.nativeElement;
+    if (el) el.addEventListener('scroll', () => this.onChatScroll());
   }
 
-  // only auto-scroll when a new message came in *and* user hasn't scrolled away
   ngAfterViewChecked(): void {
     const len = this.messages?.length || 0;
-
-    // If the message count changed (new message arrived or cleared)
     if (len !== this.prevMessagesLen) {
-      // If user is near bottom or we just added a message from current user, scroll
-      if (!this.userScrolledAway) {
-        this.scrollToBottom();
-      }
+      if (!this.userScrolledAway) this.scrollToBottom();
       this.prevMessagesLen = len;
     }
   }
@@ -204,29 +64,16 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
   private onChatScroll(): void {
     const el = this.chatBody?.nativeElement;
     if (!el) return;
-
     const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-    // if user is more than threshold away from bottom -> treat as "scrolled away"
     this.userScrolledAway = distanceFromBottom > this.nearBottomThreshold;
   }
 
   toggleChat(): void {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
-      // reset "scrolled away" so it auto-scrolls on open if needed
       this.userScrolledAway = false;
       setTimeout(() => this.inputEl?.nativeElement?.focus(), 220);
-      // force scroll when opening so user sees latest if they didn't intentionally scroll up
       this.scrollToBottom();
-    }
-  }
-
-  toggleMinimize(): void {
-    this.isMinimized = !this.isMinimized;
-    if (!this.isMinimized) {
-      // expanding -> show bottom
-      this.userScrolledAway = false;
-      setTimeout(() => this.scrollToBottom(), 120);
     }
   }
 
@@ -236,16 +83,22 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
   }
 
   sendMessage(): void {
+    if (!this.botOnline) {
+      this.messages.push({
+        sender: 'bot',
+        text: '⚠️ JinBo is currently offline. Please try again later.',
+        ts: Date.now(),
+      });
+      return;
+    }
+
     const input = this.userInput.trim();
     if (!input) return;
 
-    // push user message and make sure widget will scroll
     this.messages.push({ sender: 'user', text: input, ts: Date.now() });
     this.userInput = '';
     this.saveToStorage();
     this.isLoading = true;
-
-    // when user sends, assume they want to be at bottom
     this.userScrolledAway = false;
     this.scrollToBottom();
 
@@ -256,7 +109,6 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
           this.messages.push({ sender: 'bot', text: reply, ts: Date.now() });
           this.isLoading = false;
           this.saveToStorage();
-          // new message -> auto scroll if user didn't intentionally scroll away
           if (!this.userScrolledAway) this.scrollToBottom();
         },
         error: () => {
@@ -272,40 +124,54 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
       });
   }
 
-  clearHistory(): void {
+  clearMessages(): void {
+    this.clearConversation();
+  }
+
+  private clearConversation(): void {
     this.messages = [];
-    localStorage.removeItem(STORAGE_KEY);
+    this.userInput = '';
+    this.isLoading = false;
     this.prevMessagesLen = 0;
     this.userScrolledAway = false;
+    localStorage.removeItem(STORAGE_KEY);
   }
 
   private scrollToBottom(): void {
-    try {
-      const el = this.chatBody?.nativeElement;
-      if (el) {
-        // small smooth behavior
-        el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
-      }
-    } catch {}
+    const el = this.chatBody?.nativeElement;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
   }
 
   private saveToStorage(): void {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.messages));
-    } catch {}
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.messages));
   }
 
   private loadFromStorage(): void {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) this.messages = parsed;
-      }
+      if (raw) this.messages = JSON.parse(raw);
     } catch {
       this.messages = [];
     }
   }
+
+  private checkHealth(): void {
+  this.http.get<{ status: string }>(this.healthUrl).subscribe({
+    next: (res) => {
+      this.botOnline = res?.status === 'ok';
+      if (!this.botOnline) this.scheduleHealthRetry();
+    },
+    error: () => {
+      this.botOnline = false;
+      this.scheduleHealthRetry();
+    }
+  });
+}
+
+private scheduleHealthRetry(): void {
+  setTimeout(() => this.checkHealth(), 30000); // retry every 30s
+}
+
 
   formatTime(ts?: number): string {
     if (!ts) return '';
@@ -318,18 +184,14 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
     if (e.key === 'Escape') this.closeChat();
   }
 
-  clearMessages(): void {
-    this.clearConversation();
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const panel = this.chatBody?.nativeElement?.closest('.chat-panel');
+    const button = document.querySelector('.chat-button');
+    const target = event.target as Node;
+    if (this.isOpen && panel && !panel.contains(target) && !button?.contains(target)) {
+      this.closeChat();
+    }
   }
 
-   clearConversation(): void {
-    this.messages = [];
-    this.userInput = '';
-    this.isLoading = false;
-    this.prevMessagesLen = 0;
-    this.userScrolledAway = false;
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {}
-  }
 }

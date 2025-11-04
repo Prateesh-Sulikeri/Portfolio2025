@@ -45,7 +45,7 @@ main {
 
 .back-to-top:hover {
   background: var(--accent-blue);
-  color: var(--surface-dark);
+  color: var(--text-light);
   transform: translateY(-3px) scale(1.1);
   box-shadow: 0 0 12px var(--accent-blue);
 }
