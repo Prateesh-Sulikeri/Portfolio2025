@@ -1,6 +1,5 @@
-<!-- Floating Button -->
-<button class="chat-button" (click)="toggleChat()" aria-label="Open chat">
-  <!-- Bot SVG Icon -->
+<!-- Floating Chat Button -->
+<button class="chat-button" (click)="toggleChat()" aria-label="Open JinBo chat">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path
       d="M12 2a1 1 0 0 1 1 1v1.09A7.002 7.002 0 0 1 19 11v1a1 1 0 0 1-1 1h-1v1.5a2.5 2.5 0 0 1-5 0V13h-2v1.5a2.5 2.5 0 0 1-5 0V13H5a1 1 0 0 1-1-1v-1a7.002 7.002 0 0 1 6-6.91V3a1 1 0 0 1 1-1zm-4 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"
@@ -10,7 +9,6 @@
 
 <!-- Chat Panel -->
 <div class="chat-panel" [class.open]="isOpen">
-  <!-- Header -->
   <div class="chat-header">
     <span>🤖 JinBo Assistant</span>
     <div class="header-actions">
@@ -19,7 +17,6 @@
     </div>
   </div>
 
-  <!-- Chat Body -->
   <div class="chat-body" #chatBody>
     <div *ngIf="messages.length === 0" class="empty-note">
       <p>Start chatting with JinBo — your AI portfolio assistant 💬</p>
@@ -35,7 +32,6 @@
     </div>
   </div>
 
-  <!-- Input -->
   <div class="chat-input">
     <input
       #inputEl
@@ -48,7 +44,6 @@
     <button (click)="sendMessage()">Send</button>
   </div>
 
-  <!-- Sticky Disclaimer -->
   <div class="disclaimer">
     ⚠️ AI-generated responses may be inaccurate. Verify before use.
   </div>
