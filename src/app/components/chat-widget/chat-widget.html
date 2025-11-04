@@ -1,19 +1,27 @@
 <!-- Floating Chat Button -->
-<button class="chat-button" (click)="toggleChat()" aria-label="Open JinBo chat">
-  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path
-      d="M12 2a1 1 0 0 1 1 1v1.09A7.002 7.002 0 0 1 19 11v1a1 1 0 0 1-1 1h-1v1.5a2.5 2.5 0 0 1-5 0V13h-2v1.5a2.5 2.5 0 0 1-5 0V13H5a1 1 0 0 1-1-1v-1a7.002 7.002 0 0 1 6-6.91V3a1 1 0 0 1 1-1zM8 10a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"
-    />
-  </svg>
+<button 
+  class="chat-button" 
+  [class.active]="isOpen"
+  (click)="toggleChat()" 
+  aria-label="Open JinBo chat"
+>
+  <i class="fas fa-robot"></i>
 </button>
 
 <!-- Chat Panel -->
-<div class="chat-panel" [class.open]="isOpen" role="dialog" aria-label="JinBo chat window">
+<div 
+  class="chat-panel" 
+  [class.open]="isOpen" 
+  role="dialog" 
+  aria-label="JinBo chat window"
+>
   <div class="chat-header">
     <span class="header-title">JinBo Assistant</span>
     <div class="header-actions">
       <button class="clear-btn" (click)="clearMessages()">Clear</button>
-      <button class="close-btn" (click)="closeChat()">Close</button>
+      <button class="close-btn" (click)="closeChat()">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
   </div>
 
@@ -24,10 +32,15 @@
 
     <div *ngFor="let msg of messages" class="chat-message" [ngClass]="msg.sender">
       <div class="msg-text">{{ msg.text }}</div>
-      <div class="meta">{{ msg.sender === 'bot' ? 'JinBo' : 'You' }} · {{ formatTime(msg.ts) }}</div>
+      <div class="meta">
+        {{ msg.sender === 'bot' ? '🤖 JinBo' : 'You' }} · {{ formatTime(msg.ts) }}
+      </div>
     </div>
 
-    <div *ngIf="isLoading" class="loading">JinBo is typing…</div>
+    <div *ngIf="isLoading" class="typing-indicator">
+  <span></span><span></span><span></span>
+</div>
+
   </div>
 
   <div class="chat-input">
@@ -38,9 +51,21 @@
       type="text"
       placeholder="Type a message..."
       autocomplete="off"
+      inputmode="text"
+      enterkeyhint="send"
     />
-    <button (click)="sendMessage()" class="send-btn">Send</button>
+    <button 
+      (click)="sendMessage()" 
+      class="send-btn" 
+      [disabled]="!botOnline"
+      [class.disabled]="!botOnline"
+    >
+      <i class="fas fa-paper-plane"></i>
+    </button>
   </div>
 
-  <div class="disclaimer">AI-generated responses may be inaccurate. Verify before use.</div>
+  <div class="disclaimer">
+    ⚠️ AI-generated responses may be inaccurate. Verify before use.<br />
+    <span *ngIf="!botOnline" class="bot-offline">🛠 JinBo is offline — please try later.</span>
+  </div>
 </div>
