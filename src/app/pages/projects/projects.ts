@@ -8,6 +8,7 @@ interface Project {
   image: string;
   live: string;
   github: string;
+  tags: string[]; // ✅ added
 }
 
 @Component({
@@ -26,32 +27,36 @@ export class Projects implements AfterViewInit, OnDestroy {
     private ngZone: NgZone
   ) {}
 
-  projects: Project[] = [
-    {
-      image: 'images/project1.jpg',
-      title: 'Clone Catch',
-      description:
-        'ML-powered tool for automatic person, place, and object detection, sorting, and removing blurry/duplicate images.',
-      live: '#',
-      github: '#'
-    },
-    {
-      image: 'images/project2.jpg',
-      title: 'JinBo',
-      description:
-        'Personal portfolio chat bot for interactive communication and dynamic content display.',
-      live: 'https://jinbo.onrender.com/',
-      github: 'https://github.com/Prateesh-Sulikeri/JinBo/tree/main'
-    },
-    {
-      image: 'images/project3.jpg',
-      title: 'FinBo',
-      description:
-        'AI-based financial advisor bot for expenditure analysis, investment portfolio guidance, spend control, and general finance advice.',
-      live: '#',
-      github: '#'
-    }
-  ];
+projects: Project[] = [
+  {
+    image: 'images/project1.jpg',
+    title: 'Clone Catch',
+    description:
+      'Image sorting and duplicate detection tool powered by AWS Lambda (VGG16) and S3. Automates cleanup for large photo datasets.',
+    live: '#',
+    github: 'https://github.com/Prateesh-Sulikeri/CloneCatch',
+    tags: ['AWS (Lambda, S3)', 'Python', "VGG16"] 
+  },
+  {
+    image: 'images/project2.jpg',
+    title: 'Redditorials API',
+    description:
+      'FastAPI-based Reddit content API to fetch and filter stories programmatically for automation tools.',
+    live: '#',
+    github: 'https://github.com/Prateesh-Sulikeri/redditorials',
+    tags: ['FastAPI', 'Python', 'Reddit API']
+  },
+  {
+    image: 'images/project3.jpg',
+    title: 'JinBo — AI Assistant',
+    description:
+      'AI-powered personal assistant built with Express.js and Hugging Face APIs, integrated into my portfolio for dynamic Q&A.',
+    live: 'https://jinbo.onrender.com/',
+    github: 'https://github.com/Prateesh-Sulikeri/JinBo',
+    tags: ['Hugging Face', 'Express', 'NLP']
+  }
+];
+
 
   openLink(url: string) {
     if (url && url !== '#') window.open(url, '_blank');

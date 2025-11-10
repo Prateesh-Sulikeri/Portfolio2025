@@ -1,8 +1,4 @@
 # TO-do
-- Email Received verification to sender 
-- X.com integration 
-- Env Vars Setup
-- Content update
 
 # Completed in feature_branch:
 1. EmailJS full integration with feedback mechanism
@@ -17,3 +13,4 @@
 10. JinBo is finally live! and usable integration complete
 11. All JinBo features completed 
 12. Cleaned up the interface and final look are now ready! 
+13. Content added 

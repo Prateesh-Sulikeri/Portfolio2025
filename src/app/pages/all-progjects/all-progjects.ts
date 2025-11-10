@@ -67,14 +67,14 @@ export class AllProgjects implements AfterViewInit, OnInit {
         {
           title: 'Employee Management System',
           description:
-            'FAST API-based Employee Management System for internal HR and operations.',
+            'FastAPI-based employee management solution designed for internal HR and operations under the Martian Internship Program.',
           teamSize: '3',
-          roles: 'Backend Developer',
+          roles: 'Backend Developer (Intern)',
           responsibilities:
-            'Built REST APIs using Python, integrated MySQL, optimized data access using DSA principles, and deployed on Linux.',
+            'Developed REST APIs in Python (FastAPI), integrated MySQL, and deployed on Linux. Focused on data validation, modular design, and optimized query performance using DSA principles.',
           impact:
-            'Streamlined HR workflows and improved data consistency and retrieval speed.',
-          status: 'Internship Project',
+            'Streamlined HR workflows, improved data consistency, and reduced query response times by optimizing backend logic.',
+          status: 'Delivered',
           live: '',
           github: ''
         }
@@ -84,61 +84,61 @@ export class AllProgjects implements AfterViewInit, OnInit {
       name: 'Xoriant Technologies',
       projects: [
         {
-          title: 'Inbound Message Gateway RTM Task',
+          title: 'Global FX Settlement Platform — Core Components',
           description:
-            'Automated handling of inbound message gateway messages in a global FX settlement platform.',
-          teamSize: '5',
-          roles: 'Associate Software Engineer',
+            'Enterprise-scale foreign exchange settlement platform used by 18+ multinational banks, processing multi-currency transactions worth billions daily.',
+          teamSize: '8',
+          roles: 'Junior Backend Developer',
           responsibilities:
-            'Handled message processing pipelines, integrated AWS services (Lambda, S3, DynamoDB), automated regression testing, and optimized C++ & Java microservices.',
+            'Developed and maintained backend services in C++ and Java (Spring Boot), automated setup and regression pipelines on AWS (Lambda, S3, DynamoDB), and integrated SWIFT 2025 message formats (MFP/TDA).',
           impact:
-            'Reduced manual processing effort by 65%, improved reliability, and ensured high audit compliance.',
+            'Reduced regression effort by ~65%, improved reliability, and achieved full SWIFT compliance for critical message flows.',
           status: 'Production',
           live: '',
           github: ''
         },
         {
-          title: 'C++ v11 → v23 Upgrade & Java Microservices POCs',
+          title: 'C++ Modernization & Java Microservice Refactor',
           description:
-            'Modernized legacy C++ components to C++23 and created new Java microservices for critical components.',
+            'Migration initiative to modernize legacy C++11 code to C++23 and modularize core settlement components into Java microservices.',
           teamSize: '4',
           roles: 'Software Engineer',
           responsibilities:
-            'Refactored large components into smaller, testable Java microservices including InputQueue Drainer and PD Setter; implemented automatic test generation scripts.',
+            'Refactored large C++ modules into Java (Spring Boot) services, implemented automated unit test generators, and improved cross-component reliability in AWS deployments.',
           impact:
-            'Enhanced code maintainability, performance, and test coverage.',
+            'Enhanced maintainability, boosted test coverage, and reduced build failures across multiple environments.',
           status: 'Delivered',
           live: '',
           github: ''
         },
         {
-          title: 'Custom CI/CD Monitoring Dashboard',
+          title: 'Static Code Analysis Automation',
           description:
-            'Angular + Spring Boot dashboard to monitor build, test, and deployment pipelines.',
+            'Automated pipeline for detecting memory leaks and performance issues in C++ components using open-source analysis tools.',
           teamSize: '2',
-          roles: 'Full Stack Engineer',
+          roles: 'Backend Engineer',
           responsibilities:
-            'Developed UI, backend services, and monitoring scripts; integrated alerts and visualizations.',
+            'Integrated RATS, Flawfinder, and Valgrind into CI/CD workflows; automated report generation and flagged code-level issues pre-merge.',
           impact:
-            'Enabled proactive issue detection and faster release visibility for operations teams.',
+            'Reduced manual code review time by 50% and improved release quality by enforcing static analysis in every build.',
           status: 'Delivered',
           live: '',
           github: ''
         },
         {
-          title: 'Automatic Static Code Analysis Tool for C++',
+          title: 'CI/CD Monitoring Dashboard',
           description:
-            'Automated tool for detecting memory leaks and performance issues in C++ components.',
+            'Angular + Spring Boot dashboard for real-time monitoring of build, test, and deployment pipelines across internal environments.',
           teamSize: '2',
-          roles: 'Software Engineer',
+          roles: 'Full Stack Developer',
           responsibilities:
-            'Integrated RATS, Flawfinder, and Valgrind to identify issues and generate reports.',
+            'Developed UI and backend services, implemented alerts and analytics for release visibility, and integrated it into DevOps tooling.',
           impact:
-            'Improved code quality and reduced manual debugging time.',
+            'Enabled proactive issue detection and faster troubleshooting across teams.',
           status: 'Delivered',
           live: '',
           github: ''
-        },
+        }
       ],
     },
   ];
@@ -146,63 +146,54 @@ export class AllProgjects implements AfterViewInit, OnInit {
   // =================== PERSONAL PROJECTS ===================
   personalProjects: PersonalSection[] = [
     {
-      section: 'Portfolio & Web Tools',
+      section: 'Personal Projects',
       projects: [
         {
           title: 'Clone Catch',
           description:
-            'ML-powered tool for automatic person, place, and object detection, sorting, and removing blurry/duplicate images.',
+            'Backend-driven image management tool powered by AWS Lambda (VGG16) and S3 for duplicate and blurry image detection at scale.',
           teamSize: '1',
-          roles: 'Developer',
+          roles: 'Backend Developer',
           responsibilities:
-            'Implemented image processing pipeline using ML models, built UI for viewing results, and automated clone detection.',
-          impact: 'Saved hours of manual image curation, improved dataset quality.',
+            'Implemented ML inference on AWS Lambda using VGG16, managed file pipelines via REST APIs, and stored processed data in S3. Built lightweight frontend for uploads and results visualization.',
+          impact:
+            'Automated the tedious process of image curation and cleanup for large datasets.',
           status: 'Active',
           live: '',
-          github: ''
+          github: 'https://github.com/Prateesh-Sulikeri/CloneCatch'
         },
         {
-          title: 'JinBo',
+          title: 'Redditorials API',
           description:
-            'Chat bot integrated into personal portfolio website for interactive communication.',
+            'FastAPI-based backend service for fetching and filtering Reddit stories for automated content generation workflows.',
           teamSize: '1',
-          roles: 'Developer',
+          roles: 'Backend Developer',
           responsibilities:
-            'Developed chatbot backend and frontend interactions, integrated Angular frontend.',
-          impact: 'Enhanced interactivity of personal portfolio and user engagement.',
+            'Developed REST endpoints using FastAPI and Reddit API, implemented JSON-based query filters, and optimized caching for repeated queries.',
+          impact:
+            'Enabled automated content aggregation for YouTube storytelling and text-to-speech projects.',
+          status: 'Delivered',
+          live: '',
+          github: 'https://github.com/Prateesh-Sulikeri/redditorials'
+        },
+        {
+          title: 'JinBo — AI Portfolio Assistant',
+          description:
+            'AI assistant built with Express.js and Hugging Face APIs, integrated into my portfolio for conversational Q&A and interactive engagement.',
+          teamSize: '1',
+          roles: 'Full Stack Developer',
+          responsibilities:
+            'Built backend using Express.js and Hugging Face transformers, implemented fuzzy search and RAG for personalized responses, and connected to Angular frontend.',
+          impact:
+            'Improved user engagement and portfolio interactivity through natural conversation features.',
           status: 'Active',
           live: 'https://jinbo.onrender.com/',
-          github: 'https://github.com/Prateesh-Sulikeri/JinBo/tree/main'
-        },
-        {
-          title: 'FinBo',
-          description:
-            'AI-based financial advisor bot for expenditure analysis, investment portfolio guidance, spend control, and general finance advice.',
-          teamSize: '1',
-          roles: 'Developer',
-          responsibilities:
-            'Developed AI models to track expenses, analyze investments, and provide recommendations.',
-          impact: 'Helped users make better financial decisions and manage spending efficiently.',
-          status: 'Active',
-          live: '',
-          github: ''
-        },
-        {
-          title: 'CalBo',
-          description:
-            'WhatsApp-based calorie tracker to monitor daily calorie intake.',
-          teamSize: '1',
-          roles: 'Developer',
-          responsibilities:
-            'Integrated Twilio API with backend logic for calorie tracking.',
-          impact: 'Simplified health tracking via WhatsApp interface.',
-          status: 'Active',
-          live: '',
-          github: ''
+          github: 'https://github.com/Prateesh-Sulikeri/JinBo'
         }
-      ],
-    },
+      ]
+    }
   ];
+
 
   // =================== LOGIC ===================
   toggleExpand(project: Project): void {
