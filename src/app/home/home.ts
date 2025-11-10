@@ -10,14 +10,13 @@ import { TooltipDirective } from '../tooltip';
   styleUrl: './home.css'
 })
 export class Home implements OnInit, OnDestroy, AfterViewInit {
-  roles = [
-    'Cloud Architect Associate ☁️',
-    'Machine Learning Enthusiast 🤖',
-    'Cloud Developer Associate 🌩️',
-    'Backend Engineer 🔧',
-    'Raspberry Pi Enthusiast 🍓',
-    'HomeLabbing Noob 🧰',
-  ]
+roles = [
+  'Backend Engineer 🔧',
+  'Cloud Developer ☁️',
+  'DevOps Enthusiast ⚙️',
+  'Machine Learning Explorer 🤖',
+  'Systems Builder 🧱',
+]
 
   accentColor = 'var(--accent-blue)';
   currentRole = '';

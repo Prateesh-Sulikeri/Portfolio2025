@@ -196,3 +196,24 @@
     font-size: 0.85rem;
   }
 }
+.email-link {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.email-link:hover {
+  text-shadow: 0 0 6px var(--accent-blue);
+  color: #66ccff;
+}
+
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none; /* ✅ hides social-bar reminder on mobile */
+  }
+}
