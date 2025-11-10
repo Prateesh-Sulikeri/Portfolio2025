@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 
 interface Project {
   title: string;
@@ -29,13 +29,33 @@ interface PersonalSection {
   templateUrl: './all-progjects.html',
   styleUrls: ['./all-progjects.css']
 })
-export class AllProgjects implements AfterViewInit {
+export class AllProgjects implements AfterViewInit, OnInit {
 
+  isMobile = false;
+
+  ngOnInit() {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
+
+  constructor(private el: ElementRef) { }
   ngAfterViewInit(): void {
     setTimeout(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }, 0);
+    // Wait until header height is known
+    setTimeout(() => {
+      const header = document.querySelector('.app-header') as HTMLElement;
+      const section = this.el.nativeElement.querySelector('.projects-page') as HTMLElement;
+
+      if (header && section) {
+        const headerHeight = header.offsetHeight;
+        section.style.scrollMarginTop = `${headerHeight + 20}px`;
+        section.style.paddingTop = `${headerHeight + 30}px`;
+      }
+    }, 100); // ensure layout settled
   }
+
 
   expandedProject: Project | null = null;
 

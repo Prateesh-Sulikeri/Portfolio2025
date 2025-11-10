@@ -139,9 +139,15 @@ body::before {
 }
 
 section + section {
-  margin-top: -2rem; /* overlap slightly to tighten sections visually */
+  margin-top: 0; /* remove overlap */
 }
 
 section {
-  scroll-margin-top: 100px; /* ← adjust to your navbar height */
+  scroll-margin-top: 100px; /* equals header height */
+}
+
+/* individual fine-tuning */
+.projects-section,
+.contact-section {
+  padding-top: 6rem; /* ensures visible offset */
 }

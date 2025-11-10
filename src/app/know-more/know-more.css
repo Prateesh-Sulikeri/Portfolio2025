@@ -458,3 +458,101 @@
 @keyframes blink-cursor {
   50% { opacity: 0; }
 }
+
+/* === Know More Section === */
+.know-more-section {
+  min-height: 100vh;
+  padding: 8rem 2rem 5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  scroll-margin-top: 100px; /* ✅ Prevents navbar overlap when navigated via link */
+  position: relative;
+}
+
+/* === Prompt === */
+.prompt {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;              /* ✅ allow wrapping on small screens */
+  gap: 0.4rem;
+  word-break: break-word;       /* ✅ breaks long commands or paths */
+  font-size: 0.9rem;
+  color: var(--accent-blue);
+  margin-bottom: 1.5rem;
+  position: relative;
+  font-family: "Fira Code", monospace;
+  line-height: 1.4;
+  padding-top: 0.5rem;          /* ✅ adds breathing space below navbar */
+}
+
+.prompt .user { color: #00ff7f; }
+.prompt .path { color: #33bfff; }
+.prompt .command { color: var(--text-light); }
+
+.prompt::after {
+  content: "█";
+  margin-left: 4px;
+  color: var(--accent-blue);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+
+/* === Ensure prompt never clips under navbar === */
+@media (max-width: 992px) {
+  .know-more-section {
+    padding-top: 7rem;          /* ✅ extra offset to clear fixed header */
+  }
+
+  .prompt {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    margin-bottom: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .know-more-section {
+    padding-top: 6.5rem;        /* ✅ consistent offset for mobile navbar height */
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+
+  .prompt {
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 480px) {
+  .know-more-section {
+    padding-top: 6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .prompt {
+    font-size: 0.75rem;
+    gap: 0.25rem;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 375px) {
+  .know-more-section {
+    padding-top: 5.5rem;        /* ✅ final tweak for iPhone mini */
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+
+  .prompt {
+    font-size: 0.7rem;
+    flex-wrap: wrap;
+    line-height: 1.3;
+    gap: 0.2rem;
+  }
+}
+
+

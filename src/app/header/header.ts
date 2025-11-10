@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import {  Event } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,13 @@ import { filter } from 'rxjs/operators';
 export class Header {
   menuOpen = false;
 
-  constructor(private router: Router) {}
+
+constructor(private router: Router) {
+  this.router.events.subscribe((event: Event) => {
+    console.log('Router event:', event);
+  });
+}
+
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -33,7 +40,7 @@ export class Header {
         // Wait for navigation and rendering to complete
         setTimeout(() => {
           this.scrollToSection(sectionId);
-        }, 100);
+        }, 200);
       });
     } else {
       // Already on main route, just scroll

@@ -1,6 +1,6 @@
 .about-section {
   min-height: 100vh;
-  padding: 8rem 2rem 4rem; /* ↓ reduced from 15rem / 5rem */
+  padding: 8rem 2rem 4rem;
   max-width: 900px;
   margin: 0 auto;
   text-align: left;
@@ -11,22 +11,43 @@
   background: transparent;
 }
 
-
-/* Terminal-style prompt (above heading) */
+/* ===== Prompt ===== */
 .about-prompt {
-  color: var(--accent-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;              /* ✅ allow wrapping gracefully */
+  word-break: break-word;
   font-size: 0.9rem;
+  color: var(--accent-blue);
   margin-bottom: 1.8rem;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.6s ease-out;
+  font-family: "Fira Code", monospace;
+  position: relative;
 }
 
-.about-prompt .user { color: var(--success); }
-.about-prompt .path { color: #33ccff; }
+.about-prompt .user { color: #00ff7f; }
+.about-prompt .path { color: #33bfff; }
 .about-prompt .command { color: var(--text-light); }
 
-/* Header Row (Title + Line + Button) */
+.about-prompt::after {
+  content: "█";
+  margin-left: 4px;
+  color: var(--accent-blue);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+
+.about-prompt::before {
+  position: absolute;
+  bottom: -1.2rem;
+  left: 1.6rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #00ff7f;
+  opacity: 0.85;
+  animation: fade-in 1s ease forwards;
+}
+
+/* ===== Header ===== */
 .about-header {
   display: flex;
   align-items: center;
@@ -34,9 +55,6 @@
   margin-bottom: 2.5rem;
   width: 100%;
   box-sizing: border-box;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease-out;
 }
 
 .section-title {
@@ -48,17 +66,9 @@
   margin: 0;
 }
 
-.head-text {
-  color: var(--text-light);
-}
+.head-text { color: var(--text-light); }
+.hash { color: var(--accent-blue); margin-right: 2px; text-shadow: 0 0 3px var(--accent-blue); }
 
-.hash {
-  color: var(--accent-blue);
-  margin-right: 2px;
-  text-shadow: 0 0 3px var(--accent-blue);
-}
-
-/* Blue accent line */
 .about-line {
   flex: 1;
   height: 3px;
@@ -70,7 +80,7 @@
   top: 1px;
 }
 
-/* Header Button */
+/* Button */
 .about-btn-header {
   padding: 0.4rem 1.2rem;
   font-size: 0.9rem;
@@ -84,26 +94,20 @@
   border-radius: 0;
   letter-spacing: 0.5px;
 }
-
 .about-btn-header:hover {
   color: var(--accent-blue);
   box-shadow: 0 0 6px var(--accent-blue);
   transform: translateY(-2px);
 }
 
-/* Content */
-.about-content {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.9s ease-out;
-}
-
+/* ===== Content ===== */
 .about-content p {
   margin-bottom: 1.2rem;
   line-height: 1.7;
+  font-size: 1rem;
 }
 
-/* Sequential reveal (when visible) */
+/* Sequential reveal */
 .about-section.active .about-prompt,
 .about-section.active .about-header,
 .about-section.active .about-content {
@@ -111,77 +115,93 @@
   transform: translateY(0);
 }
 
-.about-section.active .about-header {
-  transition-delay: 0.2s;
-}
-.about-section.active .about-content {
-  transition-delay: 0.4s;
-}
+/* ======== RESPONSIVE ======== */
 
-/* Responsive layout */
+/* --- Tablets & below (<=768px) --- */
 @media (max-width: 768px) {
+  .about-section {
+    padding: 6rem 1.5rem 3rem;   /* tighter vertical spacing */
+  }
+
   .about-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.6rem;
+    margin-bottom: 2rem;
   }
 
-  .about-line {
-    display: none;
+  .about-line { display: none; }
+
+  .section-title {
+    font-size: 1.6rem;
   }
 
   .about-btn-header {
     align-self: flex-start;
     margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .about-prompt {
+    font-size: 0.8rem;           /* smaller prompt font */
+    flex-wrap: wrap;             /* allow multi-line */
+    line-height: 1.3;
+  }
+
+  .about-content p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+}
+
+/* --- Phones (<=480px) --- */
+@media (max-width: 480px) {
+  .about-section {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .about-prompt {
+    font-size: 0.75rem;
+    justify-content: flex-start;
   }
 
   .section-title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+  }
+
+  .about-btn-header {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.8rem;
+  }
+
+  .about-content p {
+    font-size: 0.85rem;
+    line-height: 1.55;
   }
 }
 
-/* Terminal prompt look */
-.about-prompt {
-  color: var(--accent-blue);
-  font-size: 0.9rem;
-  margin-bottom: 1.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  position: relative;
-  font-family: "Fira Code", monospace;
-}
+/* --- Very small phones (<=375px, e.g. iPhone 12 mini) --- */
+@media (max-width: 375px) {
+  .about-section {
+    padding: 4rem 0.8rem 2rem;
+  }
 
-/* Colors for parts of prompt */
-.about-prompt .user { color: #00ff7f; } /* green like bash user */
-.about-prompt .path { color: #33bfff; } /* cyan */
-.about-prompt .command { color: var(--text-light); }
+  .about-prompt {
+    font-size: 0.7rem;
+    gap: 0.2rem;
+  }
 
-/* Blinking cursor (active input illusion) */
-.about-prompt::after {
-  content: "█"; /* block cursor */
-  margin-left: 4px;
-  color: var(--accent-blue);
-  animation: blink-cursor 1s steps(1) infinite;
-}
+  .section-title {
+    font-size: 1.2rem;
+  }
 
-@keyframes blink-cursor {
-  50% { opacity: 0; }
-}
+  .about-btn-header {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+  }
 
-/* Insert mode indicator — bottom-left, like Vim */
-.about-prompt::before {
-  position: absolute;
-  bottom: -1.2rem;
-  left: 1.6rem;
-  font-size: 0.8rem;
-  font-style: italic;
-  color: #00ff7f;
-  opacity: 0.85;
-  animation: fade-in 1s ease forwards;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(2px); }
-  to { opacity: 0.85; transform: translateY(0); }
+  .about-content p {
+    font-size: 0.8rem;
+  }
 }

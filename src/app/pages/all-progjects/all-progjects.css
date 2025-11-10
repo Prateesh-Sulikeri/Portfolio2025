@@ -227,3 +227,125 @@
 @keyframes blink-cursor {
   50% { opacity: 0; }
 }
+
+/* === All Projects Responsive Fix === */
+.projects-page {
+  min-height: 100vh;
+  padding: 2rem 2rem 5rem; /* remove huge fixed top padding */
+  max-width: 950px;
+  margin: 0 auto;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+/* === Fix Prompt Overflow & Zoom === */
+.projects-page {
+  min-height: 100vh;
+  padding: 2rem 2rem 5rem; /* remove huge fixed top padding */
+  max-width: 950px;
+  margin: 0 auto;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+.prompt .user { color: #00ff7f; }
+.prompt .path { color: #33bfff; }
+.prompt .command { color: var(--text-light); }
+
+.prompt::after {
+  content: "█";
+  margin-left: 4px;
+  color: var(--accent-blue);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+
+@keyframes blink-cursor {
+  50% { opacity: 0; }
+}
+
+/* === Fix Mobile Scaling Issues === */
+@media (max-width: 768px) {
+  .projects-page {
+    padding: 6.5rem 1.5rem 3.5rem;
+  }
+
+  .prompt {
+    font-size: 0.95rem;   /* ✅ readable but below zoom threshold */
+    gap: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .section-line {
+    display: none;
+  }
+
+  .project-card {
+    padding: 1rem;
+  }
+
+  .project-title {
+    font-size: 1rem;
+  }
+
+  .company-title {
+    font-size: 1.05rem;
+  }
+
+  .project-description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-page {
+    padding: 5.5rem 1rem 3rem;
+  }
+
+  .prompt {
+    font-size: 0.9rem;
+    gap: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .company-title {
+    font-size: 1rem;
+    padding-left: 0.6rem;
+  }
+
+  .project-description {
+    font-size: 0.85rem;
+  }
+
+  .link-btn, .view-btn {
+    font-size: 0.8rem;
+    padding: 0.45rem 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .projects-page {
+    padding: 5rem 0.8rem 2.5rem;
+  }
+
+  .prompt {
+    font-size: 0.85rem;
+    word-break: break-all;
+  }
+}
