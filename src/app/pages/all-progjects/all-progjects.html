@@ -1,9 +1,10 @@
 <section id="all-projects" class="projects-page">
 
-  <div class="prompt">
+  <div class="prompt" [class.mobile]="isMobile" [class.desktop]="!isMobile">
     <i class="fas fa-terminal"></i>
     <span class="user">@jinxx</span>:<span class="path">~/projects</span>$
-    <span class="command">./list_project_details.sh</span>
+    <span class="command" *ngIf="isMobile">ls -lart</span>
+    <span class="command" *ngIf="!isMobile">find . -name "project_manifest.json"</span>
   </div>
 
   <!-- Main Header -->

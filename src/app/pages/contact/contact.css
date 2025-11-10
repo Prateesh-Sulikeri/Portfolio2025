@@ -1,6 +1,6 @@
 .contact-section {
   min-height: 100vh;
-  padding: 4rem 2rem 5rem; /* consistent with other sections */
+  padding: 4rem 2rem 5rem;
   max-width: 900px;
   margin: 0 auto;
   text-align: left;
@@ -12,14 +12,17 @@
 
 /* === Terminal Prompt === */
 .contact-prompt {
-  color: var(--accent-blue);
-  font-size: 0.9rem;
-  margin-bottom: 1.8rem;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;              /* ✅ allows clean wrapping */
   gap: 0.4rem;
+  word-break: break-word;       /* ✅ breaks long paths or commands */
+  font-size: 0.9rem;
+  color: var(--accent-blue);
+  margin-bottom: 1.8rem;
   position: relative;
   font-family: "Fira Code", monospace;
+  line-height: 1.4;
 }
 
 .contact-prompt .user { color: #00ff7f; }
@@ -33,9 +36,7 @@
   animation: blink-cursor 1s steps(1) infinite;
 }
 
-@keyframes blink-cursor {
-  50% { opacity: 0; }
-}
+@keyframes blink-cursor { 50% { opacity: 0; } }
 
 /* === Header === */
 .contact-header {
@@ -45,12 +46,9 @@
   margin-bottom: 2.5rem;
   width: 100%;
   box-sizing: border-box;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease-out;
+  flex-wrap: wrap;              /* ✅ prevents overflow of button/line */
 }
 
-/* Title */
 .section-title {
   font-size: 2rem;
   color: var(--accent-blue);
@@ -63,7 +61,6 @@
 .head-text { color: var(--text-light); }
 .hash { color: var(--accent-blue); margin-right: 2px; text-shadow: 0 0 3px var(--accent-blue); }
 
-/* Line */
 .contact-line {
   flex: 1;
   height: 3px;
@@ -115,11 +112,16 @@
   transform: translateY(0);
 }
 
-/* Staggered reveal */
-.contact-section.active .contact-content { transition-delay: 0.2s; }
+.contact-section.active .contact-content {
+  transition-delay: 0.2s;
+}
 
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
+  .contact-section {
+    padding: 3.5rem 1.5rem 3rem;
+  }
+
   .contact-header {
     flex-direction: column;
     align-items: flex-start;
@@ -133,5 +135,64 @@
     margin-top: 0.5rem;
   }
 
-  .section-title { font-size: 1.6rem; }
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .contact-prompt {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .contact-prompt {
+    font-size: 0.75rem;
+    gap: 0.3rem;
+    word-break: break-word;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .contact-header-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+  }
+
+  .contact-content p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+}
+
+/* Very small phones (<=375px) */
+@media (max-width: 375px) {
+  .contact-section {
+    padding: 2.8rem 0.8rem 2rem;
+  }
+
+  .contact-prompt {
+    font-size: 0.7rem;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .contact-header-btn {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+  }
+
+  .contact-content p {
+    font-size: 0.85rem;
+  }
 }
