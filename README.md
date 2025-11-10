@@ -15,3 +15,5 @@
 8. Updated the know-more to add certifications view 
 9. Apparent fix to the navigation issue needs further investigation
 10. JinBo is finally live! and usable integration complete
+11. All JinBo features completed 
+12. Cleaned up the interface and final look are now ready! 

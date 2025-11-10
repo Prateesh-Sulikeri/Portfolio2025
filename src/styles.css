@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 /* Global Dark Theme */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap');
 :root {
   --background-dark: #0a0f1f;
   --surface-dark: #111827;
@@ -59,3 +60,88 @@ body.menu-open::before {
   z-index: 99;
 }
 
+/* Tooltip box */
+.flat-tooltip {
+  position: fixed;
+  background: rgba(10, 15, 25, 0.95);
+  color: #00bfff;
+  font-family: "Fira Code", monospace;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border: 1px solid rgba(0, 191, 255, 0.5);
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.35);
+  opacity: 0;
+  transition: opacity 1.8s ease-in-out;
+  z-index: 9999;
+}
+
+/* When visible */
+.flat-tooltip.visible {
+  opacity: 1;
+}
+
+/* Arrow (triangle pointing down) aligned properly */
+.flat-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;        /* at bottom of tooltip box */
+  left: 50%;        /* centered horizontally */
+  margin-left: -6px;/* half width of arrow */
+  border-width: 6px;         /* size of arrow */
+  border-style: solid;
+  border-color: rgba(10, 15, 25, 0.95) transparent transparent transparent;
+  /* border colour matches the box background */
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .flat-tooltip {
+    font-size: 0.65rem;
+    padding: 4px 8px;
+  }
+  .flat-tooltip::after {
+    margin-left: -5px;
+    border-width: 5px;
+  }
+}
+
+
+body {
+  background: linear-gradient(135deg, var(--background-dark), var(--surface-dark));
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Add a global soft radial glow */
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle at center, rgba(0,191,255,0.08), transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  animation: slowPulse 12s ease-in-out infinite alternate;
+}
+@keyframes slowPulse {
+  from { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 0.6; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+section + section {
+  margin-top: -2rem; /* overlap slightly to tighten sections visually */
+}
+
+section {
+  scroll-margin-top: 100px; /* ← adjust to your navbar height */
+}

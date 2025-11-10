@@ -30,6 +30,7 @@
     "@angular/router": "^20.3.0",
     "@emailjs/browser": "^4.4.1",
     "@fortawesome/fontawesome-free": "^7.1.0",
+    "devicon": "^2.17.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

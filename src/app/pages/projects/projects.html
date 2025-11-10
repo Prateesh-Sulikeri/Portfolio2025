@@ -1,19 +1,44 @@
 <section id="projects" class="projects-section">
-  <div class="projects-header">
-  <h1 class="section-title">#<span class="head-text">my-projects</span></h1>
-    <div class="projects-line"></div>
-    <button class="view-all-btn" (click)="viewMore()">View all Projects-></button>
+  <!-- Terminal-style prompt -->
+  <div class="prompt projects-prompt">
+    <i class="fas fa-terminal"></i>
+    <span class="user">@jinxx</span>:<span class="path">~/projects</span>$ 
+    <span class="command">ls -l</span>
   </div>
 
+  <!-- Header Row -->
+  <div class="projects-header">
+    <h1 class="section-title">
+      <span class="hash">#</span><span class="head-text">my-projects</span>
+    </h1>
+    <div class="projects-line"></div>
+    <button class="view-all-btn" (click)="viewMore()">View all Projects →</button>
+  </div>
+
+  <!-- Projects Grid -->
   <div class="projects-grid">
-    <div class="project-card" *ngFor="let project of projects">
-      <img [src]="project.image" alt="{{ project.title }}" class="project-image" />
+    <div class="project-card" *ngFor="let project of projects" >
+      <img
+        [src]="project.image"
+        alt="{{ project.title }}"
+        class="project-image"
+      />
       <div class="project-content">
         <h3 class="project-title">{{ project.title }}</h3>
         <p class="project-description">{{ project.description }}</p>
         <div class="project-buttons">
-          <button class="project-btn" (click)="openLink(project.live)">Live</button>
-          <button class="project-btn" (click)="openLink(project.github)">GitHub</button>
+          <button
+            class="project-btn"
+            (click)="openLink(project.live)"
+          >
+            <i class="fas fa-play"></i> Live
+          </button>
+          <button
+            class="project-btn"
+            (click)="openLink(project.github)"
+          >
+            <i class="fab fa-github"></i> GitHub
+          </button>
         </div>
       </div>
     </div>

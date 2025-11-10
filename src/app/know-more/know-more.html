@@ -1,4 +1,10 @@
 <section id="know-more" class="know-more-section">
+  <div class="prompt">
+    <i class="fas fa-terminal"></i>
+    <span class="user">@jinxx</span>:<span class="path">~/about</span>$
+    <span class="command">./know_more.sh</span>
+  </div>
+
   <div class="section-header">
     <h1 class="section-title">/<span class="head-text">know-more</span></h1>
     <div class="section-line"></div>
@@ -10,7 +16,10 @@
   <!-- Summary Section -->
   <div class="summary">
     <p>
-      I enjoy exploring new domains and experimenting with ideas that push my skills further. I focus on building projects I'd actually use myself—tools that not only solve real problems but also look good and feel intuitive. I care about the small details that make an app smooth, responsive, and enjoyable to use. At the end of the day, it's about creating experiences that are both practical and a pleasure to interact with.
+      I enjoy exploring new domains and experimenting with ideas that push my skills further. I focus on building
+      projects I'd actually use myself—tools that not only solve real problems but also look good and feel intuitive. I
+      care about the small details that make an app smooth, responsive, and enjoyable to use. At the end of the day,
+      it's about creating experiences that are both practical and a pleasure to interact with.
     </p>
   </div>
 
@@ -66,11 +75,7 @@
       <div class="cert-top">
         <!-- Fixed: Made the entire container clickable -->
         <div class="cert-image-container" *ngIf="cert.image" (click)="openModal(cert.image, cert.title)">
-          <img 
-            [src]="cert.image" 
-            [alt]="cert.title" 
-            class="cert-image"
-          />
+          <img [src]="cert.image" [alt]="cert.title" class="cert-image" />
           <div class="image-overlay">Click to Expand</div>
         </div>
 
@@ -100,11 +105,7 @@
   <div class="modal-overlay" (click)="closeModal()"></div>
   <div class="modal-inner">
     <span class="close-btn" (click)="closeModal()">&times;</span>
-    <img 
-      class="modal-image" 
-      [src]="modalImageSrc" 
-      [alt]="modalImageAlt"
-    />
+    <img class="modal-image" [src]="modalImageSrc" [alt]="modalImageAlt" />
     <div class="caption">{{ modalImageAlt }}</div>
   </div>
 </div>

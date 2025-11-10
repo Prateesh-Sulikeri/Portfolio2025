@@ -1,18 +1,37 @@
-<section id="about" class="about-section">
+<section id="about" class="about-section" #aboutSection [class.active]="isAboutVisible">
+  <!-- Terminal prompt -->
+  <div class="prompt about-prompt">
+    <i class="fas fa-terminal"></i>
+    <span class="user">@jinxx</span>:<span class="path">~/about</span>$
+    <span class="command">cat about-me.txt</span>
+  </div>
+
+
+  <!-- Section Header -->
   <div class="about-header">
-    <h1 class="section-title">#<span class="head-text">about-me</span></h1>
+    <h1 class="section-title">
+      <span class="hash">#</span><span class="head-text">about-me</span>
+    </h1>
     <div class="about-line"></div>
     <button class="about-btn-header" (click)="navigateToContact()">Know More -></button>
   </div>
 
+  <!-- Content -->
   <div class="about-content">
     <p>
-      I’m <strong>Prateesh Sulikeri</strong>, a software engineer who builds solutions that actually work! Whether it’s streamlining <strong> global banking systems</strong> or creating AI tools that make data smarter, I enjoy taking complex problems and turning them into efficient, reliable software. Every project is a challenge, and I like seeing it through from idea to execution.
-    <p>
-      I work with <strong> Java, C++, Python, and cloud platforms like AWS and GCP</strong>. On the AI side, I use <strong>TensorFlow, PyTorch, and LangChain </strong>to develop applications that are both practical and clever, combining logic with a touch of creativity
+      I’m <strong>Prateesh Sulikeri</strong>, a software engineer who builds solutions that actually work! Whether it’s
+      streamlining
+      <strong>global banking systems</strong> or creating AI tools that make data smarter, I enjoy taking complex
+      problems and turning them into efficient, reliable software.
     </p>
-     <p>
-      I approach each project with curiosity and care, aiming for solutions that are robust, maintain . . . I know you got bored, but if you are interested click on the "KNOW MORE" button you know know-more about me 😉.
+    <p>
+      I work with <strong>Java, C++, Python, and cloud platforms like AWS and GCP</strong>. On the AI side, I use
+      <strong>TensorFlow, PyTorch, and LangChain</strong> to develop applications that are both practical and clever,
+      combining logic with creativity.
+    </p>
+    <p>
+      I approach each project with curiosity and care, aiming for solutions that are robust, maintainable, and elegant.
+      If you’re interested, click “Know More” to know… well, more 😉.
     </p>
   </div>
 </section>

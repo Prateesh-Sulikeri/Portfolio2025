@@ -36,6 +36,9 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
   messages: ChatMessage[] = [];
   botOnline = false;
 
+  // 👇 Track whether user interacted (in-memory only — resets on reload)
+  userInteracted = false;
+
   private prevMessagesLen = 0;
   private userScrolledAway = false;
   private readonly nearBottomThreshold = 140;
@@ -70,6 +73,12 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
 
   toggleChat(): void {
     this.isOpen = !this.isOpen;
+
+    // ✅ Mark user as interacted (animation stops this session)
+    if (this.isOpen && !this.userInteracted) {
+      this.userInteracted = true;
+    }
+
     if (this.isOpen) {
       this.userScrolledAway = false;
       setTimeout(() => this.inputEl?.nativeElement?.focus(), 220);
@@ -102,7 +111,8 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
     this.userScrolledAway = false;
     this.scrollToBottom();
 
-    this.http.post<{ success: boolean; response: string }>(this.apiUrl, { message: input })
+    this.http
+      .post<{ success: boolean; response: string }>(this.apiUrl, { message: input })
       .subscribe({
         next: (res) => {
           const reply = res?.success ? res.response : 'Sorry — no response.';
@@ -120,7 +130,7 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
           this.isLoading = false;
           this.saveToStorage();
           if (!this.userScrolledAway) this.scrollToBottom();
-        }
+        },
       });
   }
 
@@ -156,22 +166,21 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
   }
 
   private checkHealth(): void {
-  this.http.get<{ status: string }>(this.healthUrl).subscribe({
-    next: (res) => {
-      this.botOnline = res?.status === 'ok';
-      if (!this.botOnline) this.scheduleHealthRetry();
-    },
-    error: () => {
-      this.botOnline = false;
-      this.scheduleHealthRetry();
-    }
-  });
-}
+    this.http.get<{ status: string }>(this.healthUrl).subscribe({
+      next: (res) => {
+        this.botOnline = res?.status === 'ok';
+        if (!this.botOnline) this.scheduleHealthRetry();
+      },
+      error: () => {
+        this.botOnline = false;
+        this.scheduleHealthRetry();
+      },
+    });
+  }
 
-private scheduleHealthRetry(): void {
-  setTimeout(() => this.checkHealth(), 30000); // retry every 30s
-}
-
+  private scheduleHealthRetry(): void {
+    setTimeout(() => this.checkHealth(), 30000); // retry every 30s
+  }
 
   formatTime(ts?: number): string {
     if (!ts) return '';
@@ -193,5 +202,4 @@ private scheduleHealthRetry(): void {
       this.closeChat();
     }
   }
-
 }
