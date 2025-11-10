@@ -6,79 +6,86 @@
   text-align: center;
   padding: 0 1rem;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
-.intro-text h1 {
-  font-size: 2rem;
+
+
+@keyframes pulseBg {
+  from { opacity: 0.2; transform: scale(1); }
+  to { opacity: 0.5; transform: scale(1.05); }
+}
+
+.intro-text {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+}
+
+/* Terminal prompt */
+.prompt {
+  text-align: left;
+  color: var(--accent-blue);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.prompt .user { color: var(--success); }
+.prompt .path { color: #33ccff; }
+.prompt .command { color: var(--text-light); }
+
+/* Typing line */
+.typing-line {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--accent-blue);
+  font-size: 2.2rem;
+  color: var(--text-light);
   margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(0,191,255,0.2);
+  width: 0;
+  animation:
+    typing 2s steps(22, end) forwards,
+    blinkCursor 1s step-end infinite alternate;
 }
-
-.intro-text h2 {
-  font-size: 1.3rem;
-  font-weight: 400;
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
 }
+@keyframes blinkCursor { 50% { border-color: transparent; } }
 
-/* 👋 Waving animation */
+/* Wave */
 .wave {
   display: inline-block;
   animation: wave 2s infinite ease-in-out;
   animation-delay: 3s;
 }
-
 @keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  10%, 20% { transform: rotate(20deg); }
-  30%, 50%, 70%, 90% { transform: rotate(-10deg); }
-  40%, 60%, 80% { transform: rotate(10deg); }
+  0%,100% { transform: rotate(0deg); }
+  10%,20% { transform: rotate(20deg); }
+  30%,50%,70%,90% { transform: rotate(-10deg); }
+  40%,60%,80% { transform: rotate(10deg); }
 }
 
-/* Glow effect for rotating text */
+/* Second line fade-in */
+.delayed-line {
+  font-size: 1.3rem;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: showLine2 0.8s ease-out forwards;
+
+  animation-delay: 2.5s;
+}
+@keyframes showLine2 {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Rotating text glow */
 .rotating-text {
   font-weight: 600;
-  text-shadow: 0 0 0.5px var(--accent-blue), 0 0 20px var(--accent-blue);
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: 0 0 0.5px var(--accent-blue), 0 0 15px var(--accent-blue);
 }
-
-.contact-btn {
-  margin-top: 1.5rem;
-  padding: 0.55rem 1.5rem; /* smaller, tighter */
-  font-family: "Fira Code", monospace;
-  font-size: 0.95rem;
-  color: var(--text-light);
-  background: transparent;
-  border: 1.5px solid var(--accent-blue);
-  border-radius: 0; /* 👈 sharp 90° corners */
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.25s ease-in-out;
-  box-shadow: 0 0 4px rgba(0, 191, 255, 0.25); /* subtle, soft glow */
-  position: relative;
-}
-
-/* Clean, subtle hover effect */
-.contact-btn:hover {
-  color: var(--accent-blue);
-  text-shadow: 0 0 4px rgba(0, 191, 255, 0.5);
-  box-shadow: 0 0 6px rgba(0, 191, 255, 0.5);
-  transform: translateY(-1px);
-}
-
-/* Gentle breathing glow animation */
-@keyframes borderPulse {
-  0%, 100% {
-    box-shadow: 0 0 4px rgba(0, 191, 255, 0.25);
-  }
-  50% {
-    box-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
-  }
-}
-
-.contact-btn {
-  animation: borderPulse 4s infinite ease-in-out;
-}
-
-/* Typing cursor animation */
 .cursor {
   display: inline-block;
   width: 1px;
@@ -86,9 +93,191 @@
   margin-left: 2px;
   animation: blink 1s steps(1) infinite;
 }
+@keyframes blink { 50% { opacity: 0; } }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
+/* Button */
+.contact-btn {
+  margin-top: 2rem;
+  padding: 0.6rem 1.8rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  background: transparent;
+  border: 1.5px solid var(--accent-blue);
+  border-radius: 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 0 5px rgba(0,191,255,0.3);
+
+  position: relative;
+  animation: borderPulse 4s infinite ease-in-out;
+}
+.contact-btn:hover {
+  color: var(--accent-blue);
+  text-shadow: 0 0 6px rgba(0,191,255,0.8);
+  box-shadow: 0 0 10px rgba(0,191,255,0.6);
+  transform: translateY(-2px);
+}
+@keyframes borderPulse {
+  0%,100% { box-shadow: 0 0 4px rgba(0,191,255,0.3); }
+  50% { box-shadow: 0 0 10px rgba(0,191,255,0.5); }
+}
+
+/* Animated grid */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(0,191,255,0.07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,191,255,0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.05;
+  animation: moveGrid 30s linear infinite;
+  z-index: 0;
+}
+@keyframes moveGrid {
+  from { background-position: 0 0; }
+  to { background-position: 100px 100px; }
+}
+
+.tagline {
+  opacity: 0;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-family: "Fira Code", monospace;
+  color: rgba(0,191,255,0.75);
+  letter-spacing: 0.03em;
+  animation: fadeUp 0.8s ease-out forwards;
+  animation-delay: 3.2s; /* starts after line 2 appears */
+
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* === Floating Icons (Final Fixed — AWS visible) === */
+.float-icon {
+  position: absolute;
+  color: rgba(0, 191, 255, 0.25);
+  font-size: 2.7rem;
+  z-index: 1;
+  animation: drift 26s ease-in-out infinite;
+  opacity: 0.85;
+  transition: all 0.3s ease-in-out;
+  filter: drop-shadow(0 0 4px rgba(0,191,255,0.25));
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(12px, -10px) rotate(4deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.float-icon:hover {
+  color: #00bfff;
+  opacity: 1;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 12px rgba(0,191,255,0.8));
+  z-index: 3;
+}
+
+/* === Desktop icon positions (non-overlapping + AWS visible) === */
+.icon-arch {
+  top: 18%;
+  left: 12%;
+  font-size: 3rem;
+  animation-delay: 0.8s;
+}
+
+.icon-cpp {
+  top: 35%;
+  right: 25%;
+  font-size: 2.8rem;
+  animation-delay: 1.5s;
+}
+
+.icon-docker {
+  bottom: 38%;
+  right: 10%;
+  font-size: 3rem;
+  animation-delay: 2.5s;
+}
+
+.icon-k8s {
+  bottom: 14%;
+  right: 28%;
+  font-size: 2.7rem;
+  animation-delay: 3.5s;
+}
+
+.icon-gcp {
+  top: 58%;
+  left: 24%;
+  font-size: 2.6rem;
+  animation-delay: 4.5s;
+}
+
+.icon-aws {
+  bottom: 12%;
+  left: 20%;
+  font-size: 2.6rem;
+  animation-delay: 4.5s;
+}
+
+
+/* === Home Section Prompt === */
+.home .prompt {
+  color: var(--accent-blue);
+  font-size: 0.9rem;
+  margin-bottom: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  font-family: "Fira Code", monospace;
+}
+
+/* User and path colors (same as About) */
+.home .prompt .user {
+  color: #00ff7f; /* Arch-style green */
+}
+
+.home .prompt .path {
+  color: #33bfff; /* cyan tone to match accent */
+}
+
+.home .prompt .command {
+  color: var(--text-light);
+}
+
+/* Block cursor (Arch terminal style) */
+.home .prompt::after {
+  content: "█";
+  margin-left: 4px;
+  color: var(--accent-blue);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+
+@keyframes blink-cursor {
+  50% { opacity: 0; }
+}
+
+/* Vim-style INSERT indicator (for consistency with About) */
+.home .prompt::before {
+  position: absolute;
+  bottom: -1.2rem;
+  left: 1.6rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #00ff7f;
+  opacity: 0.85;
+  animation: fade-in 1s ease forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 0.85; transform: translateY(0); }
 }

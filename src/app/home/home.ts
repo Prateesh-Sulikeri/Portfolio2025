@@ -1,19 +1,18 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, NgZone } from '@angular/core';
 import { Notification } from '../services/notification';
+import { TooltipDirective } from '../tooltip';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [TooltipDirective],
   standalone: true,
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit, OnDestroy, AfterViewInit {
   roles = [
-    'Full Stack Developer 💻',
     'Cloud Architect Associate ☁️',
     'Machine Learning Enthusiast 🤖',
-    'Backyard Junky Scientist 🧪',
     'Cloud Developer Associate 🌩️',
     'Backend Engineer 🔧',
     'Raspberry Pi Enthusiast 🍓',
@@ -49,7 +48,7 @@ export class Home implements OnInit, OnDestroy, AfterViewInit {
           sessionStorage.setItem('homeHintShown', '1'); // mark as shown
         }
       });
-    }, 6000);
+    }, 15000);
   }
 
 

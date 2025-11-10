@@ -1,15 +1,43 @@
 .contact-section {
   min-height: 100vh;
-  padding: 10rem 2rem 3rem;
+  padding: 4rem 2rem 5rem; /* consistent with other sections */
   max-width: 900px;
   margin: 0 auto;
   text-align: left;
   color: var(--text-light);
   font-family: "Fira Code", monospace;
   position: relative;
+  overflow: hidden;
 }
 
-/* Header Row (Title + Line + Button) */
+/* === Terminal Prompt === */
+.contact-prompt {
+  color: var(--accent-blue);
+  font-size: 0.9rem;
+  margin-bottom: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  font-family: "Fira Code", monospace;
+}
+
+.contact-prompt .user { color: #00ff7f; }
+.contact-prompt .path { color: #33bfff; }
+.contact-prompt .command { color: var(--text-light); }
+
+.contact-prompt::after {
+  content: "█";
+  margin-left: 4px;
+  color: var(--accent-blue);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+
+@keyframes blink-cursor {
+  50% { opacity: 0; }
+}
+
+/* === Header === */
 .contact-header {
   display: flex;
   align-items: center;
@@ -17,8 +45,12 @@
   margin-bottom: 2.5rem;
   width: 100%;
   box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
 }
 
+/* Title */
 .section-title {
   font-size: 2rem;
   color: var(--accent-blue);
@@ -28,7 +60,10 @@
   margin: 0;
 }
 
-/* Blue accent line */
+.head-text { color: var(--text-light); }
+.hash { color: var(--accent-blue); margin-right: 2px; text-shadow: 0 0 3px var(--accent-blue); }
+
+/* Line */
 .contact-line {
   flex: 1;
   height: 3px;
@@ -40,7 +75,7 @@
   top: 1px;
 }
 
-/* Header button (Contact Form) */
+/* Button */
 .contact-header-btn {
   padding: 0.4rem 1.2rem;
   font-size: 0.9rem;
@@ -61,13 +96,29 @@
   transform: translateY(-2px);
 }
 
-/* Content */
+/* === Content === */
+.contact-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.8s ease-out;
+}
+
 .contact-content p {
   margin-bottom: 1.2rem;
   line-height: 1.7;
 }
 
-/* Responsive behavior — matches Projects and About */
+/* === Reveal on scroll === */
+.contact-section.active .contact-header,
+.contact-section.active .contact-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered reveal */
+.contact-section.active .contact-content { transition-delay: 0.2s; }
+
+/* Responsive */
 @media (max-width: 768px) {
   .contact-header {
     flex-direction: column;
@@ -75,22 +126,12 @@
     gap: 0.6rem;
   }
 
-  .contact-line {
-    display: none;
-  }
+  .contact-line { display: none; }
 
   .contact-header-btn {
     align-self: flex-start;
     margin-top: 0.5rem;
   }
-}
 
-.head-text {
-  color: var(--text-light);
-}
-
-.hash {
-  color: var(--accent-blue);
-  margin-right: 2px;
-  text-shadow: 0 0 3px var(--accent-blue);
+  .section-title { font-size: 1.6rem; }
 }

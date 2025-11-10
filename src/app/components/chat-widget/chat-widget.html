@@ -1,20 +1,11 @@
 <!-- Floating Chat Button -->
-<button 
-  class="chat-button" 
-  [class.active]="isOpen"
-  (click)="toggleChat()" 
-  aria-label="Open JinBo chat"
->
+<button class="chat-button" [class.active]="isOpen" [class.user-interacted]="userInteracted" (click)="toggleChat()"
+  aria-label="Open JinBo chat">
   <i class="fas fa-robot"></i>
 </button>
 
 <!-- Chat Panel -->
-<div 
-  class="chat-panel" 
-  [class.open]="isOpen" 
-  role="dialog" 
-  aria-label="JinBo chat window"
->
+<div class="chat-panel" [class.open]="isOpen" role="dialog" aria-label="JinBo chat window">
   <div class="chat-header">
     <span class="header-title">JinBo Assistant</span>
     <div class="header-actions">
@@ -24,10 +15,18 @@
       </button>
     </div>
   </div>
+<div *ngIf="!botOnline" class="bot-offline-overlay">
+  💤 <strong>JinBo is recharging...</strong><br />
+  <span>Sometimes JinBo likes to take a short nap (free hosting quirks).</span><br />
+  <span>You can gently wake him up by visiting </span>
+  <a href="https://jinbo.onrender.com" target="_blank">jinbo.onrender.com</a>.<br />
+  <span>Thanks for your patience — he'll be back in a moment!</span>
+</div>
 
-  <div class="chat-body" #chatBody>
+
+ <div class="chat-body" #chatBody>
     <div *ngIf="messages.length === 0" class="empty-note">
-      Start chatting with JinBo — your AI assistant
+      Start chatting with JinBo - Say Hi!
     </div>
 
     <div *ngFor="let msg of messages" class="chat-message" [ngClass]="msg.sender">
@@ -38,34 +37,20 @@
     </div>
 
     <div *ngIf="isLoading" class="typing-indicator">
-  <span></span><span></span><span></span>
-</div>
+      <span></span><span></span><span></span>
+    </div>
 
   </div>
 
   <div class="chat-input">
-    <input
-      #inputEl
-      [(ngModel)]="userInput"
-      (keyup.enter)="sendMessage()"
-      type="text"
-      placeholder="Type a message..."
-      autocomplete="off"
-      inputmode="text"
-      enterkeyhint="send"
-    />
-    <button 
-      (click)="sendMessage()" 
-      class="send-btn" 
-      [disabled]="!botOnline"
-      [class.disabled]="!botOnline"
-    >
+    <input #inputEl [(ngModel)]="userInput" (keyup.enter)="sendMessage()" type="text" placeholder="Type a message..."
+      autocomplete="off" inputmode="text" enterkeyhint="send" />
+    <button (click)="sendMessage()" class="send-btn" [disabled]="!botOnline" [class.disabled]="!botOnline">
       <i class="fas fa-paper-plane"></i>
     </button>
   </div>
 
   <div class="disclaimer">
     ⚠️ AI-generated responses may be inaccurate. Verify before use.<br />
-    <span *ngIf="!botOnline" class="bot-offline">🛠 JinBo is offline — please try later.</span>
   </div>
 </div>

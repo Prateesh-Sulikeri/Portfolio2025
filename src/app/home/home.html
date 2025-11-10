@@ -1,15 +1,36 @@
 <section class="home">
+  <div class="bg-grid"></div>
+
   <div class="intro-text">
-    <h1>
-      Hi! Prateesh here 
-      <span class="wave" role="img" aria-label="wave">👋</span>
+    <div class="prompt">
+      <i class="fas fa-terminal"></i>
+      <span class="user">@jinxx</span>:<span class="path">~/home</span>$
+      <span class="command">whoami</span>
+    </div>
+
+    <h1 class="typing-line">
+      Hi! Prateesh here <span class="wave">👋</span>
     </h1>
-    <h2>
-      I am a 
-      <span class="rotating-text" [style.color]="accentColor">
+
+    <h2 class="delayed-line">
+      I am a
+      <span class="rotating-text">
         {{ currentRole }}<span class="cursor">|</span>
       </span>
     </h2>
-    <button class="contact-btn" (click)="scrollTo('contact')" >Contact Me!!</button>
+
+    <p class="tagline">sudo make awesome --portfolio</p>
+
+    <button class="contact-btn" (click)="scrollTo('contact')">
+      <i class="fas fa-paper-plane"></i> Contact Me
+    </button>
   </div>
+
+  <!-- Floating tech icons -->
+  <i class="devicon-archlinux-plain float-icon icon-arch" appTooltip="Arch Linux"></i>
+  <i class="devicon-cplusplus-plain float-icon icon-cpp" appTooltip="C++"></i>
+  <i class="devicon-docker-plain float-icon icon-docker" appTooltip="Docker"></i>
+  <i class="devicon-kubernetes-plain float-icon icon-k8s" appTooltip="Kubernetes"></i>
+  <i class="devicon-googlecloud-plain float-icon icon-gcp" appTooltip="GCP"></i>
+  <i class="devicon-amazonwebservices-plain float-icon icon-aws" appTooltip="GCP"></i>
 </section>
