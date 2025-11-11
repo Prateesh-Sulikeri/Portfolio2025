@@ -16,13 +16,19 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  flex-wrap: wrap;              /* ✅ allow wrapping gracefully */
+  flex-wrap: wrap; /* ✅ allow wrapping gracefully */
   word-break: break-word;
   font-size: 0.9rem;
   color: var(--accent-blue);
   margin-bottom: 1.8rem;
   font-family: "Fira Code", monospace;
   position: relative;
+  line-height: 1.4;
+
+  /* === Animation initial state === */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.8s ease-out;
 }
 
 .about-prompt .user { color: #00ff7f; }
@@ -36,16 +42,7 @@
   animation: blink-cursor 1s steps(1) infinite;
 }
 
-.about-prompt::before {
-  position: absolute;
-  bottom: -1.2rem;
-  left: 1.6rem;
-  font-size: 0.8rem;
-  font-style: italic;
-  color: #00ff7f;
-  opacity: 0.85;
-  animation: fade-in 1s ease forwards;
-}
+@keyframes blink-cursor { 50% { opacity: 0; } }
 
 /* ===== Header ===== */
 .about-header {
@@ -55,6 +52,11 @@
   margin-bottom: 2.5rem;
   width: 100%;
   box-sizing: border-box;
+
+  /* === Animation initial state === */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.8s ease-out;
 }
 
 .section-title {
@@ -94,6 +96,7 @@
   border-radius: 0;
   letter-spacing: 0.5px;
 }
+
 .about-btn-header:hover {
   color: var(--accent-blue);
   box-shadow: 0 0 6px var(--accent-blue);
@@ -101,13 +104,40 @@
 }
 
 /* ===== Content ===== */
+.about-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.8s ease-out;
+}
+
 .about-content p {
   margin-bottom: 1.2rem;
   line-height: 1.7;
   font-size: 1rem;
 }
 
-/* Sequential reveal */
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.about-list li {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-light);
+  word-break: break-word;
+}
+
+.about-list .label {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+/* ===== Reveal on scroll ===== */
 .about-section.active .about-prompt,
 .about-section.active .about-header,
 .about-section.active .about-content {
@@ -115,12 +145,20 @@
   transform: translateY(0);
 }
 
+.about-section.active .about-header {
+  transition-delay: 0.1s;
+}
+
+.about-section.active .about-content {
+  transition-delay: 0.2s;
+}
+
 /* ======== RESPONSIVE ======== */
 
 /* --- Tablets & below (<=768px) --- */
 @media (max-width: 768px) {
   .about-section {
-    padding: 6rem 1.5rem 3rem;   /* tighter vertical spacing */
+    padding: 6rem 1.5rem 3rem;
   }
 
   .about-header {
@@ -132,9 +170,7 @@
 
   .about-line { display: none; }
 
-  .section-title {
-    font-size: 1.6rem;
-  }
+  .section-title { font-size: 1.6rem; }
 
   .about-btn-header {
     align-self: flex-start;
@@ -144,14 +180,14 @@
   }
 
   .about-prompt {
-    font-size: 0.8rem;           /* smaller prompt font */
-    flex-wrap: wrap;             /* allow multi-line */
+    font-size: 0.8rem;
+    flex-wrap: wrap;
     line-height: 1.3;
   }
 
-  .about-content p {
+  .about-list li {
     font-size: 0.9rem;
-    line-height: 1.6;
+    line-height: 1.5;
   }
 }
 
@@ -175,9 +211,13 @@
     padding: 0.35rem 0.8rem;
   }
 
-  .about-content p {
+  .about-list {
+    gap: 0.6rem;
+  }
+
+  .about-list li {
     font-size: 0.85rem;
-    line-height: 1.55;
+    line-height: 1.45;
   }
 }
 
@@ -201,45 +241,7 @@
     padding: 0.3rem 0.7rem;
   }
 
-  .about-content p {
+  .about-list li {
     font-size: 0.8rem;
-  }
-}
-.about-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.about-list li {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--text-light);
-  word-break: break-word;
-}
-
-.about-list .label {
-  color: var(--accent-blue);
-  font-weight: 600;
-}
-
-/* --- Mobile adjustments --- */
-@media (max-width: 768px) {
-  .about-list li {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-}
-
-@media (max-width: 480px) {
-  .about-list {
-    gap: 0.6rem;
-  }
-  .about-list li {
-    font-size: 0.85rem;
-    line-height: 1.45;
   }
 }

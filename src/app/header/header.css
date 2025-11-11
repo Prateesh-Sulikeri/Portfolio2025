@@ -154,3 +154,36 @@
   color: var(--accent-blue);
   margin-right: 2px;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.6rem;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px var(--accent-blue));
+  transition: filter 0.3s ease;
+}
+
+.logo:hover .logo-img {
+  filter: drop-shadow(0 0 8px var(--accent-blue));
+}
+
+.brand-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  animation: pulseGlow 2s infinite ease-in-out;
+}
