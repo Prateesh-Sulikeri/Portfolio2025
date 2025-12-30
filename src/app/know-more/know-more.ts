@@ -151,11 +151,6 @@ export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
       image: 'images/deeplearning_cert.png',
       link: 'https://www.deeplearning.ai/certifications/'
     },
-    {
-      title: 'AWS Certified Developer Associate (DVA-C02)',
-      description: 'Validates ability to build, deploy, and debug cloud-native applications on AWS using modern development practices. (In progress)',
-      image: 'images/AWS.jpg'
-    }
   ];
 
 

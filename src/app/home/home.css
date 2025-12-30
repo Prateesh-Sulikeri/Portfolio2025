@@ -482,3 +482,35 @@
     padding-bottom: 2rem;
   }
 }
+
+
+/* === Slide-in Animations (Name + Role) === */
+.name-slide {
+  font-size: 2.2rem;
+  opacity: 0;
+  transform: translateX(-40px);
+  animation: slideInLeft 0.9s ease-out forwards;
+}
+
+.role-slide {
+  font-size: 1.3rem;
+  opacity: 0;
+  transform: translateX(40px);
+  animation: slideInRight 0.9s ease-out 0.3s forwards;
+}
+
+.static-role {
+  font-weight: 600;
+  color: var(--accent-blue);
+  text-shadow: 0 0 0.5px var(--accent-blue), 0 0 15px var(--accent-blue);
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
