@@ -112,21 +112,18 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
     this.scrollToBottom();
 
     this.http
-      .post<{ success: boolean; response: string }>(this.apiUrl, { message: input })
+      .post<{ response: string; intent: string; timestamp: string }>(this.apiUrl, { message: input })
       .subscribe({
         next: (res) => {
-          const reply = res?.success ? res.response : 'Sorry — no response.';
+          const reply = res?.response ?? 'No response from JinBo.';
           this.messages.push({ sender: 'bot', text: reply, ts: Date.now() });
           this.isLoading = false;
           this.saveToStorage();
           if (!this.userScrolledAway) this.scrollToBottom();
         },
-        error: () => {
-          this.messages.push({
-            sender: 'bot',
-            text: '⚠️ Network error: could not reach JinBo. Try again later.',
-            ts: Date.now(),
-          });
+        error: (err) => {
+          const msg = err?.error?.error ?? '⚠️ Network error: could not reach JinBo. Try again later.';
+          this.messages.push({ sender: 'bot', text: msg, ts: Date.now() });
           this.isLoading = false;
           this.saveToStorage();
           if (!this.userScrolledAway) this.scrollToBottom();
@@ -168,7 +165,7 @@ export class ChatWidget implements AfterViewChecked, AfterViewInit {
   private checkHealth(): void {
     this.http.get<{ status: string }>(this.healthUrl).subscribe({
       next: (res) => {
-        this.botOnline = res?.status === 'ok';
+        this.botOnline = res?.status?.toLowerCase() === 'healthy';
         if (!this.botOnline) this.scheduleHealthRetry();
       },
       error: () => {

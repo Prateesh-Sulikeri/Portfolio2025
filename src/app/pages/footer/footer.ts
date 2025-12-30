@@ -13,6 +13,6 @@ export class Footer {
   socialLinks = [
     { name: 'GitHub', icon: 'fab fa-github', url: 'https://github.com/Prateesh-Sulikeri' },
     { name: 'LinkedIn', icon: 'fab fa-linkedin', url: 'https://linkedin.com/in/prateesh-sulikeri' },
-    { name: 'Medium', icon: 'fab fa-medium', url: 'https://medium.com' },
+    // { name: 'Medium', icon: 'fab fa-medium', url: 'https://medium.com' },
   ];
 }
