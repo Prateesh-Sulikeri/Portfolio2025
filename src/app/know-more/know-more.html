@@ -16,17 +16,17 @@
   <!-- Summary Section -->
   <div class="summary">
     <p>
-      I’m a <strong>Backend and Cloud Engineer</strong> who enjoys building systems that are reliable, scalable, and a
-      little smarter than they were yesterday.
-      At work, I focus on designing APIs, automating workflows, and making deployments smoother across <strong>AWS and
-        enterprise-scale systems</strong>.
-      Outside of work, I tinker with AI assistants, Raspberry Pi builds, and small utilities that make everyday dev life
-      easier.
-      I care about writing clean, testable code — but even more about making things that genuinely work well and stand
-      the test of time.
+      I'm a <strong>Back-End and Cloud Engineer</strong> with ~2 years of experience in the banking
+      and finance sector, contributing to the development of
+      <strong>high-volume foreign exchange settlement systems</strong> used by global enterprises. I
+      focus on building scalable APIs, automation pipelines, and deployment workflows across AWS to
+      improve reliability and delivery efficiency. <br /><br />
+      I enjoy learning how complex systems work underneath—especially in areas like distributed
+      systems, automation, and applied AI. Outside of work, I build smaller tools and experiments to
+      strengthen my fundamentals and grow toward becoming a developer known for
+      <strong>practical, dependable engineering</strong>.
     </p>
   </div>
-
 
   <!-- Skills Section -->
   <div class="skills-section">
@@ -35,11 +35,14 @@
       <div class="section-line"></div>
     </div>
 
-    <div class="skills-columns">
-      <div class="skill-column" *ngFor="let item of skills">
-        <div class="skill-category">{{ item.category }}</div>
-        <div class="skill-items">
-          <div class="skill" *ngFor="let skill of item.skills">{{ skill }}</div>
+    <div class="skills-grid">
+      <div *ngFor="let category of skills" class="skill-card">
+        <h3 class="skill-title"><span class="cat-hash">#</span>{{ category.category }}</h3>
+        <div class="skill-tag-container">
+          <span *ngFor="let skill of category.skills" class="skill-tag">
+            <i [ngClass]="skill.icon"></i>
+            {{ skill.name }}
+          </span>
         </div>
       </div>
     </div>
@@ -54,10 +57,19 @@
 
     <div *ngFor="let work of workExperiences" class="experience-card">
       <div class="experience-summary">
-        <h3>{{ work.role }} | {{ work.company }}</h3>
-        <button class="view-btn" (click)="toggleExpand(work)">
-          {{ expandedWork === work ? 'Hide Details' : 'View More Details' }}
-        </button>
+        <div class="experience-header-col">
+          <h3 class="exp-role">{{ work.role }}</h3>
+
+          <div class="exp-company-row">
+            <span class="exp-company">{{ work.company }}</span>
+
+            <button class="view-btn" (click)="toggleExpand(work)">
+              {{ expandedWork === work ? 'Hide' : 'View More' }}
+            </button>
+          </div>
+
+          <span class="exp-duration">{{ work.duration }}</span>
+        </div>
       </div>
 
       <!-- Expanded Details -->
@@ -79,7 +91,11 @@
     <div *ngFor="let cert of certifications" class="cert-card">
       <div class="cert-top">
         <!-- Fixed: Made the entire container clickable -->
-        <div class="cert-image-container" *ngIf="cert.image" (click)="openModal(cert.image, cert.title)">
+        <div
+          class="cert-image-container"
+          *ngIf="cert.image"
+          (click)="openModal(cert.image, cert.title)"
+        >
           <img [src]="cert.image" [alt]="cert.title" class="cert-image" />
           <div class="image-overlay">Click to Expand</div>
         </div>
@@ -96,12 +112,31 @@
         <div class="cert-content">
           <div class="cert-description">
             <p>{{ cert.description }}</p>
-            <a *ngIf="cert.link" [href]="cert.link" target="_blank" class="link-btn">Check Certificate</a>
+            <a *ngIf="cert.link" [href]="cert.link" target="_blank" class="link-btn"
+              >Check Certificate</a
+            >
           </div>
         </div>
       </div>
     </div>
   </div>
+<!-- Achievements Section -->
+<div class="achievement-section">
+  <div class="section-header">
+    <h2 class="section-title">#<span class="head-text">achievements</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="achievement-card">
+    <h3 class="achievement-title">XOR-Champ Award</h3>
+    <h4>Xoriant Technologies</h4>
+    <hr class="ach-divider" />
+    <p>
+      Awarded for automation and modernization work that directly improved developer productivity,
+      test coverage, and delivery timelines for Xoriant and its client.
+    </p>
+  </div>
+</div>
 
 </section>
 

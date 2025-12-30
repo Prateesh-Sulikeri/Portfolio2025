@@ -38,6 +38,10 @@
   line-height: 1.8;
 }
 
+.skills-section {
+  margin-bottom: 4rem; /* or 5rem if you want more breathing room */
+}
+
 .skills-section h2,
 .work-experience-section h2 {
   color: var(--accent-blue);
@@ -555,4 +559,264 @@
   }
 }
 
+.duration {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: normal;
+  text-transform: none;
+}
 
+
+.achievement-card {
+  background: var(--surface-dark);
+  border-left: 4px solid var(--accent-blue);
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 3px 15px rgba(0, 191, 255, 0.15);
+  margin-bottom: 2rem;
+}
+.achievement-card h3 {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.achievement-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ===== Skills Section Redesign ===== */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-card {
+  background: var(--surface-dark);
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 191, 255, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.1);
+  transition: 0.3s ease;
+}
+
+.skill-card:hover {
+  box-shadow: 0 0 18px rgba(0, 191, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.skill-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.skill-tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(0, 191, 255, 0.08);
+  border: 1px solid rgba(0, 191, 255, 0.25);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-family: "Fira Code", monospace;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(0, 191, 255, 0.18);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.tag-hash {
+  color: var(--accent-blue); /* matches your section titles */
+  font-weight: 600;
+}
+
+.skill-tag i {
+  font-size: 1.1rem;
+  margin-right: 0.35rem;
+  display: inline-block;
+  color: var(--accent-blue);
+}
+
+
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* === Work Experience Layout === */
+
+.experience-header-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+/* Role line */
+.exp-role {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Company + Button Row */
+.exp-company-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Company */
+.exp-company {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+/* Duration line under it */
+.exp-duration {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* Smaller, cleaner button */
+.exp-view-btn {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--accent-blue);
+  background: transparent;
+  color: var(--text-light);
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: 0.25s ease;
+}
+
+.exp-view-btn:hover {
+  color: var(--accent-blue);
+  box-shadow: 0 0 4px var(--accent-blue);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .exp-company-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .exp-view-btn {
+    width: 100%;
+  }
+}
+
+/* ===== Achievements Section ===== */
+
+.achievement-section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.achievement-section .section-header {
+  margin-bottom: 2rem;
+}
+
+.achievement-card {
+  background: var(--surface-dark);
+  border-left: 4px solid var(--accent-blue);
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 2.5rem;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.12);
+  transition: 0.3s ease;
+}
+
+.achievement-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.25);
+}
+
+.achievement-card h3 {
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: bold;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.achievement-card h4 {
+  margin: 0;
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+.ach-divider {
+  border: none;
+  height: 2px;
+  width: 94%;
+  background: var(--accent-blue);
+  opacity: 0.4;
+  margin: 0.8rem 0 1.2rem;
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.5);
+}
+
+.ach-divider:hover {
+  opacity: 0.7;
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.7);
+}
+
+.achievement-card p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  padding-right: 0.2rem;
+  opacity: 0.9;
+}
+
+.cat-hash {
+  font-size: 1.2em;              /* scale with heading */
+  color: var(--accent-blue);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+
+@media (max-width: 768px) {
+  .achievement-card {
+    padding: 1.2rem 1.4rem;
+  }
+
+  .achievement-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .achievement-card h4 {
+    font-size: 0.95rem;
+  }
+
+  .achievement-card p {
+    font-size: 0.9rem;
+  }
+}
