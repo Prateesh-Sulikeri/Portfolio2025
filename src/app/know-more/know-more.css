@@ -820,3 +820,33 @@
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 768px) {
+  .experience-header-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  /* Key change */
+  .exp-company-row {
+    display: contents;          /* Flatten the wrapper */
+  }
+
+  .exp-company {
+    order: 1;
+  }
+
+  .exp-duration {
+    order: 2;
+  }
+
+  .view-btn {
+    order: 3;
+    width: 100%;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+}
+

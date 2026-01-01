@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Notification } from '../services/notification';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 interface SkillItem {
   name: string;
@@ -29,7 +30,7 @@ interface Certification {
 
 @Component({
   selector: 'app-know-more',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './know-more.html',
   styleUrl: './know-more.css'
 })
