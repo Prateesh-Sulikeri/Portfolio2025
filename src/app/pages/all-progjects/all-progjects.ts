@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Notification } from '../../services/notification';
 
 interface Project {
   title: string;
@@ -68,14 +69,51 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-  // APPLY button
   applyFilters() {
-    this.filterCategory = this.pendingCategory;
-    this.filterTypes = [...this.pendingTypes];
-    this.filterTech = [...this.pendingTech];
-    this.filterLiveOnly = this.pendingLive;
+    // Build a prospective view WITHOUT committing the filter state yet
+    const prospectiveCategory = this.pendingCategory;
+    const prospectiveTypes = [...this.pendingTypes];
+    const prospectiveTech = [...this.pendingTech];
+    const prospectiveLive = this.pendingLive;
+
+    // Check if prospective filter set yields NO RESULTS
+    const prospectiveResults = [
+      ...this.professionalProjects.map(company =>
+        company.projects.filter(p =>
+          (prospectiveCategory === 'all' || (prospectiveCategory === 'professional' && this.inProfessional(p)) || (prospectiveCategory === 'personal' && this.inPersonal(p)))
+          && (!prospectiveTypes.length || prospectiveTypes.includes(p.projectType))
+          && (!prospectiveTech.length || prospectiveTech.every(t => p.tags?.some(pt => pt.name === t)))
+          && (!prospectiveLive || p.live)
+        )
+      ).flat(),
+      ...this.personalProjects.map(section =>
+        section.projects.filter(p =>
+          (prospectiveCategory === 'all' || (prospectiveCategory === 'professional' && this.inProfessional(p)) || (prospectiveCategory === 'personal' && this.inPersonal(p)))
+          && (!prospectiveTypes.length || prospectiveTypes.includes(p.projectType))
+          && (!prospectiveTech.length || prospectiveTech.every(t => p.tags?.some(pt => pt.name === t)))
+          && (!prospectiveLive || p.live)
+        )
+      ).flat()
+    ];
+
+    if (prospectiveResults.length === 0) {
+      // Notify and DO NOT apply filter change
+      this.notification.error(
+        "These filter selections return no results; your previous filters have been retained.", 8000
+      );
+      this.showFilters = false;
+      return;
+    }
+
+    // APPLY (only if prospective results exist)
+    this.filterCategory = prospectiveCategory;
+    this.filterTypes = prospectiveTypes;
+    this.filterTech = prospectiveTech;
+    this.filterLiveOnly = prospectiveLive;
     this.showFilters = false;
   }
+
+
 
   // RESET button
   resetFilters() {
@@ -89,7 +127,11 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     this.pendingTech = [];
     this.pendingLive = false;
   }
-  constructor(private el: ElementRef) { }
+  constructor(
+    private el: ElementRef,
+    private notification: Notification // ADD THIS
+  ) { }
+
 
   ngOnInit() {
     this.isMobile = window.innerWidth <= 768;
@@ -371,7 +413,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
             { name: "JavaScript", icon: "devicon-javascript-plain" }
           ]
         },
-                {
+        {
           title: 'CloneCatch — Image Duplicate & Face-Based Sorter',
           shortDescription: 'Python-based tool for identifying duplicate images and tagging/moving images by face matches using VGG16 encodings and traditional image hashing.',
           longDescription: [
@@ -443,11 +485,14 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     this.professionalProjects.forEach(c => pushTags(c.projects));
     this.personalProjects.forEach(s => pushTags(s.projects));
 
-    this.availableTech = Array.from(tech).map(name => ({
-      name,
-      icon: this.findIcon(name),
-    }));
+    this.availableTech = Array.from(tech)
+      .map(name => ({
+        name,
+        icon: this.findIcon(name),
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name)); // SORT HERE
   }
+
 
   // look up icon based on name (fallback)
   findIcon(name: string) {
@@ -497,7 +542,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     if (this.filterCategory === 'professional' && !this.inProfessional(p)) return false;
     if (this.filterCategory === 'personal' && !this.inPersonal(p)) return false;
     if (this.filterTypes.length && !this.filterTypes.includes(p.projectType)) return false;
-    if (this.filterTech.length && !p.tags?.some(t => this.filterTech.includes(t.name))) return false;
+    if (this.filterTech.length && !this.filterTech.every(t => p.tags?.some(pt => pt.name === t))) return false;
     if (this.filterLiveOnly && !p.live) return false;
     return true;
   }
