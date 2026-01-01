@@ -576,3 +576,21 @@
     padding: 0.15rem 0.45rem;
   }
 }
+
+.tag {
+  display: inline-flex;
+  align-items: center;       /* ensures both icon & text align */
+  gap: 0.35rem;              /* consistent spacing */
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(0, 191, 255, 0.05);
+  border: 1px solid var(--accent-blue);
+}
+
+.tag i {
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

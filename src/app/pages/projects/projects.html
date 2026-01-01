@@ -23,13 +23,20 @@
         <h3 class="project-title">{{ project.title }}</h3>
         <p class="project-description">{{ project.description }}</p>
         <div class="project-tags">
-          <span class="tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+          <span class="tag" *ngFor="let tag of project.tags">
+            <i [ngClass]="tag.icon"></i> {{ tag.name }}
+          </span>
         </div>
 
         <div class="project-buttons">
-          <button class="project-btn" (click)="openLink(project.live)">
+          <button
+            *ngIf="project.live && project.live !== '#'"
+            class="project-btn"
+            (click)="openLink(project.live)"
+          >
             <i class="fas fa-play"></i> Live
           </button>
+
           <button class="project-btn" (click)="openLink(project.github)">
             <i class="fab fa-github"></i> GitHub
           </button>

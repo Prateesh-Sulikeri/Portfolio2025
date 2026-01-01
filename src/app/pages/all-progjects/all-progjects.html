@@ -1,97 +1,229 @@
 <section id="all-projects" class="projects-page">
-
-  <div class="prompt" [class.mobile]="isMobile" [class.desktop]="!isMobile">
+  <!-- Terminal Prompt -->
+  <div class="prompt" [class.mobile]="isMobile">
     <i class="fas fa-terminal"></i>
     <span class="user">@jinxx</span>:<span class="path">~/projects</span>$
     <span class="command" *ngIf="isMobile">ls -lart</span>
     <span class="command" *ngIf="!isMobile">find . -name "project_manifest.json"</span>
   </div>
 
-  <!-- Main Header -->
+  <!-- PAGE TITLE -->
   <div class="section-header">
-    <h1 class="section-title">/<span class="head-text">all-projects</span></h1>
+    <h1 class="section-title"><span class="prefix">/</span>all-projects</h1>
     <div class="section-line"></div>
   </div>
 
-  <p class="intro-text">
-    Here’s a comprehensive overview of my professional and personal projects — organized by category and experience.
-    Each project expands to reveal my specific roles, impact, and technical details.
-  </p>
+  <!-- ========================= FILTER BAR ========================= -->
+  <div class="filter-toggle-row">
+    <button class="filter-toggle-btn" (click)="toggleFilters()">
+      <i class="fas fa-sliders-h"></i> Filters
+    </button>
 
-  <!-- =================== PROFESSIONAL PROJECTS =================== -->
-  <div class="project-category">
+    <button
+      *ngIf="filterCategory !== 'all' || filterTypes.length || filterTech.length || filterLiveOnly"
+      class="reset-btn"
+      (click)="resetFilters()"
+    >
+      Reset
+    </button>
+  </div>
+
+  <!-- ========================= FILTER PANEL ========================= -->
+  <div class="filter-panel" [class.open]="showFilters">
+    <!-- Category -->
+    <div class="filter-group">
+      <label class="filter-label">Category</label>
+      <select [(ngModel)]="pendingCategory">
+        <option value="all">All</option>
+        <option value="professional">Professional</option>
+        <option value="personal">Personal</option>
+      </select>
+    </div>
+
+    <!-- Project Type -->
+    <div class="filter-group">
+      <label class="filter-label">Project Type</label>
+      <div class="type-options">
+        <!-- Project Type -->
+        <div class="filter-group">
+          <select [(ngModel)]="pendingTypes" multiple>
+            <option value="backend">backend</option>
+            <option value="frontend">frontend</option>
+            <option value="fullstack">fullstack</option>
+            <option value="cloud">cloud</option>
+            <option value="ai-ml">ai-ml</option>
+            <option value="exploratory">exploratory</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="filter-group">
+      <label class="filter-label">Tech Stack</label>
+      <div class="tech-options">
+        <span
+          class="tech-pill"
+          *ngFor="let t of availableTech"
+          [class.active]="pendingTech.includes(t.name)"
+          (click)="togglePendingTech(t.name)"
+        >
+          <i [ngClass]="t.icon"></i> {{ t.name }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Live-only -->
+    <label class="checkbox-row">
+      <input type="checkbox" [(ngModel)]="pendingLive" />
+      <span class="checkmark"></span>
+      Live projects only
+    </label>
+
+    <!-- Buttons -->
+    <div class="filter-actions">
+      <button class="project-btn apply-btn" (click)="applyFilters()">Apply</button>
+      <button class="project-btn reset-btn" (click)="resetFilters()">Reset</button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="filterCategory !== 'all' || filterTypes.length || filterTech.length || filterLiveOnly"
+    class="filter-results-divider"
+  >
+    <span>Filtered Results</span>
+  </div>
+
+  <!-- ==========================================================
+       PROFESSIONAL PROJECTS
+       ========================================================== -->
+  <div *ngIf="filterCategory !== 'personal'" class="project-category">
     <div class="section-header sub-header">
-      <h2 class="section-title">#<span class="head-text">professional-projects</span></h2>
+      <h2 class="section-title"><span class="prefix">#</span>professional-projects</h2>
       <div class="section-line"></div>
     </div>
 
-    <div *ngFor="let company of professionalProjects" class="company-section">
-      <h3 class="company-title">{{ company.name }}</h3>
+    <div *ngFor="let company of filteredProfessional" class="company-wrapper">
+      <h3 class="company-title sub-title"><span class="prefix">╰─</span> {{ company.name }}</h3>
 
-      <div *ngFor="let project of company.projects" class="project-card">
-        <div class="project-summary">
+      <div class="project-grid">
+        <div
+          *ngFor="let project of company.projects"
+          class="project-card"
+          [class.expanded-card]="expandedProject === project"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- COLLAPSED (default) -->
           <h4 class="project-title">{{ project.title }}</h4>
-          <p class="project-description">{{ project.description }}</p>
+          <p class="project-description">{{ project.shortDescription }}</p>
 
-          <button class="view-btn" (click)="toggleExpand(project)">
-            {{ expandedProject === project ? 'Hide Details' : 'View More Details' }}
+          <div class="project-tags" *ngIf="project.tags?.length">
+            <span class="tag" *ngFor="let tag of project.tags">
+              <i [ngClass]="tag.icon"></i> {{ tag.name }}
+            </span>
+          </div>
+
+          <button class="project-btn" (click)="toggleExpand(project, $event)">
+            {{ expandedProject === project ? 'Hide Details' : 'View More' }}
           </button>
-        </div>
 
-        <!-- Expanded Details -->
-        <div class="project-details" [class.expanded]="expandedProject === project">
-          <ul>
-            <li><strong>Team Size:</strong> {{ project.teamSize }}</li>
-            <li><strong>Roles & Contributions:</strong> {{ project.roles }}</li>
-            <li><strong>Responsibilities:</strong> {{ project.responsibilities }}</li>
-            <li><strong>Impact:</strong> {{ project.impact }}</li>
-            <li><strong>Status:</strong> {{ project.status }}</li>
-          </ul>
+          <!-- EXPANDED CONTENT -->
+          <div
+            class="details"
+            *ngIf="expandedProject === project"
+            (click)="$event.stopPropagation()"
+          >
+            <ul>
+              <li><strong>Team Size:</strong> {{ project.teamSize }}</li>
+              <li><strong>Role:</strong> {{ project.roles }}</li>
+              <li><strong>Responsibilities:</strong> {{ project.responsibilities }}</li>
+              <li><strong>Impact:</strong> {{ project.impact }}</li>
+              <li><strong>Status:</strong> {{ project.status }}</li>
 
-          <!-- Conditional Live/GitHub Buttons -->
-          <div class="project-links" *ngIf="project.live || project.github">
-            <a *ngIf="project.live" [href]="project.live" target="_blank" class="link-btn">Live</a>
-            <a *ngIf="project.github" [href]="project.github" target="_blank" class="link-btn">GitHub</a>
+              <li *ngIf="project.longDescription.length">
+                <strong>Execution:</strong>
+                <ul class="inner-bullets">
+                  <li *ngFor="let point of project.longDescription">
+                    {{ point }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <div class="project-buttons">
+              <a *ngIf="project.live" [href]="project.live" target="_blank" class="project-btn">
+                <i class="fas fa-play"></i> Live
+              </a>
+              <a *ngIf="project.github" [href]="project.github" target="_blank" class="project-btn">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- =================== PERSONAL PROJECTS =================== -->
-  <div class="project-category">
+  <!-- ==========================================================
+       PERSONAL PROJECTS
+       ========================================================== -->
+  <div *ngIf="filterCategory !== 'professional'" class="project-category">
     <div class="section-header sub-header">
-      <h2 class="section-title">#<span class="head-text">personal-projects</span></h2>
+      <h2 class="section-title"><span class="prefix">#</span>personal-projects</h2>
       <div class="section-line"></div>
     </div>
 
-    <div *ngFor="let section of personalProjects" class="personal-section">
-      <h3 class="company-title">{{ section.section }}</h3>
-
-      <div *ngFor="let project of section.projects" class="project-card">
-        <div class="project-summary">
+    <div *ngFor="let section of filteredPersonal" class="company-wrapper">
+      <div class="project-grid">
+        <div
+          *ngFor="let project of section.projects"
+          class="project-card"
+          [class.expanded-card]="expandedProject === project"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- COLLAPSED -->
           <h4 class="project-title">{{ project.title }}</h4>
-          <p class="project-description">{{ project.description }}</p>
+          <p class="project-description">{{ project.shortDescription }}</p>
 
-          <button class="view-btn" (click)="toggleExpand(project)">
-            {{ expandedProject === project ? 'Hide Details' : 'View More Details' }}
+          <div class="project-tags" *ngIf="project.tags?.length">
+            <span class="tag" *ngFor="let tag of project.tags">
+              <i [ngClass]="tag.icon"></i> {{ tag.name }}
+            </span>
+          </div>
+
+          <button class="project-btn" (click)="toggleExpand(project, $event)">
+            {{ expandedProject === project ? 'Hide Details' : 'View More' }}
           </button>
-        </div>
 
-        <!-- Expanded Details -->
-        <div class="project-details" [class.expanded]="expandedProject === project">
-          <ul>
-            <li><strong>Team Size:</strong> {{ project.teamSize }}</li>
-            <li><strong>Roles & Contributions:</strong> {{ project.roles }}</li>
-            <li><strong>Responsibilities:</strong> {{ project.responsibilities }}</li>
-            <li><strong>Impact:</strong> {{ project.impact }}</li>
-            <li><strong>Status:</strong> {{ project.status }}</li>
-          </ul>
+          <!-- EXPANDED -->
+          <div
+            class="details"
+            *ngIf="expandedProject === project"
+            (click)="$event.stopPropagation()"
+          >
+            <ul>
+              <li><strong>Team Size:</strong> {{ project.teamSize }}</li>
+              <li><strong>Role:</strong> {{ project.roles }}</li>
+              <li><strong>Responsibilities:</strong> {{ project.responsibilities }}</li>
+              <li><strong>Impact:</strong> {{ project.impact }}</li>
+              <li><strong>Status:</strong> {{ project.status }}</li>
 
-          <!-- Conditional Live/GitHub Buttons -->
-          <div class="project-links" *ngIf="project.live || project.github">
-            <a *ngIf="project.live" [href]="project.live" target="_blank" class="link-btn">Live</a>
-            <a *ngIf="project.github" [href]="project.github" target="_blank" class="link-btn">GitHub</a>
+              <li *ngIf="project.longDescription.length">
+                <strong>Execution:</strong>
+                <ul class="inner-bullets">
+                  <li *ngFor="let point of project.longDescription">{{ point }}</li>
+                </ul>
+              </li>
+            </ul>
+
+            <div class="project-buttons">
+              <a *ngIf="project.live" [href]="project.live" target="_blank" class="project-btn">
+                <i class="fas fa-play"></i> Live
+              </a>
+              <a *ngIf="project.github" [href]="project.github" target="_blank" class="project-btn">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
           </div>
         </div>
       </div>

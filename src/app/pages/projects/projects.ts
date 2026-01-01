@@ -6,9 +6,9 @@ interface Project {
   title: string;
   description: string;
   image: string;
-  live: string;
+  live?: string;
   github: string;
-  tags: string[]; // ✅ added
+  tags: { name: string; icon: string }[];
 }
 
 @Component({
@@ -32,30 +32,45 @@ projects: Project[] = [
     image: 'images/project1.jpg',
     title: 'Clone Catch',
     description:
-      'Image sorting and duplicate detection tool powered by AWS Lambda (VGG16) and S3. Automates cleanup for large photo datasets.',
+      'Image sorting and duplicate detection tool using AWS Lambda (VGG16) and S3 to automate cleanup for large photo datasets.',
     live: '#',
     github: 'https://github.com/Prateesh-Sulikeri/CloneCatch',
-    tags: ['AWS (Lambda, S3)', 'Python', "VGG16"] 
+    tags: [
+      { name: 'AWS Lambda', icon: 'devicon-amazonwebservices-plain' },
+      { name: 'Python', icon: 'devicon-python-plain' },
+      { name: 'VGG16', icon: 'fa-solid fa-image' }
+    ]
   },
   {
-    image: 'images/project2.jpg',
-    title: 'Redditorials API',
+    image: 'images/go-event-ingestor.jpg', // add a relevant image in /images
+    title: 'Go Event Ingestor',
     description:
-      'FastAPI-based Reddit content API to fetch and filter stories programmatically for automation tools.',
-    live: '#',
-    github: 'https://github.com/Prateesh-Sulikeri/redditorials',
-    tags: ['FastAPI', 'Python', 'Reddit API']
+      'High-performance Go event ingestion system with JWT auth, Redis rate limiting, and real-time dashboards to protect backend APIs under bursty traffic.',
+    live: '', // no live deployment provided
+    github: 'https://github.com/Prateesh-Sulikeri/Go-event-ingestor',
+    tags: [
+      { name: 'Go', icon: 'devicon-go-plain-wordmark' },
+      { name: 'Redis', icon: 'devicon-redis-plain' },
+      { name: 'PostgreSQL', icon: 'devicon-postgresql-plain' },
+      { name: 'JWT', icon: 'fa-solid fa-key' },               // Font Awesome fallback
+      { name: 'WebSocket', icon: 'fa-solid fa-wave-square' }  // FA logical choice
+    ]
   },
   {
     image: 'images/project3.jpg',
     title: 'JinBo — AI Assistant',
     description:
-      'AI-powered personal assistant built with Express.js and Hugging Face APIs, integrated into my portfolio for dynamic Q&A.',
+      'AI-powered personal assistant built with Express.js and Hugging Face APIs, integrated into the portfolio for dynamic Q&amp;A.',
     live: 'https://jinbo.onrender.com/',
     github: 'https://github.com/Prateesh-Sulikeri/JinBo',
-    tags: ['Hugging Face', 'Express', 'NLP']
+    tags: [
+      { name: 'Hugging Face', icon: 'fa-regular fa-face-smile-beam' },
+      { name: 'Express', icon: 'devicon-express-original' },
+      { name: 'NLP', icon: 'fa-solid fa-brain' }
+    ]
   }
 ];
+
 
 
   openLink(url: string) {
