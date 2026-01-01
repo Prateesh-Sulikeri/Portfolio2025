@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 interface Project {
   title: string;
-  description: string;
+  shortDescription: string;
+  longDescription: string[];
+
   teamSize: string;
   roles: string;
   responsibilities: string;
   impact: string;
   status: string;
-  live?: string;   // optional live link
-  github?: string; // optional GitHub link
+
+  projectType: 'backend' | 'frontend' | 'fullstack' | 'cloud' | 'ai-ml' | 'exploratory';
+  live?: string;
+  github?: string;
+  tags?: { name: string; icon: string }[];
 }
 
 interface CompanyProjects {
@@ -25,193 +31,516 @@ interface PersonalSection {
 
 @Component({
   selector: 'app-all-progjects',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './all-progjects.html',
   styleUrls: ['./all-progjects.css']
 })
-export class AllProgjects implements AfterViewInit, OnInit {
+export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
 
   isMobile = false;
+  expandedProject: Project | null = null;
+  private lastScrollY: number | null = null;
+
+  // =================== FILTER STATE ===================
+  filterCategory: 'all' | 'professional' | 'personal' = 'all'; filterTypes: string[] = [];
+  filterTech: string[] = [];
+  filterLiveOnly: boolean = false;
+  availableTech: { name: string; icon: string }[] = [];
+
+  showFilters: boolean = false; // NEW — filter panel visibility toggle
+
+  // UI selections buffer (temp until Apply)
+  pendingCategory: 'all' | 'professional' | 'personal' = 'all';
+  pendingTypes: string[] = [];
+  pendingTech: string[] = [];
+  pendingLive = false;
+
+
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+
+    // when opening: load actual values into pending
+    if (this.showFilters) {
+      this.pendingCategory = this.filterCategory;
+      this.pendingTypes = [...this.filterTypes];
+      this.pendingTech = [...this.filterTech];
+      this.pendingLive = this.filterLiveOnly;
+    }
+  }
+
+  // APPLY button
+  applyFilters() {
+    this.filterCategory = this.pendingCategory;
+    this.filterTypes = [...this.pendingTypes];
+    this.filterTech = [...this.pendingTech];
+    this.filterLiveOnly = this.pendingLive;
+    this.showFilters = false;
+  }
+
+  // RESET button
+  resetFilters() {
+    this.filterCategory = 'all';
+    this.filterTypes = [];
+    this.filterTech = [];
+    this.filterLiveOnly = false;
+
+    this.pendingCategory = 'all';
+    this.pendingTypes = [];
+    this.pendingTech = [];
+    this.pendingLive = false;
+  }
+  constructor(private el: ElementRef) { }
 
   ngOnInit() {
     this.isMobile = window.innerWidth <= 768;
+    this.collectTechnologies();
   }
 
-
-  constructor(private el: ElementRef) { }
   ngAfterViewInit(): void {
     setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    }, 0);
-    // Wait until header height is known
-    setTimeout(() => {
-      const header = document.querySelector('.app-header') as HTMLElement;
-      const section = this.el.nativeElement.querySelector('.projects-page') as HTMLElement;
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    });
 
-      if (header && section) {
-        const headerHeight = header.offsetHeight;
-        section.style.scrollMarginTop = `${headerHeight + 20}px`;
-        section.style.paddingTop = `${headerHeight + 30}px`;
-      }
-    }, 100); // ensure layout settled
+    // Listen globally for outside clicks
+    document.addEventListener('click', this.onWindowClick);
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.onWindowClick);
   }
 
 
-  expandedProject: Project | null = null;
+  // =================== DATA ===================
 
-  // =================== PROFESSIONAL PROJECTS ===================
   professionalProjects: CompanyProjects[] = [
     {
       name: 'Persistent Systems',
       projects: [
         {
           title: 'Employee Management System',
-          description:
-            'FastAPI-based employee management solution designed for internal HR and operations under the Martian Internship Program.',
+          shortDescription: 'FastAPI-based employee management solution for HR automation.',
+          longDescription: [
+            'REST APIs in FastAPI + MySQL',
+            'Linux deployment, modular design',
+            'Query optimisation & validations'
+          ],
           teamSize: '3',
           roles: 'Backend Developer (Intern)',
-          responsibilities:
-            'Developed REST APIs in Python (FastAPI), integrated MySQL, and deployed on Linux. Focused on data validation, modular design, and optimized query performance using DSA principles.',
-          impact:
-            'Streamlined HR workflows, improved data consistency, and reduced query response times by optimizing backend logic.',
+          responsibilities: 'FastAPI + MySQL backend ownership',
+          impact: 'Improved workflow efficiency + reduced response times',
           status: 'Delivered',
-          live: '',
-          github: ''
+          projectType: 'backend',
+          tags: [
+            { name: "FastAPI", icon: "devicon-fastapi-plain" },
+            { name: "MySQL", icon: "devicon-mysql-plain" },
+            { name: "Linux", icon: "devicon-linux-plain" }
+          ]
         }
-      ],
+      ]
     },
     {
-      name: 'Xoriant Technologies',
+      name: 'Xoriant Technologies Pvt Ltd',
       projects: [
         {
-          title: 'Global FX Settlement Platform — Core Components',
-          description:
-            'Enterprise-scale foreign exchange settlement platform used by 18+ multinational banks, processing multi-currency transactions worth billions daily.',
+          title: 'Session-Based Multi-Currency Validation & Settlement Routing',
+          shortDescription: 'Session-based multi-currency validation and auditing flows in an existing C++ settlement component, including cross-layer routing logic and compliance-driven behavior changes.',
+          longDescription: [
+            'Collaborated with Business Analysts to finalize requirements and translate functional specifications into implementation-ready designs for multi-currency settlement sessions.',
+            'Redesigned portions of the existing architecture to incorporate currency validation into multiple settlement sessions without regression or breaking downstream workflows.',
+            'Designed and implemented new RDM APIs (request–response flows, query structure, DB interaction patterns) required to support the new validation architecture, including separate UT coverage for API components.',
+            'Analyzed existing codebase for impact areas and integrated changes across core layers: Data layer parsing, business rules & validation layer, cache layer synchronization, and DB persistence.',
+            'Introduced a currency allow-list architecture to handle dynamic and static validation rules, designed for extensibility and reduced repetitive validation logic across sessions.',
+            'Developed multi-session routing logic to enforce distinct behaviors for session types (ex: morning vs. end-of-day settlement behavior) and ensure isolated failure domains.',
+            'Implemented Perl-based scripting functions and rule files for execution of settlement validation logic, ensuring compatibility with existing test harnesses and auto-execution setups.',
+            'Collaborated with onshore and offshore technical leads to optimize performance, reduce redundant validations, and maintain coding standards across multiple components.',
+            'Wrote extensive UTs (DB mocks + functional isolation), CTs for inter-component validation, and contributed to broader integration tests to ensure correctness post-deployment.',
+            'Supported build and release readiness: issue identification, regression fixes, behavior verification across integration environments, and documentation for handover.'
+          ],
           teamSize: '8',
           roles: 'Junior Backend Developer',
-          responsibilities:
-            'Developed and maintained backend services in C++ and Java (Spring Boot), automated setup and regression pipelines on AWS (Lambda, S3, DynamoDB), and integrated SWIFT 2025 message formats (MFP/TDA).',
-          impact:
-            'Reduced regression effort by ~65%, improved reliability, and achieved full SWIFT compliance for critical message flows.',
+          responsibilities: 'Design collaboration, code implementation, API development, unit/component testing, integration support, and release readiness.',
+          impact: 'Enabled compliant multi-currency settlements with reduced rejection rates across routing flows; improved standards alignment and ensured stability of session-based settlement behavior.',
           status: 'Production',
-          live: '',
-          github: ''
+          projectType: 'backend',
+          tags: [
+            { name: "C++", icon: "devicon-cplusplus-plain" },
+            { name: "IBM DB2", icon: "fas fa-database" },
+            { name: "IBM MQ", icon: "fas fa-network-wired" },
+            { name: "Perl", icon: "devicon-perl-plain" },
+            { name: "Messaging Systems", icon: "fas fa-exchange-alt" }
+          ]
         },
         {
-          title: 'C++ Modernization & Java Microservice Refactor',
-          description:
-            'Migration initiative to modernize legacy C++11 code to C++23 and modularize core settlement components into Java microservices.',
-          teamSize: '4',
-          roles: 'Software Engineer',
-          responsibilities:
-            'Refactored large C++ modules into Java (Spring Boot) services, implemented automated unit test generators, and improved cross-component reliability in AWS deployments.',
-          impact:
-            'Enhanced maintainability, boosted test coverage, and reduced build failures across multiple environments.',
-          status: 'Delivered',
-          live: '',
-          github: ''
+          title: 'Standards 2025 — FXTR.08 SWIFT Trade Message Compliance',
+          shortDescription: 'Implemented SWIFT FXTR.08 standards across trade lifecycle and settlement components.',
+          longDescription: [
+            'Owned end-to-end upgrade of FXTR.08 messaging flow for 2025 SWIFT standards compliance',
+            'Performed code analysis and refactoring across C++ and Java components handling trade lifecycle events',
+            'Integrated field/tag changes, validation rules, and updated audit behaviors impacting downstream systems',
+            'Implemented IBM MQ updates for new message schema routing and acknowledgement behaviors',
+            'Enhanced auditing logic and data visibility through IBM DB schema adjustments',
+            'Co-ordinated with product/architecture team for design alignment and compliance traceability',
+            'Executed integration and UAT validation across internal rails and SWIFT test environment'
+          ],
+          teamSize: '8',
+          roles: 'Junior Backend Developer',
+          responsibilities: 'Standards upgrade ownership, design collaboration, code changes, validation & testing',
+          impact: 'Delivered 2025 SWIFT standards compliance; ensured production-ready FX trade flows and audit readiness',
+          status: 'Production',
+          projectType: 'backend',
+          tags: [
+            { name: "C++", icon: "devicon-cplusplus-plain" },
+            { name: "Java", icon: "devicon-java-plain" },
+            { name: "IBM MQ", icon: "fas fa-network-wired" },
+            { name: "IBM DB", icon: "fas fa-database" },
+            { name: "SWIFT Network", icon: "fas fa-exchange-alt" },
+            { name: "Compliance", icon: "fas fa-shield-alt" }
+          ]
         },
         {
-          title: 'Static Code Analysis Automation',
-          description:
-            'Automated pipeline for detecting memory leaks and performance issues in C++ components using open-source analysis tools.',
-          teamSize: '2',
+          title: 'Unit Testing Modernization — gMock Adoption',
+          shortDescription: 'Introduced a modern gMock-based testing approach to replace legacy UTs tied to real MQ and DB2 systems.',
+          longDescription: [
+            'Evaluated gMock as a replacement for legacy in-house UT framework; delivered POC to validate feasibility',
+            'Re-architected unit tests to remove dependencies on IBM MQ and IBM DB2, eliminating CT-like behavior in UT runs',
+            'Created reusable gMock patterns for gateway, DB, and message interface layers to support deterministic test results',
+            'Refactored UT structure, naming, and Makefile workflows for consistency and maintainability',
+            'Modernized ~1200 tests under the new approach, improving isolation, stability, and root cause traceability'
+          ],
+          teamSize: '6',
           roles: 'Backend Engineer',
-          responsibilities:
-            'Integrated RATS, Flawfinder, and Valgrind into CI/CD workflows; automated report generation and flagged code-level issues pre-merge.',
-          impact:
-            'Reduced manual code review time by 50% and improved release quality by enforcing static analysis in every build.',
+          responsibilities: 'POC, framework integration, reference mock implementations, modernization of legacy UTs',
+          impact: 'Reduced environmental coupling; significantly improved test stability and reliability for C++ components',
           status: 'Delivered',
-          live: '',
-          github: ''
+          projectType: 'backend',
+          tags: [
+            { name: "C++", icon: "devicon-cplusplus-plain" },
+            { name: "gMock", icon: "fas fa-vial" },
+            { name: "IBM MQ", icon: "fas fa-network-wired" },
+            { name: "DB2", icon: "fas fa-database" },
+            { name: "Testing", icon: "fas fa-check-circle" }
+          ]
         },
         {
-          title: 'CI/CD Monitoring Dashboard',
-          description:
-            'Angular + Spring Boot dashboard for real-time monitoring of build, test, and deployment pipelines across internal environments.',
-          teamSize: '2',
-          roles: 'Full Stack Developer',
-          responsibilities:
-            'Developed UI and backend services, implemented alerts and analytics for release visibility, and integrated it into DevOps tooling.',
-          impact:
-            'Enabled proactive issue detection and faster troubleshooting across teams.',
+          title: 'Code Quality, Coverage & Analysis Automation',
+          shortDescription: 'Automated code coverage and analysis workflows to track quality, security warnings, memory issues, and performance regressions across C++ modules.',
+          longDescription: [
+            'Switched existing coverage setup to Gcovr and re-structured report generation so individual components can be checked instead of running full-suite every time.',
+            'Wrote shell scripts to run static code analysis tools (RATS, Flawfinder, CppCheck) in a batch flow and capture outputs in a consistent format.',
+            'Used Python to aggregate results: combined static analysis findings, code coverage numbers, and memory/runtime reports into a single summary report.',
+            'Integrated Valgrind into the workflow for runtime checks (memory leaks, invalid reads/writes) and included its output in the final report.',
+            'Added basic performance comparison: new version vs previous version (execution time and memory usage deltas), included as diff sections in the report.',
+            'Fixed ~50+ code issues across multiple components (mix of low/medium severity findings, a few bugs, and multiple security warnings flagged by static tools).',
+            'Shared the reporting flow with the rest of the team and helped them interpret the results so issues could be broken down and assigned.'
+          ],
+          teamSize: '1',
+          roles: 'Backend Engineer',
+          responsibilities: 'Setup + automation scripting, static/dynamic analysis, defect fixes, coverage improvements.',
+          impact: 'Made it easier to catch regressions early; reduced back-and-forth during reviews; coverage reports are now easier to check and share.',
           status: 'Delivered',
-          live: '',
-          github: ''
-        }
-      ],
-    },
+          projectType: 'backend',
+          tags: [
+            { name: "C++", icon: "devicon-cplusplus-plain" },
+            { name: "Python", icon: "devicon-python-plain" },
+            { name: "Shell", icon: "devicon-bash-plain" },
+            { name: "Gcovr", icon: "fas fa-clipboard-check" },
+            { name: "Valgrind", icon: "fas fa-tachometer-alt" },
+            { name: "CppCheck", icon: "fas fa-search" }
+          ]
+        },
+        {
+          title: 'Build & Analysis Monitoring Dashboard',
+          shortDescription: 'Internal CI observability dashboard for build health, UTC metrics, component insights, and quality trend analysis.',
+          longDescription: [
+            'Developed Spring Boot APIs for CI data aggregation, build/UTC metrics ingestion, and component report access',
+            'Built Angular dashboard with drill-down analytics, failure categorization, and interactive component-level summaries',
+            'Integrated realtime update channel (WebSockets) for live build status refresh — leveraging Java backend and/or Angular client event stream (based on environment)',
+            'Implemented pre-build validators: Jira ticket checks, configuration validation, and environment gating to reduce CI failures',
+            'Added UTC summaries, build duration trends, failure rate breakdown, and automated validation report generation',
+            'Automated environment setup and scheduled report pipelines using Python + Ansible'
+          ],
+          teamSize: '3',
+          roles: 'Full Stack Developer',
+          responsibilities: 'API design + Angular UI + automation scripts + validation flows + realtime status integration',
+          impact: 'Improved CI visibility, reduced build cycle friction, accelerated investigation times for regressions and validation failures',
+          status: 'POC / Internal Pilot',
+          projectType: 'fullstack',
+          tags: [
+            { name: "Angular", icon: "devicon-angular-plain" },
+            { name: "Spring Boot", icon: "devicon-spring-plain" },
+            { name: "WebSockets", icon: "fas fa-bolt" },
+            { name: "Python", icon: "devicon-python-plain" },
+            { name: "Ansible", icon: "devicon-ansible-plain" }
+          ]
+        },
+      ]
+    }
+
   ];
 
-  // =================== PERSONAL PROJECTS ===================
   personalProjects: PersonalSection[] = [
     {
       section: 'Personal Projects',
       projects: [
         {
-          title: 'Clone Catch',
-          description:
-            'Backend-driven image management tool powered by AWS Lambda (VGG16) and S3 for duplicate and blurry image detection at scale.',
+          title: 'Go Rate-Limited Event Ingestor',
+          shortDescription: 'Go + Redis event ingestor with token bucket rate limiting, JWT auth, real-time dashboard, and concurrent batch processing.',
+          longDescription: [
+            'Built using Go (Gin) to ingest event payloads over HTTP; token bucket rate limiting handled through Redis to maintain shared state and prevent request spikes.',
+            'Implemented JWT authentication middleware so only authorized clients can submit events; unauthorized traffic is rejected before hitting ingestion logic.',
+            'Used Redis both for limiter state and lightweight request bookkeeping so the service can run in more than one instance without losing rate context.',
+            'Event handling is decoupled from storage using goroutine worker pools and channel queues; this keeps ingestion responsive even if DB writes slow down.',
+            'Worker batches are flushed to a SQL database; retries use a `select {}`-based mechanism to handle backpressure and timeouts without blocking the main pipeline.',
+            'On flush failures (DB unreachable, timeout, etc.), events are held in memory/Redis and re-attempted with a controlled retry interval instead of infinite looping.',
+            'WebSockets layer streams real-time updates (new events, limiter status, queue length, and batch writes) to subscribers for visibility into ingest behavior.',
+            'Small dashboard built with HTML/CSS/JS + Go to visualize throughput, queue size, limiter tokens, and refill timings; intended for debugging and local observability.',
+            'Shell scripts simulate traffic in multiple modes (steady, burst, wave) so limiter behavior and buffering strategies can be validated and graphed.',
+            'Deployment is a local binary but architecture supports containerizing later; primarily built for local/edge ingestion and experimentation.'
+          ],
           teamSize: '1',
           roles: 'Backend Developer',
-          responsibilities:
-            'Implemented ML inference on AWS Lambda using VGG16, managed file pipelines via REST APIs, and stored processed data in S3. Built lightweight frontend for uploads and results visualization.',
-          impact:
-            'Automated the tedious process of image curation and cleanup for large datasets.',
+          responsibilities: 'Service architecture, Redis integration, JWT auth, retry/flush design, dashboard, scripts, documentation.',
+          impact: 'Useful as a prototype for traffic shaping and controlled ingestion before scaling to message queues or larger pipelines.',
           status: 'Active',
-          live: '',
-          github: 'https://github.com/Prateesh-Sulikeri/CloneCatch'
+          projectType: 'backend',
+          github: 'https://github.com/Prateesh-Sulikeri/Go-event-ingestor',
+          tags: [
+            { name: "Go", icon: "devicon-go-plain-wordmark" },
+            { name: "Gin", icon: "devicon-go-plain" },
+            { name: "Redis", icon: "devicon-redis-plain" },
+            { name: "SQL", icon: "fas fa-database" },
+            { name: "JWT", icon: "fas fa-key" },
+            { name: "WebSockets", icon: "fas fa-signal" },
+            { name: "Concurrency", icon: "fas fa-stream" }
+          ]
         },
         {
-          title: 'Redditorials API',
-          description:
-            'FastAPI-based backend service for fetching and filtering Reddit stories for automated content generation workflows.',
+          title: 'Redditorials API — Reddit + YouTube Story Automation',
+          shortDescription: 'FastAPI backend that aggregates Reddit posts, processes them, and serves structured content for downstream automation.',
+          longDescription: [
+            'Built a FastAPI service to fetch Reddit submissions and comments using the official Reddit API with OAuth-based authentication.',
+            'Created modular API endpoints that allow clients to request content by subreddit, topic, or filters such as minimum upvotes/time range.',
+            'Implemented response caching using in-memory and time-based expiration logic to reduce redundant calls to Reddit and improve responsiveness.',
+            'Parsed Reddit payloads into a normalized, structured JSON format suitable for automation or consumption by other services.',
+            'Included filtering layers to remove spam or low-quality content (based on upvote threshold, comment depth, blacklists, etc.) before returning results.',
+            'Handled rate-limit errors from Reddit gracefully with backoff and retry policies to remain within API usage boundaries.',
+            'Documented API routes using autogenerated OpenAPI docs and included example curl/python calls in the README for quick developer onboarding.',
+            'Wrote unit tests for API handlers, caching logic, and filter pipelines to ensure correctness and guard against regressions.'
+          ],
           teamSize: '1',
           roles: 'Backend Developer',
-          responsibilities:
-            'Developed REST endpoints using FastAPI and Reddit API, implemented JSON-based query filters, and optimized caching for repeated queries.',
-          impact:
-            'Enabled automated content aggregation for YouTube storytelling and text-to-speech projects.',
+          responsibilities: 'API design, Reddit integration, caching, error handling, documentation.',
+          impact: 'Made it easy to fetch, filter, and reuse Reddit content programmatically for content workflows or automation scripts.',
           status: 'Delivered',
-          live: '',
-          github: 'https://github.com/Prateesh-Sulikeri/redditorials'
+          projectType: 'backend',
+          github: 'https://github.com/Prateesh-Sulikeri/redditorials',
+          tags: [
+            { name: "Python", icon: "devicon-python-plain" },
+            { name: "FastAPI", icon: "devicon-fastapi-plain" },
+            { name: "Reddit API", icon: "fa-brands fa-reddit-alien" },
+            { name: "Caching", icon: "fas fa-memory" },
+            { name: "REST API", icon: "fas fa-plug" }
+          ]
         },
         {
           title: 'JinBo — AI Portfolio Assistant',
-          description:
-            'AI assistant built with Express.js and Hugging Face APIs, integrated into my portfolio for conversational Q&A and interactive engagement.',
+          shortDescription: 'Express.js backend that serves a stateless conversational assistant powered by HuggingFace inference and a small local knowledge base file.',
+          longDescription: [
+            'Built an Express.js backend that exposes REST API endpoints for chat requests; responses are generated using HuggingFace hosted models (Inference API).',
+            'Implements a lightweight RAG-like flow by matching user queries against a KB.json file; the most relevant context is appended to the prompt before inference.',
+            'KB.json acts as a mini knowledge base with portfolio-related facts and predefined context chunks; retrieval is currently string/semantic matching on request.',
+            'The assistant is stateless at the moment — each request is treated independently and no conversation history is stored.',
+            'Added basic request validation and authentication (API key check / token) to prevent unrestricted usage of the inference endpoint.',
+            'Includes a minimal client: a public/index.html page with vanilla JS that sends chat requests to the backend and displays responses.',
+            'Deployment is hosted on Render (free tier) for public access; setup instructions included in the repo for local testing via npm + environment variables.',
+            'Project is structured so it can be extended later with vector embeddings, conversation memory, or Redis-based session state if needed.'
+          ],
           teamSize: '1',
-          roles: 'Full Stack Developer',
-          responsibilities:
-            'Built backend using Express.js and Hugging Face transformers, implemented fuzzy search and RAG for personalized responses, and connected to Angular frontend.',
-          impact:
-            'Improved user engagement and portfolio interactivity through natural conversation features.',
+          roles: 'Backend Developer',
+          responsibilities: 'API design, HuggingFace integration, KB retrieval logic, minimal frontend, deployment.',
+          impact: 'Used on my portfolio to let visitors ask questions and get contextual responses instead of static content browsing.',
           status: 'Active',
+          projectType: 'ai-ml',
           live: 'https://jinbo.onrender.com/',
-          github: 'https://github.com/Prateesh-Sulikeri/JinBo'
+          github: 'https://github.com/Prateesh-Sulikeri/JinBo',
+          tags: [
+            { name: "Node.js", icon: "devicon-nodejs-plain" },
+            { name: "Express.js", icon: "devicon-express-original" },
+            { name: "HuggingFace", icon: "fa-regular fa-face-smile-beam" },
+            { name: "RAG-Lite", icon: "fas fa-brain" },
+            { name: "JavaScript", icon: "devicon-javascript-plain" }
+          ]
+        },
+                {
+          title: 'CloneCatch — Image Duplicate & Face-Based Sorter',
+          shortDescription: 'Python-based tool for identifying duplicate images and tagging/moving images by face matches using VGG16 encodings and traditional image hashing.',
+          longDescription: [
+            'Built a utility in Python that scans a local folder of images, normalizes them (e.g., converting HEIC/other formats to JPEG), and identifies duplicates and near-duplicates based on perceptual hashing and feature extraction.',
+            'Used VGG16 via Keras to compute deep feature vectors for images and match them based on cosine similarity; this enabled fuzzy duplicate detection beyond simple hash matches.',
+            'Integrated face-encoding extraction using `face_recognition` and OpenCV so images containing a given person could be grouped into a separate folder named after that person.',
+            'Structured the workflow as multiple scripts (convert, detect duplicates, move matching images) so users can run only the steps they need for their dataset.',
+            'Handled image I/O, format conversion, and consistency checks with `Pillow` and `pillow-heif` to support modern camera formats common on phones.',
+            'Organized output folders for “best” and “duplicate” images to make downstream review simple and avoid manual sorting.',
+            'Documentation and usage instructions included sample command flows to process thousands of images with minimal manual intervention.',
+            'Developed this as a standalone tool useful for personal photo library cleanup or preprocessing before building larger ML/vision workflows.'
+          ],
+          teamSize: '1',
+          roles: 'Tool Architect & Developer',
+          responsibilities: 'Feature design, algorithm selection (perceptual hashing + deep features), scripting, test runs, documentation.',
+          impact: 'Reduced manual effort for photo organization and duplicate filtering; a practical utility for photographers and hobbyists with large local libraries.',
+          status: 'Delivered',
+          projectType: 'exploratory',
+          github: 'https://github.com/Prateesh-Sulikeri/CloneCatch',
+          tags: [
+            { name: "Python", icon: "devicon-python-plain" },
+            { name: "Keras", icon: "devicon-keras-plain" },
+            { name: "OpenCV", icon: "devicon-opencv-plain" },
+            { name: "Image Processing", icon: "fas fa-image" },
+            { name: "Face Recognition", icon: "fas fa-user-circle" }
+          ]
+        },
+        {
+          title: 'Go Webscraper — Configurable Scraping Utility',
+          shortDescription: 'Go tool that scrapes multiple URLs concurrently using CSS selectors and outputs JSON.',
+          longDescription: [
+            'Command-line tool built in Go that accepts a list of URLs and a set of CSS selectors, scrapes them, and returns structured data.',
+            'Uses goroutines and channels to scrape multiple URLs concurrently; concurrency limit is configurable via a CLI flag to prevent overload.',
+            'HTML parsing handled using the `goquery` library; selectors resolve to text or attribute values and are stored in structured fields.',
+            'Exports results as JSON (one object per URL) to support downstream data processing or ingestion into other services.',
+            'Includes CLI flags for input URLs, selector lists, output file path, and concurrency level; can scrape a single URL or batch from a list.',
+            'Basic retry and timeout handling using the standard library http.Client; planned for future improvements like rate limiting and sleep intervals.',
+            'Error handling avoids full job failure — failed fetches log errors and continue with the remaining URLs.',
+            'Designed to be extended into a larger data ingestion pipeline or integrated with headless scraping for JS-heavy sites.'
+          ],
+          teamSize: '1',
+          roles: 'Backend Developer',
+          responsibilities: 'HTML parsing, concurrency design, CLI interface, JSON structuring, documentation.',
+          impact: 'Served as a reusable utility for collecting structured data when APIs are unavailable or limited.',
+          status: 'Delivered',
+          projectType: 'backend',
+          github: 'https://github.com/Prateesh-Sulikeri/Go-Webscrapper',
+          tags: [
+            { name: "Go", icon: "devicon-go-plain" },
+            { name: "Web Scraping", icon: "fas fa-spider" },
+            { name: "Concurrency", icon: "fas fa-stream" },
+            { name: "goquery", icon: "fas fa-search" },
+            { name: "CLI", icon: "fas fa-terminal" },
+            { name: "JSON", icon: "fas fa-code" }
+          ]
         }
       ]
     }
   ];
 
+  // =================== HELPERS ===================
 
-  // =================== LOGIC ===================
-  toggleExpand(project: Project): void {
-    this.expandedProject =
-      this.expandedProject === project ? null : project;
+  collectTechnologies() {
+    const tech = new Set<string>();
+    const pushTags = (projects: any[]) => {
+      projects.forEach((p: any) => p.tags?.forEach((t: any) => tech.add(t.name)));
+    };
+
+    this.professionalProjects.forEach(c => pushTags(c.projects));
+    this.personalProjects.forEach(s => pushTags(s.projects));
+
+    this.availableTech = Array.from(tech).map(name => ({
+      name,
+      icon: this.findIcon(name),
+    }));
   }
 
-  // ✅ Easily add new personal sections dynamically
-  addPersonalSection(sectionName: string): void {
-    this.personalProjects.push({ section: sectionName, projects: [] });
+  // look up icon based on name (fallback)
+  findIcon(name: string) {
+    const match = [...this.professionalProjects, ...this.personalProjects]
+      .flatMap(g => g.projects)
+      .flatMap(p => p.tags || [])
+      .find(t => t.name === name);
+
+    return match?.icon || "fas fa-code"; // fallback
   }
 
-  addPersonalProject(sectionName: string, newProject: Project): void {
-    const section = this.personalProjects.find(
-      (s) => s.section === sectionName
-    );
-    if (section) {
-      section.projects.push(newProject);
+  togglePendingType(t: string) {
+    if (this.pendingTypes.includes(t)) {
+      this.pendingTypes = this.pendingTypes.filter(x => x !== t);
+    } else {
+      this.pendingTypes.push(t);
     }
+  }
+
+
+  togglePendingTech(name: string) {
+    if (this.pendingTech.includes(name)) {
+      this.pendingTech = this.pendingTech.filter(x => x !== name);
+    } else {
+      this.pendingTech.push(name);
+    }
+  }
+
+
+  // =================== FILTERS ===================
+
+  get filteredProfessional() {
+    return this.professionalProjects.map(company => ({
+      ...company,
+      projects: company.projects.filter(p => this.passesFilters(p))
+    })).filter(x => x.projects.length);
+  }
+
+  get filteredPersonal() {
+    return this.personalProjects.map(section => ({
+      ...section,
+      projects: section.projects.filter(p => this.passesFilters(p))
+    })).filter(x => x.projects.length);
+  }
+
+  passesFilters(p: Project): boolean {
+    if (this.filterCategory === 'professional' && !this.inProfessional(p)) return false;
+    if (this.filterCategory === 'personal' && !this.inPersonal(p)) return false;
+    if (this.filterTypes.length && !this.filterTypes.includes(p.projectType)) return false;
+    if (this.filterTech.length && !p.tags?.some(t => this.filterTech.includes(t.name))) return false;
+    if (this.filterLiveOnly && !p.live) return false;
+    return true;
+  }
+
+  inProfessional(p: Project) { return this.professionalProjects.some(c => c.projects.includes(p)); }
+  inPersonal(p: Project) { return this.personalProjects.some(s => s.projects.includes(p)); }
+
+  // =================== UI ===================
+  toggleExpand(project: Project, event?: Event) {
+    if (event) event.stopPropagation();
+
+    // If this project is already expanded → collapse on Hide Details click
+    if (this.expandedProject === project) {
+      this.expandedProject = null;
+      return;
+    }
+
+    // Otherwise expand
+    this.expandedProject = project;
+
+    // Scroll to top of the expanded card
+    setTimeout(() => {
+      const el = document.querySelector('.expanded-card') as HTMLElement;
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 120;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 250);
+  }
+
+
+  closeExpanded(event?: Event) {
+    if (event) event.stopPropagation();
+    this.expandedProject = null;
+  }
+
+  onWindowClick = (event: MouseEvent) => {
+    const card = (event.target as HTMLElement).closest('.expanded-card');
+    if (!card) this.expandedProject = null;
+  };
+
+
+  onCardClick(event: any, project: Project) {
+    if (!this.isMobile) this.toggleExpand(project);
   }
 }

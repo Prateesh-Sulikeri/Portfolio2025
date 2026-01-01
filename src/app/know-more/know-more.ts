@@ -3,9 +3,14 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Notification } from '../services/notification';
 import { Router } from '@angular/router';
 
+interface SkillItem {
+  name: string;
+  icon: string;
+}
+
 interface SkillCategory {
   category: string;
-  skills: string[];
+  skills: SkillItem[];
 }
 
 interface WorkExperience {
@@ -76,31 +81,58 @@ export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
 
   skills: SkillCategory[] = [
     {
-      category: 'Backend',
-      skills: ['Java (Spring Boot)', 'C++', 'Python', 'REST APIs', 'Microservices']
+      category: 'backend-languages',
+      skills: [
+        { name: 'Go (GoLang)', icon: 'devicon-go-original-wordmark' },
+        { name: 'Java (Spring Boot)', icon: 'devicon-java-plain' },
+        { name: 'C++', icon: 'devicon-cplusplus-plain' },
+      ]
     },
     {
-      category: 'Cloud & DevOps',
-      skills: ['AWS', 'GCP', 'Docker', 'CI/CD', 'Linux']
+      category: 'cloud-&-devOps',
+      skills: [
+        { name: 'AWS', icon: 'devicon-amazonwebservices-plain' },
+        { name: 'GCP', icon: 'devicon-googlecloud-plain' },
+        { name: 'Docker', icon: 'devicon-docker-plain' },
+        { name: 'CI/CD', icon: 'devicon-githubactions-plain' },
+        { name: 'Linux', icon: 'devicon-linux-plain' }
+      ]
     },
     {
-      category: 'Frontend',
-      skills: ['Angular', 'TypeScript', 'JavaScript']
+      category: 'frontend',
+      skills: [
+        { name: 'Angular', icon: 'devicon-angular-plain' },
+        { name: 'HTML', icon: 'devicon-html5-plain' },
+        { name: 'CSS', icon: 'devicon-css3-plain' },
+        { name: 'JavaScript', icon: 'devicon-javascript-plain' },
+        { name: 'TypeScript', icon: 'devicon-typescript-plain' }
+      ]
     },
     {
-      category: 'AI / ML (Exploratory)',
-      skills: ['LangChain', 'TensorFlow', 'Hugging Face', 'RAG Pipelines']
+      category: 'ai/ml (exploratory)',
+      skills: [
+        { name: 'LangChain', icon: 'fa-solid fa-link' },
+        { name: 'Hugging Face', icon: 'fa-regular fa-face-smile-beam' },
+        { name: 'RAG Pipelines', icon: 'fa-solid fa-network-wired' }
+      ]
     },
     {
-      category: 'Scripting languges',
-      skills: ['Python scripts', 'Shell scripts', 'JS Scripts']
+      category: 'scripting-languges',
+      skills: [
+        { name: 'Python scripts', icon: 'devicon-python-plain' },
+        { name: 'Shell scripts', icon: 'devicon-bash-plain' }
+      ]
     },
     {
-      category: 'Databases',
-      skills: ['MySQL', 'PostgreSQL', 'MongoDB']
+      category: 'databases',
+      skills: [
+        { name: 'MySQL', icon: 'devicon-mysql-plain' },
+        { name: 'PostgreSQL', icon: 'devicon-postgresql-plain' },
+        { name: 'MongoDB', icon: 'devicon-mongodb-plain' },
+        { name: 'IBM DB2', icon: 'fa-solid fa-database' }
+      ]
     }
   ];
-
 
   workExperiences: WorkExperience[] = [
     {
@@ -108,10 +140,10 @@ export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
       company: 'Persistent Systems',
       duration: 'Jun 2023 – Aug 2023',
       details: [
-        'Part of Martian internship program',
-        'Built a FastAPI-based Employee Management System on Linux with a MySQL backend.',
-        'Implemented RESTful endpoints and data validation while applying DSA principles for optimized operations.',
-        'Gained hands-on experience with version control, testing, and collaborative development workflows.'
+        'Selected for the Martian internship program and trained on industry-grade SDLC practices.',
+        'Built a FastAPI-based Employee Management System on Linux with a MySQL backend, covering routing, validation, and custom business logic.',
+        'Implemented RESTful endpoints and input validation, applying algorithmic/data-structure fundamentals to optimize workflows.',
+        'Gained exposure to version control (Git), unit testing, documentation, and collaborative agile development practices.'
       ]
     },
     {
@@ -119,17 +151,33 @@ export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
       company: 'Xoriant Technologies',
       duration: 'Apr 2024 – Present',
       details: [
-        'Part of the engineering team responsible for developing and maintaining components powering a global foreign-exchange settlement platform used by 18+ multinational banks, processing multi-currency transactions worth billions daily.',
-        'Devised an automated setup, testing, and deployment framework on AWS (Lambda, S3, DynamoDB), cutting regression effort by nearly 65%.',
-        'Contributed to integrating SWIFT 2025 messaging standards in C++ components, adding secure message parsing and processing for SWIFT MFP and TDA channels.',
-        'Engineered a static code-analysis pipeline using RATS, Flawfinder, and Python, reducing manual review time by 50% and embedding automated checks into release workflows.',
-        'Collaborated on modernizing the C++11 → C++23 codebase and refactoring core modules into Java microservices (Spring Boot), improving maintainability and deployment reliability.',
-        'Built an internal CI/CD monitoring dashboard (Angular 17 + Spring Boot 3) adopted by DevOps for release visibility and faster issue detection.',
-        'Provided L3 production support for high-value, mission-critical settlement systems, ensuring seamless operations and zero downtime during releases.'
+        'Contributing to a foreign exchange settlement system used by 18+ multinational banks, including federal and central banking institutions, to support multi-currency, risk-free settlements processing transactions worth billions.',
+
+        'Delivered a currency-validation enhancement that required coordinated changes across business logic, cache handling, and database design. Drove clarifications with BAs, aligned the approach with onshore architects, implemented the feature, wrote tests, and supported it through release until stable.',
+
+        'Implemented support for the SWIFT ISO 20022 fxtr.08 (ForeignExchangeTradeStatusNotification) message, enabling accurate tracking of trade status updates throughout the FX settlement lifecycle.',
+
+        'Built a repeatable automation setup on AWS (Lambda, S3, DynamoDB) to streamline environment configuration, test preparation, and deployment checks — saving hours of manual setup during regression cycles.',
+
+        'Wrote scripts to automatically annotate and map thousands of RTM test cases for inbound message flows. This reduced repetitive manual work and improved consistency of coverage for New Trade, Amend, and Cancel cases.',
+
+        'Helped modernize the codebase from C++11 toward C++23, and contributed to early-stage conversion of selected components into Spring Boot microservices to improve maintainability and reduce deployment friction.',
+
+        'Introduced gMock-based patterns for unit testing and implemented a DB access mock that removed database dependency for UTs. Added structure and guidelines for UT layout, Makefile execution, and reporting, and contributed 1200+ test cases across inbound and outbound components.',
+
+        'Improved coverage and code quality by enhancing Gcovr reports, fixing bugs and critical issues raised in SonarQube, and integrating static analysis tools (RATS, Flawfinder, Valgrind) into the review pipeline.',
+
+        'Developed an internal build and analysis dashboard (Angular + Spring Boot) to visualize CI/CD progress and failure patterns, reducing the need to dig through raw logs and helping DevOps teams identify issues faster.',
+
+        'Supported L3 debugging during releases with a zero-downtime requirement. Investigated issues across components, validated fixes, and coordinated with multiple teams to ensure readiness before deployment.',
+
+        'Recognized with the Xor-Champ Award (2025) for consistency, ownership of deliverables, and contributions that improved productivity, coverage, and platform stability.'
       ]
     }
 
+
   ];
+
 
 
   certifications: Certification[] = [
