@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Notification } from '../../services/notification';
 
 interface Project {
   title: string;
@@ -13,7 +14,11 @@ interface Project {
   impact: string;
   status: string;
 
-  projectType: 'backend' | 'frontend' | 'fullstack' | 'cloud' | 'ai-ml' | 'exploratory';
+  projectType: 'backend' | 'frontend' | 'fullstack' | 'cloud' | 'ai-ml' | 'exploratory' | 'system-design';
+
+  // optional, display-only secondary tag
+  secondaryType?: string;
+
   live?: string;
   github?: string;
   tags?: { name: string; icon: string }[];
@@ -45,7 +50,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
   filterCategory: 'all' | 'professional' | 'personal' = 'all'; filterTypes: string[] = [];
   filterTech: string[] = [];
   filterLiveOnly: boolean = false;
-  availableTech: { name: string; icon: string }[] = [];
+  availableTech: { name: string; icon: string; count?: number }[] = [];
 
   showFilters: boolean = false; // NEW — filter panel visibility toggle
 
@@ -68,14 +73,51 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-  // APPLY button
   applyFilters() {
-    this.filterCategory = this.pendingCategory;
-    this.filterTypes = [...this.pendingTypes];
-    this.filterTech = [...this.pendingTech];
-    this.filterLiveOnly = this.pendingLive;
+    // Build a prospective view WITHOUT committing the filter state yet
+    const prospectiveCategory = this.pendingCategory;
+    const prospectiveTypes = [...this.pendingTypes];
+    const prospectiveTech = [...this.pendingTech];
+    const prospectiveLive = this.pendingLive;
+
+    // Check if prospective filter set yields NO RESULTS
+    const prospectiveResults = [
+      ...this.professionalProjects.map(company =>
+        company.projects.filter(p =>
+          (prospectiveCategory === 'all' || (prospectiveCategory === 'professional' && this.inProfessional(p)) || (prospectiveCategory === 'personal' && this.inPersonal(p)))
+          && (!prospectiveTypes.length || prospectiveTypes.includes(p.projectType))
+          && (!prospectiveTech.length || prospectiveTech.every(t => p.tags?.some(pt => pt.name === t)))
+          && (!prospectiveLive || p.live)
+        )
+      ).flat(),
+      ...this.personalProjects.map(section =>
+        section.projects.filter(p =>
+          (prospectiveCategory === 'all' || (prospectiveCategory === 'professional' && this.inProfessional(p)) || (prospectiveCategory === 'personal' && this.inPersonal(p)))
+          && (!prospectiveTypes.length || prospectiveTypes.includes(p.projectType))
+          && (!prospectiveTech.length || prospectiveTech.every(t => p.tags?.some(pt => pt.name === t)))
+          && (!prospectiveLive || p.live)
+        )
+      ).flat()
+    ];
+
+    if (prospectiveResults.length === 0) {
+      // Notify and DO NOT apply filter change
+      this.notification.error(
+        "These filter selections return no results; your previous filters have been retained.", 8000
+      );
+      this.showFilters = false;
+      return;
+    }
+
+    // APPLY (only if prospective results exist)
+    this.filterCategory = prospectiveCategory;
+    this.filterTypes = prospectiveTypes;
+    this.filterTech = prospectiveTech;
+    this.filterLiveOnly = prospectiveLive;
     this.showFilters = false;
   }
+
+
 
   // RESET button
   resetFilters() {
@@ -89,7 +131,11 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     this.pendingTech = [];
     this.pendingLive = false;
   }
-  constructor(private el: ElementRef) { }
+  constructor(
+    private el: ElementRef,
+    private notification: Notification // ADD THIS
+  ) { }
+
 
   ngOnInit() {
     this.isMobile = window.innerWidth <= 768;
@@ -113,7 +159,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
   // =================== DATA ===================
 
   professionalProjects: CompanyProjects[] = [
-    {
+      {
       name: 'Persistent Systems',
       projects: [
         {
@@ -129,7 +175,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           responsibilities: 'FastAPI + MySQL backend ownership',
           impact: 'Improved workflow efficiency + reduced response times',
           status: 'Delivered',
-          projectType: 'backend',
+          projectType: 'fullstack',
           tags: [
             { name: "FastAPI", icon: "devicon-fastapi-plain" },
             { name: "MySQL", icon: "devicon-mysql-plain" },
@@ -139,7 +185,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
       ]
     },
     {
-      name: 'Xoriant Technologies Pvt Ltd',
+      name: 'Xoriant Technologies',
       projects: [
         {
           title: 'Session-Based Multi-Currency Validation & Settlement Routing',
@@ -198,57 +244,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           ]
         },
         {
-          title: 'Unit Testing Modernization — gMock Adoption',
-          shortDescription: 'Introduced a modern gMock-based testing approach to replace legacy UTs tied to real MQ and DB2 systems.',
-          longDescription: [
-            'Evaluated gMock as a replacement for legacy in-house UT framework; delivered POC to validate feasibility',
-            'Re-architected unit tests to remove dependencies on IBM MQ and IBM DB2, eliminating CT-like behavior in UT runs',
-            'Created reusable gMock patterns for gateway, DB, and message interface layers to support deterministic test results',
-            'Refactored UT structure, naming, and Makefile workflows for consistency and maintainability',
-            'Modernized ~1200 tests under the new approach, improving isolation, stability, and root cause traceability'
-          ],
-          teamSize: '6',
-          roles: 'Backend Engineer',
-          responsibilities: 'POC, framework integration, reference mock implementations, modernization of legacy UTs',
-          impact: 'Reduced environmental coupling; significantly improved test stability and reliability for C++ components',
-          status: 'Delivered',
-          projectType: 'backend',
-          tags: [
-            { name: "C++", icon: "devicon-cplusplus-plain" },
-            { name: "gMock", icon: "fas fa-vial" },
-            { name: "IBM MQ", icon: "fas fa-network-wired" },
-            { name: "DB2", icon: "fas fa-database" },
-            { name: "Testing", icon: "fas fa-check-circle" }
-          ]
-        },
-        {
-          title: 'Code Quality, Coverage & Analysis Automation',
-          shortDescription: 'Automated code coverage and analysis workflows to track quality, security warnings, memory issues, and performance regressions across C++ modules.',
-          longDescription: [
-            'Switched existing coverage setup to Gcovr and re-structured report generation so individual components can be checked instead of running full-suite every time.',
-            'Wrote shell scripts to run static code analysis tools (RATS, Flawfinder, CppCheck) in a batch flow and capture outputs in a consistent format.',
-            'Used Python to aggregate results: combined static analysis findings, code coverage numbers, and memory/runtime reports into a single summary report.',
-            'Integrated Valgrind into the workflow for runtime checks (memory leaks, invalid reads/writes) and included its output in the final report.',
-            'Added basic performance comparison: new version vs previous version (execution time and memory usage deltas), included as diff sections in the report.',
-            'Fixed ~50+ code issues across multiple components (mix of low/medium severity findings, a few bugs, and multiple security warnings flagged by static tools).',
-            'Shared the reporting flow with the rest of the team and helped them interpret the results so issues could be broken down and assigned.'
-          ],
-          teamSize: '1',
-          roles: 'Backend Engineer',
-          responsibilities: 'Setup + automation scripting, static/dynamic analysis, defect fixes, coverage improvements.',
-          impact: 'Made it easier to catch regressions early; reduced back-and-forth during reviews; coverage reports are now easier to check and share.',
-          status: 'Delivered',
-          projectType: 'backend',
-          tags: [
-            { name: "C++", icon: "devicon-cplusplus-plain" },
-            { name: "Python", icon: "devicon-python-plain" },
-            { name: "Shell", icon: "devicon-bash-plain" },
-            { name: "Gcovr", icon: "fas fa-clipboard-check" },
-            { name: "Valgrind", icon: "fas fa-tachometer-alt" },
-            { name: "CppCheck", icon: "fas fa-search" }
-          ]
-        },
-        {
           title: 'Build & Analysis Monitoring Dashboard',
           shortDescription: 'Internal CI observability dashboard for build health, UTC metrics, component insights, and quality trend analysis.',
           longDescription: [
@@ -303,6 +298,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           impact: 'Useful as a prototype for traffic shaping and controlled ingestion before scaling to message queues or larger pipelines.',
           status: 'Active',
           projectType: 'backend',
+          secondaryType: 'system-design',
           github: 'https://github.com/Prateesh-Sulikeri/Go-event-ingestor',
           tags: [
             { name: "Go", icon: "devicon-go-plain-wordmark" },
@@ -360,7 +356,8 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           responsibilities: 'API design, HuggingFace integration, KB retrieval logic, minimal frontend, deployment.',
           impact: 'Used on my portfolio to let visitors ask questions and get contextual responses instead of static content browsing.',
           status: 'Active',
-          projectType: 'ai-ml',
+          projectType: 'backend',
+          secondaryType: 'ai-ml',
           live: 'https://jinbo.onrender.com/',
           github: 'https://github.com/Prateesh-Sulikeri/JinBo',
           tags: [
@@ -371,7 +368,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
             { name: "JavaScript", icon: "devicon-javascript-plain" }
           ]
         },
-                {
+        {
           title: 'CloneCatch — Image Duplicate & Face-Based Sorter',
           shortDescription: 'Python-based tool for identifying duplicate images and tagging/moving images by face matches using VGG16 encodings and traditional image hashing.',
           longDescription: [
@@ -390,6 +387,8 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           impact: 'Reduced manual effort for photo organization and duplicate filtering; a practical utility for photographers and hobbyists with large local libraries.',
           status: 'Delivered',
           projectType: 'exploratory',
+          secondaryType: 'ai-ml',
+
           github: 'https://github.com/Prateesh-Sulikeri/CloneCatch',
           tags: [
             { name: "Python", icon: "devicon-python-plain" },
@@ -417,7 +416,9 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           responsibilities: 'HTML parsing, concurrency design, CLI interface, JSON structuring, documentation.',
           impact: 'Served as a reusable utility for collecting structured data when APIs are unavailable or limited.',
           status: 'Delivered',
-          projectType: 'backend',
+          projectType: 'exploratory',
+          secondaryType: 'backend',
+
           github: 'https://github.com/Prateesh-Sulikeri/Go-Webscrapper',
           tags: [
             { name: "Go", icon: "devicon-go-plain" },
@@ -433,21 +434,67 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
   ];
 
   // =================== HELPERS ===================
+  private readonly TECH_PRIORITY: Record<string, number> = {
+    go: 100,
+    'c++': 90,
+    redis: 80,
+    postgres: 70,
+    postgresql: 70, // handle naming variants
+    angular: 60,
+    python: 50
+  };
+
 
   collectTechnologies() {
-    const tech = new Set<string>();
-    const pushTags = (projects: any[]) => {
-      projects.forEach((p: any) => p.tags?.forEach((t: any) => tech.add(t.name)));
+    const techCount = new Map<string, { count: number; icon: string }>();
+
+    const addTags = (projects: any[]) => {
+      projects.forEach(p =>
+        p.tags?.forEach((t: any) => {
+          if (!techCount.has(t.name)) {
+            techCount.set(t.name, { count: 1, icon: t.icon });
+          } else {
+            techCount.get(t.name)!.count++;
+          }
+        })
+      );
     };
 
-    this.professionalProjects.forEach(c => pushTags(c.projects));
-    this.personalProjects.forEach(s => pushTags(s.projects));
 
-    this.availableTech = Array.from(tech).map(name => ({
-      name,
-      icon: this.findIcon(name),
-    }));
+    this.professionalProjects.forEach(c => addTags(c.projects));
+    this.personalProjects.forEach(s => addTags(s.projects));
+
+    this.availableTech = Array.from(techCount.entries())
+      .map(([name, data]) => ({
+        name,
+        icon: data.icon,
+        count: data.count
+      }))
+      .sort((a, b) => {
+        const pa = this.TECH_PRIORITY[a.name.toLowerCase()] ?? 0;
+        const pb = this.TECH_PRIORITY[b.name.toLowerCase()] ?? 0;
+
+        // 1️⃣ priority first
+        if (pa !== pb) return pb - pa;
+
+        // 2️⃣ then frequency
+        if (a.count !== b.count) return b.count - a.count;
+
+        // 3️⃣ finally alphabetical (stable & predictable)
+        return a.name.localeCompare(b.name);
+      });
+
   }
+
+  showAllTech = false;
+  MAX_VISIBLE_TECH = 8;
+
+  get visibleTech() {
+    return this.showAllTech
+      ? this.availableTech
+      : this.availableTech.slice(0, this.MAX_VISIBLE_TECH);
+  }
+
 
   // look up icon based on name (fallback)
   findIcon(name: string) {
@@ -493,11 +540,35 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     })).filter(x => x.projects.length);
   }
 
+  // New getter: personal projects but exclude exploratory (these will be shown in exploratory section)
+  get filteredBackendAndSystemDesign() {
+    return this.personalProjects.map(section => ({
+      ...section,
+      projects: section.projects.filter(p =>
+        this.passesFilters(p) &&
+        ['backend', 'cloud', 'system-design'].includes(p.projectType)
+      )
+    })).filter(x => x.projects.length);
+  }
+
+
+  // New getter: exploratory projects collected across both personal & professional (single combined section)
+  get filteredExploratory() {
+    return this.personalProjects.map(section => ({
+      ...section,
+      projects: section.projects.filter(p =>
+        this.passesFilters(p) &&
+        !['backend', 'cloud', 'system-design'].includes(p.projectType)
+      )
+    })).filter(x => x.projects.length);
+  }
+
+
   passesFilters(p: Project): boolean {
     if (this.filterCategory === 'professional' && !this.inProfessional(p)) return false;
     if (this.filterCategory === 'personal' && !this.inPersonal(p)) return false;
     if (this.filterTypes.length && !this.filterTypes.includes(p.projectType)) return false;
-    if (this.filterTech.length && !p.tags?.some(t => this.filterTech.includes(t.name))) return false;
+    if (this.filterTech.length && !this.filterTech.every(t => p.tags?.some(pt => pt.name === t))) return false;
     if (this.filterLiveOnly && !p.live) return false;
     return true;
   }
@@ -540,7 +611,93 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
   };
 
 
+  statusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'active':
+        return 'active';
+      case 'production':
+        return 'production';
+      case 'delivered':
+        return 'delivered';
+      case 'poc / internal pilot':
+      case 'poc':
+        return 'poc';
+      default:
+        return '';
+    }
+  }
+  hoveredStatus: Project | null = null;
+
+  toggleStatus(project: Project, event: Event) {
+    event.stopPropagation();
+    this.hoveredStatus = this.hoveredStatus === project ? null : project;
+  }
+
+  statusDescription(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'active':
+        return 'Actively maintained and under ongoing development.';
+      case 'production':
+        return 'Running in a live production environment.';
+      case 'delivered':
+        return 'Development completed and formally delivered.';
+      case 'poc / internal pilot':
+      case 'poc':
+        return 'Experimental proof of concept or internal pilot.';
+      default:
+        return '';
+    }
+  }
+
   onCardClick(event: any, project: Project) {
     if (!this.isMobile) this.toggleExpand(project);
   }
+  /**
+ * Human-friendly label for projectType
+ */
+  projectTypeLabel(pt: string): string {
+    if (!pt) return '';
+    const key = pt.toLowerCase();
+    const map: Record<string, string> = {
+      'ai-ml': 'AI/ML',
+      'ai_ml': 'AI/ML',
+      'fullstack': 'Full Stack',
+      'backend': 'Backend',
+      'frontend': 'Frontend',
+      'cloud': 'Cloud',
+      'exploratory': 'Exploratory'
+    };
+    return map[key] ?? pt.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  /**
+   * CSS-friendly class name for the pill (optional; no CSS required to exist)
+   * Example returns: "type-backend", "type-ai-ml"
+   */
+  projectTypeClass(pt: string): string {
+    if (!pt) return '';
+    return 'type-' + pt.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  }
+
+  /**
+   * Secondary display helpers (display-only; do not affect filters)
+   */
+  projectSecondaryLabel(st: string): string {
+    if (!st) return '';
+    const key = st.toLowerCase();
+    const map: Record<string, string> = {
+      'ai-ml': 'AI/ML',
+      'system-design': 'System Design',
+      'data': 'Data',
+      'ml': 'ML',
+      'research': 'Research'
+    };
+    return map[key] ?? st.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  projectSecondaryClass(st: string): string {
+    if (!st) return '';
+    return 'type-secondary-' + st.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  }
+
 }

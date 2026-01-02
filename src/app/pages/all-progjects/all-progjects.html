@@ -13,6 +13,13 @@
     <div class="section-line"></div>
   </div>
 
+  <!-- Intro / positioning line (small, uses existing .intro-text) -->
+  <p class="intro-text">
+    Backend engineer with experience designing and building reliable services across personal and
+    enterprise environments, including high-throughput Go systems and large-scale financial
+    platforms developed in regulated, production settings.
+  </p>
+
   <!-- ========================= FILTER BAR ========================= -->
   <div class="filter-toggle-row">
     <button class="filter-toggle-btn" (click)="toggleFilters()">
@@ -64,12 +71,23 @@
       <div class="tech-options">
         <span
           class="tech-pill"
-          *ngFor="let t of availableTech"
+          *ngFor="let t of visibleTech"
           [class.active]="pendingTech.includes(t.name)"
           (click)="togglePendingTech(t.name)"
         >
           <i [ngClass]="t.icon"></i> {{ t.name }}
         </span>
+        <button
+          class="tech-more-btn"
+          *ngIf="availableTech.length > MAX_VISIBLE_TECH"
+          (click)="showAllTech = !showAllTech"
+        >
+          {{
+            showAllTech
+              ? 'Show less'
+              : '+ Show more (' + (availableTech.length - MAX_VISIBLE_TECH) + ')'
+          }}
+        </button>
       </div>
     </div>
 
@@ -95,26 +113,65 @@
   </div>
 
   <!-- ==========================================================
-       PROFESSIONAL PROJECTS
+       BACKEND AND SYSTEM DESIGN PROJECTS (PERSONAL FIRST)
        ========================================================== -->
-  <div *ngIf="filterCategory !== 'personal'" class="project-category">
+  <!-- Personal projects (framed as Backend & System design) - excludes exploratory items which are shown separately below -->
+  <div
+    *ngIf="filterCategory !== 'professional' && filteredBackendAndSystemDesign.length"
+    class="project-category"
+  >
     <div class="section-header sub-header">
-      <h2 class="section-title"><span class="prefix">#</span>professional-projects</h2>
+      <h2 class="section-title"><span class="prefix">#</span>backend-and-system-design-projects</h2>
       <div class="section-line"></div>
     </div>
 
-    <div *ngFor="let company of filteredProfessional" class="company-wrapper">
-      <h3 class="company-title sub-title"><span class="prefix">╰─</span> {{ company.name }}</h3>
-
+    <div *ngFor="let section of filteredBackendAndSystemDesign" class="company-wrapper">
       <div class="project-grid">
         <div
-          *ngFor="let project of company.projects"
+          *ngFor="let project of section.projects"
           class="project-card"
           [class.expanded-card]="expandedProject === project"
           (click)="$event.stopPropagation()"
         >
           <!-- COLLAPSED (default) -->
           <h4 class="project-title">{{ project.title }}</h4>
+
+          <!-- Primary type pill -->
+          <span
+            class="type-pill"
+            [ngClass]="projectTypeClass(project.projectType)"
+            aria-label="Project type: {{ projectTypeLabel(project.projectType) }}"
+          >
+            {{ projectTypeLabel(project.projectType) }}
+          </span>
+
+          <!-- Secondary display-only pill -->
+          <span
+            *ngIf="project.secondaryType"
+            class="type-pill secondary-pill"
+            [ngClass]="projectSecondaryClass(project.secondaryType)"
+            aria-label="Secondary type: {{ projectSecondaryLabel(project.secondaryType) }}"
+          >
+            {{ projectSecondaryLabel(project.secondaryType) }}
+          </span>
+
+          <div
+            class="project-status"
+            [ngClass]="statusClass(project.status)"
+            (mouseenter)="hoveredStatus = project"
+            (mouseleave)="hoveredStatus = null"
+            (click)="toggleStatus(project, $event)"
+          >
+            <span class="status-label">{{ project.status }}</span>
+
+            <div class="status-explainer" *ngIf="hoveredStatus === project">
+              <span class="status-arrow">↳</span>
+              <span class="status-text">
+                {{ statusDescription(project.status) }}
+              </span>
+            </div>
+          </div>
+
           <p class="project-description">{{ project.shortDescription }}</p>
 
           <div class="project-tags" *ngIf="project.tags?.length">
@@ -165,15 +222,125 @@
   </div>
 
   <!-- ==========================================================
-       PERSONAL PROJECTS
+       ENTERPRISE C++ SYSTEM PROJECTS (PROFESSIONAL)
        ========================================================== -->
-  <div *ngIf="filterCategory !== 'professional'" class="project-category">
+  <div
+    *ngIf="filterCategory !== 'personal' && filteredProfessional.length"
+    class="project-category"
+  >
     <div class="section-header sub-header">
-      <h2 class="section-title"><span class="prefix">#</span>personal-projects</h2>
+      <h2 class="section-title"><span class="prefix">#</span>enterprise-systems-development</h2>
       <div class="section-line"></div>
     </div>
 
-    <div *ngFor="let section of filteredPersonal" class="company-wrapper">
+    <div *ngFor="let company of filteredProfessional" class="company-wrapper">
+      <h3 class="company-title sub-title"><span class="prefix">╰─</span> {{ company.name }}</h3>
+
+      <div class="project-grid">
+        <div
+          *ngFor="let project of company.projects"
+          class="project-card"
+          [class.expanded-card]="expandedProject === project"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- COLLAPSED (default) -->
+          <h4 class="project-title">{{ project.title }}</h4>
+
+          <!-- Primary type pill -->
+          <span
+            class="type-pill"
+            [ngClass]="projectTypeClass(project.projectType)"
+            aria-label="Project type: {{ projectTypeLabel(project.projectType) }}"
+          >
+            {{ projectTypeLabel(project.projectType) }}
+          </span>
+
+          <!-- Secondary display-only pill -->
+          <span
+            *ngIf="project.secondaryType"
+            class="type-pill secondary-pill"
+            [ngClass]="projectSecondaryClass(project.secondaryType)"
+            aria-label="Secondary type: {{ projectSecondaryLabel(project.secondaryType) }}"
+          >
+            {{ projectSecondaryLabel(project.secondaryType) }}
+          </span>
+
+          <div
+            class="project-status"
+            [ngClass]="statusClass(project.status)"
+            (mouseenter)="hoveredStatus = project"
+            (mouseleave)="hoveredStatus = null"
+            (click)="toggleStatus(project, $event)"
+          >
+            <span class="status-label">{{ project.status }}</span>
+
+            <div class="status-explainer" *ngIf="hoveredStatus === project">
+              <span class="status-arrow">↳</span>
+              <span class="status-text">
+                {{ statusDescription(project.status) }}
+              </span>
+            </div>
+          </div>
+
+          <p class="project-description">{{ project.shortDescription }}</p>
+
+          <div class="project-tags" *ngIf="project.tags?.length">
+            <span class="tag" *ngFor="let tag of project.tags">
+              <i [ngClass]="tag.icon"></i> {{ tag.name }}
+            </span>
+          </div>
+
+          <button class="project-btn" (click)="toggleExpand(project, $event)">
+            {{ expandedProject === project ? 'Hide Details' : 'View More' }}
+          </button>
+
+          <!-- EXPANDED CONTENT -->
+          <div
+            class="details"
+            *ngIf="expandedProject === project"
+            (click)="$event.stopPropagation()"
+          >
+            <ul>
+              <li><strong>Team Size:</strong> {{ project.teamSize }}</li>
+              <li><strong>Role:</strong> {{ project.roles }}</li>
+              <li><strong>Responsibilities:</strong> {{ project.responsibilities }}</li>
+              <li><strong>Impact:</strong> {{ project.impact }}</li>
+              <li><strong>Status:</strong> {{ project.status }}</li>
+
+              <li *ngIf="project.longDescription.length">
+                <strong>Execution:</strong>
+                <ul class="inner-bullets">
+                  <li *ngFor="let point of project.longDescription">
+                    {{ point }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <div class="project-buttons">
+              <a *ngIf="project.live" [href]="project.live" target="_blank" class="project-btn">
+                <i class="fas fa-play"></i> Live
+              </a>
+              <a *ngIf="project.github" [href]="project.github" target="_blank" class="project-btn">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       EXPLORATORY PROJECTS
+       ========================================================== -->
+  <div *ngIf="filteredExploratory.length" class="project-category">
+    <div class="section-header sub-header">
+      <h2 class="section-title"><span class="prefix">#</span>exploratory-projects</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div *ngFor="let section of filteredExploratory" class="company-wrapper">
       <div class="project-grid">
         <div
           *ngFor="let project of section.projects"
@@ -183,6 +350,43 @@
         >
           <!-- COLLAPSED -->
           <h4 class="project-title">{{ project.title }}</h4>
+
+          <!-- Primary type pill -->
+          <span
+            class="type-pill"
+            [ngClass]="projectTypeClass(project.projectType)"
+            aria-label="Project type: {{ projectTypeLabel(project.projectType) }}"
+          >
+            {{ projectTypeLabel(project.projectType) }}
+          </span>
+
+          <!-- Secondary display-only pill -->
+          <span
+            *ngIf="project.secondaryType"
+            class="type-pill secondary-pill"
+            [ngClass]="projectSecondaryClass(project.secondaryType)"
+            aria-label="Secondary type: {{ projectSecondaryLabel(project.secondaryType) }}"
+          >
+            {{ projectSecondaryLabel(project.secondaryType) }}
+          </span>
+
+          <div
+            class="project-status"
+            [ngClass]="statusClass(project.status)"
+            (mouseenter)="hoveredStatus = project"
+            (mouseleave)="hoveredStatus = null"
+            (click)="toggleStatus(project, $event)"
+          >
+            <span class="status-label">{{ project.status }}</span>
+
+            <div class="status-explainer" *ngIf="hoveredStatus === project">
+              <span class="status-arrow">↳</span>
+              <span class="status-text">
+                {{ statusDescription(project.status) }}
+              </span>
+            </div>
+          </div>
+
           <p class="project-description">{{ project.shortDescription }}</p>
 
           <div class="project-tags" *ngIf="project.tags?.length">

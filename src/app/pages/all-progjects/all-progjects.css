@@ -1,600 +1,515 @@
-/* =========================================
-   ALL PROJECTS PAGE (CLEANED)
-   ========================================= */
-
 html,
 body {
-  overflow-x: hidden;
+overflow-x: hidden;
 }
-
 
 .projects-page {
-  max-width: 950px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 8rem 2rem 5rem;
-  overflow-x: hidden;
-  /* critical fix */
+max-width: 950px;
+width: 100%;
+margin: 0 auto;
+padding: 8rem 2rem 5rem;
+overflow-x: hidden;
 }
 
-
-/* ---------- HEADERS ---------- */
 .section-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+margin-bottom: 2rem;
 }
 
 .section-title {
-  font-size: 2rem;
-  color: var(--accent-blue);
-  margin: 0;
-  white-space: nowrap;
+font-size: 2rem;
+color: var(--accent-blue);
+margin: 0;
+white-space: nowrap;
 }
 
 .sub-header .section-title {
-  font-size: 1.6rem;
+font-size: 1.6rem;
 }
 
 .section-line {
-  flex: 1;
-  height: 3px;
-  background-color: var(--accent-blue);
-  opacity: 0.6;
-  box-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+flex: 1;
+height: 3px;
+background-color: var(--accent-blue);
+opacity: 0.6;
+box-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
 }
 
 .company-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  padding: 0.4rem 0;
-  color: var(--accent-blue);
-  letter-spacing: 0.3px;
-  border-bottom: 2px solid rgba(0, 191, 255, 0.25);
+font-size: 1.4rem;
+font-weight: 600;
+margin-bottom: 1.5rem;
+padding: 0.4rem 0;
+color: var(--accent-blue);
+letter-spacing: 0.3px;
+border-bottom: 2px solid rgba(0, 191, 255, 0.25);
 }
-
-
 
 .intro-text {
-  line-height: 1.7;
-  margin-bottom: 3rem;
-  opacity: 0.9;
+line-height: 1.7;
+margin-bottom: 3rem;
+opacity: 0.9;
 }
 
-/* ---------- PROMPT HEADER ---------- */
 .prompt {
-  text-align: left;
-  color: var(--accent-blue);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: "Fira Code", monospace;
+text-align: left;
+color: var(--accent-blue);
+font-size: 0.9rem;
+margin-bottom: 1.5rem;
+display: flex;
+align-items: center;
+gap: 0.4rem;
+font-family: "Fira Code", monospace;
 }
 
 .prompt .user {
-  color: #00ff7f;
+color: #00ff7f;
 }
 
 .prompt .path {
-  color: #33bfff;
+color: #33bfff;
 }
 
 .prompt .command {
-  color: var(--text-light);
+color: var(--text-light);
 }
 
 .prompt::after {
-  content: "█";
-  margin-left: 4px;
-  color: var(--accent-blue);
-  animation: blink-cursor 1s steps(1) infinite;
+content: "█";
+margin-left: 4px;
+color: var(--accent-blue);
+animation: blink-cursor 1s steps(1) infinite;
 }
 
 @keyframes blink-cursor {
-  50% {
-    opacity: 0;
-  }
+50% {
+opacity: 0;
+}
 }
 
-/* ---------- GRID LAYOUT ---------- */
 .company-wrapper {
-  margin-bottom: 3.5rem;
-  padding: 0 0 2rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  /* soft divider */
+margin-bottom: 3.5rem;
+padding: 0 0 2rem 0;
+border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
-
-
 
 .project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  /* prevents 3+ */
-  gap: 1.2rem;
-  width: 100%;
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 1.2rem;
+width: 100%;
 }
-
-
 
 .project-category {
-  margin-bottom: -1rem;
-  padding-bottom: 1.5rem;
+margin-bottom: -1rem;
+padding-bottom: 1.5rem;
 }
 
-
-/* ---------- CARD BASE ---------- */
 .project-card {
-  background: var(--surface-dark);
-  border-left: 3px solid var(--accent-blue);
-  padding: 1rem;
-  box-shadow: 0 0 6px rgba(0, 191, 255, 0.15);
-  transition: background 0.4s ease, box-shadow 0.45s ease, transform 0.4s ease;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
+background: var(--surface-dark);
+border-left: 3px solid var(--accent-blue);
+padding: 1rem;
+box-shadow: 0 0 6px rgba(0, 191, 255, 0.15);
+transition: background 0.4s ease, box-shadow 0.45s ease, transform 0.4s ease;
+display: flex;
+flex-direction: column;
+cursor: pointer;
 }
 
 .project-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 6px rgba(0, 191, 255, 0.18);
+transform: translateY(-1px);
+box-shadow: 0 0 6px rgba(0, 191, 255, 0.18);
 }
 
 .project-title {
-  font-size: 1.15rem;
-  font-weight: bold;
-  color: var(--accent-blue);
-  margin: 0;
+font-size: 1.15rem;
+font-weight: bold;
+color: var(--accent-blue);
+margin: 0;
 }
 
 .project-description {
-  font-size: 0.92rem;
-  color: var(--text-light);
-  line-height: 1.55;
-  padding: 0.6rem 0.8rem;
-  background: rgba(0, 191, 255, 0.04);
-  border-left: 2px solid rgba(0, 191, 255, 0.25);
-  border-radius: 2px;
-  opacity: 0.95;
+font-size: 0.92rem;
+color: var(--text-light);
+line-height: 1.55;
+padding: 0.6rem 0.8rem;
+background: rgba(0, 191, 255, 0.04);
+border-left: 2px solid rgba(0, 191, 255, 0.25);
+border-radius: 2px;
+opacity: 0.95;
 }
 
-/* ---------- BUTTONS (UNIFIED) ---------- */
 .project-btn,
 .project-buttons a {
-  padding: 0.75rem 2rem;
-  border: 2px solid var(--accent-blue);
-  background: transparent;
-  color: var(--text-light);
-  font-family: "Fira Code", monospace;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 0;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: auto !important;
-  flex: 0 0 auto !important;
+padding: 0.75rem 2rem;
+border: 2px solid var(--accent-blue);
+background: transparent;
+color: var(--text-light);
+font-family: "Fira Code", monospace;
+text-transform: uppercase;
+cursor: pointer;
+transition: all 0.3s ease;
+border-radius: 0;
+font-size: 0.85rem;
+letter-spacing: 0.5px;
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+width: auto !important;
+flex: 0 0 auto !important;
 }
 
 .project-btn:hover,
 .project-buttons a:hover {
-  color: var(--accent-blue);
-  box-shadow: 0 0 6px var(--accent-blue);
-  transform: translateY(-1px);
+color: var(--accent-blue);
+box-shadow: 0 0 6px var(--accent-blue);
+transform: translateY(-1px);
 }
 
 .project-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 1rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.8rem;
+margin-top: 1rem;
 }
 
-/* ---------- EXPANDED CARD STATE ---------- */
 .expanded-card {
-  grid-column: 1 / -1;
-  background: rgba(255, 255, 255, 0.03);
-  /* Slight neutral tone */
-  box-shadow: 0 0 10px rgba(0, 191, 255, 0.12);
-  /* Reduce intensity */
+grid-column: 1 / -1;
+background: rgba(255, 255, 255, 0.03);
+box-shadow: 0 0 10px rgba(0, 191, 255, 0.12);
 }
 
 .details {
-  padding: 1rem;
-  margin-top: 0.6rem;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 4px;
+padding: 1rem;
+margin-top: 0.6rem;
+background: rgba(255, 255, 255, 0.02);
+border-radius: 4px;
 }
 
 .details ul {
-  list-style: none;
-  padding-left: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+list-style: none;
+padding-left: 0;
+display: flex;
+flex-direction: column;
+gap: 0.4rem;
 }
 
 .details li {
-  font-size: 0.9rem;
-  padding: 0.3rem 0.6rem;
-  background: rgba(255,255,255,0.02);
-    border-radius: 4px;
+font-size: 0.9rem;
+padding: 0.3rem 0.6rem;
+background: rgba(255,255,255,0.02);
+border-radius: 4px;
 }
 
-/* ---------- TECH TAGS ---------- */
 .project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 0.5rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.4rem;
+margin-bottom: 0.5rem;
 }
 
 .tag {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.55rem;
-  border: 1px solid var(--accent-blue);
-  background: rgba(0, 191, 255, 0.05);
-  border-radius: 3px;
-  color: var(--accent-blue);
-  white-space: nowrap;
-  transition: 0.25s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
+font-size: 0.75rem;
+padding: 0.25rem 0.55rem;
+border: 1px solid var(--accent-blue);
+background: rgba(0, 191, 255, 0.05);
+border-radius: 3px;
+color: var(--accent-blue);
+white-space: nowrap;
+transition: 0.25s ease;
+display: inline-flex;
+align-items: center;
+gap: 0.35rem;
 }
 
 .tag:hover {
-  background: var(--accent-blue);
-  color: #0a0f1f;
+background: var(--accent-blue);
+color: #0a0f1f;
 }
 
 .tag i {
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
+font-size: 1rem;
+display: flex;
+align-items: center;
 }
 
 .long-description {
-  margin-top: 1rem;
+margin-top: 1rem;
 }
 
 .long-description h4 {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: var(--accent-blue);
+font-size: 1rem;
+margin-bottom: 0.5rem;
+color: var(--accent-blue);
 }
 
 .long-description ul {
-  list-style: disc;
-  margin-left: 1.5rem;
-  line-height: 1.5;
+list-style: disc;
+margin-left: 1.5rem;
+line-height: 1.5;
 }
 
-/* Terminal-esque Heading Style */
 .section-title,
 .company-title,
 .sub-title {
-  color: var(--text-light);
-  font-family: "Fira Code", monospace;
+color: var(--text-light);
+font-family: "Fira Code", monospace;
 }
 
-/* Prefix Colors */
 .section-title .prefix,
 .company-title .prefix,
 .sub-title .prefix {
-  color: var(--accent-blue);
-  text-shadow: 0 0 3px var(--accent-blue);
+color: var(--accent-blue);
+text-shadow: 0 0 3px var(--accent-blue);
 }
 
 .prefix {
-  font-weight: 300;
-  font-family: "Fira Code", monospace;
-  opacity: 0.9;
+font-weight: 300;
+font-family: "Fira Code", monospace;
+opacity: 0.9;
 }
 
-
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.section-header {
+flex-direction: column;
+align-items: flex-start;
+}
 
-  .section-line {
-    display: none;
-  }
+.section-line {
+display: none;
+}
 
-  .project-card {
-    cursor: default;
-    padding: 0.9rem;
-  }
+.project-card {
+cursor: default;
+padding: 0.9rem;
+}
 
-  .project-title {
-    font-size: 1.05rem;
-  }
+.project-title {
+font-size: 1.05rem;
+}
 }
 
 @media (max-width: 480px) {
-  .projects-page {
-    padding: 5.5rem 1rem 3rem;
-  }
+.projects-page {
+padding: 5.5rem 1rem 3rem;
+}
 
-  .section-title {
-    font-size: 1.5rem;
-  }
+.section-title {
+font-size: 1.5rem;
+}
 
-  .project-btn {
-    font-size: 0.8rem;
-    padding: 0.45rem 1rem;
-  }
+.project-btn {
+font-size: 0.8rem;
+padding: 0.45rem 1rem;
+}
 }
 
 @media (max-width: 375px) {
-  .projects-page {
-    padding: 5rem 0.8rem 2.5rem;
-  }
-
-  .prompt {
-    word-break: break-all;
-  }
+.projects-page {
+padding: 5rem 0.8rem 2.5rem;
 }
 
-/* Force single card layout on mobile */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  /* prevents 3+ */
-  gap: 1.2rem;
-  width: 100%;
+.prompt {
+word-break: break-all;
 }
-
-/* === RESPONSIVE: FORCE 1 CARD BELOW 992px === */
+}
 @media (max-width: 992px) {
-  .project-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.2rem;
-  }
-
-  .project-card {
-    width: 85% !important;
-    min-width: 0 !important;
-  }
+.project-grid {
+grid-template-columns: 1fr !important;
+gap: 1.2rem;
 }
 
-/* === OPTIONAL: EXTRA SAFE FOR SMALL DEVICES === */
+.project-card {
+width: 85% !important;
+min-width: 0 !important;
+}
+}
+
 @media (max-width: 576px) {
-  .projects-page {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+.projects-page {
+padding-left: 1rem;
+padding-right: 1rem;
+}
 }
 
-/* FILTER BUTTON BAR */
 .filter-toggle-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem 0 1.5rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+margin: 2rem 0 1.5rem;
 }
 
 .filter-toggle-btn,
 .reset-btn {
-  padding: 0.45rem 1.4rem;
-  background: transparent;
-  border: 2px solid var(--accent-blue);
-  color: var(--text-light);
-  font-family: "Fira Code", monospace;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: 0.25s ease;
-  font-size: 0.85rem;
+padding: 0.45rem 1.4rem;
+background: transparent;
+border: 2px solid var(--accent-blue);
+color: var(--text-light);
+font-family: "Fira Code", monospace;
+text-transform: uppercase;
+cursor: pointer;
+transition: 0.25s ease;
+font-size: 0.85rem;
 }
 
 .filter-toggle-btn:hover,
 .reset-btn:hover {
-  color: var(--accent-blue);
-  box-shadow: 0 0 6px var(--accent-blue);
-  transform: translateY(-1px);
+color: var(--accent-blue);
+box-shadow: 0 0 6px var(--accent-blue);
+transform: translateY(-1px);
 }
 
-/* FILTER PANEL */
-/* REMOVE THIS LINE COMPLETELY */
-/* display: none; */
 
 .filter-panel {
-  background: rgba(18, 26, 45, 0.82);
-  border-left: 3px solid var(--accent-blue);
-  padding: 1rem;
-  margin-bottom: 2rem;
-  flex-direction: column;
-  gap: 1rem;
-  display: none;
-  /* DEFAULT: hidden */
+background: rgba(18, 26, 45, 0.82);
+border-left: 3px solid var(--accent-blue);
+padding: 1rem;
+margin-bottom: 2rem;
+flex-direction: column;
+gap: 1rem;
+display: none;
 }
 
 .filter-panel.open {
-  display: flex;
-  /* OPEN: visible */
+display: flex;
 }
 
-
-/* GROUP */
 .filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  width: 100%;
+display: flex;
+flex-direction: column;
+gap: 0.35rem;
+width: 100%;
 }
 
-/* DROPDOWNS */
 .filter-group select {
-  background: rgba(0, 191, 255, 0.06);
-  border: 1px solid var(--accent-blue);
-  color: var(--text-light);
-  padding: 0.4rem;
-  font-family: "Fira Code";
-  outline: none;
+background: rgba(0, 191, 255, 0.06);
+border: 1px solid var(--accent-blue);
+color: var(--text-light);
+padding: 0.4rem;
+font-family: "Fira Code";
+outline: none;
 }
 
 .filter-group select option {
-  background: #0c111b;
-  color: var(--text-light);
+background: #0c111b;
+color: var(--text-light);
 }
 
-/* CHECKBOX */
 .theme-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: "Fira Code";
-  font-size: 0.9rem;
-  cursor: pointer;
-  user-select: none;
-  margin-top: 0.5rem;
+display: flex;
+align-items: center;
+gap: 0.6rem;
+font-family: "Fira Code";
+font-size: 0.9rem;
+cursor: pointer;
+user-select: none;
+margin-top: 0.5rem;
 }
 
 .theme-checkbox input {
-  accent-color: var(--accent-blue);
-  width: 1rem;
-  height: 1rem;
-}
-
-/* TECH FILTER BUTTONS */
-.tech-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tech-pills button {
-  background: rgba(0, 191, 255, 0.05);
-  border: 1px solid var(--accent-blue);
-  color: var(--text-light);
-  padding: 0.35rem 0.6rem;
-  font-size: 0.78rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.tech-pills button.active,
-.tech-pills button:hover {
-  background: var(--accent-blue);
-  color: #0a0f1f;
-  box-shadow: 0 0 6px var(--accent-blue);
+accent-color: var(--accent-blue);
+width: 1rem;
+height: 1rem;
 }
 
 .checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  position: relative;
-  font-family: "Fira Code", monospace;
-  color: var(--text-light);
+display: flex;
+align-items: center;
+gap: 0.6rem;
+cursor: pointer;
+position: relative;
+font-family: "Fira Code", monospace;
+color: var(--text-light);
 }
 
 .checkbox-row input {
-  opacity: 0;
-  position: absolute;
+opacity: 0;
+position: absolute;
 }
 
 .checkmark {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--accent-blue);
-  background: transparent;
-  display: inline-block;
-  transition: 0.2s;
+width: 18px;
+height: 18px;
+border: 2px solid var(--accent-blue);
+background: transparent;
+display: inline-block;
+transition: 0.2s;
 }
 
 .checkbox-row input:checked+.checkmark {
-  background: var(--accent-blue);
-  box-shadow: 0 0 6px var(--accent-blue);
+background: var(--accent-blue);
+box-shadow: 0 0 6px var(--accent-blue);
 }
 
 .filter-panel select {
-  background: #0a0f1f;
-  border: 2px solid var(--accent-blue);
-  color: var(--text-light);
-  font-family: "Fira Code", monospace;
-  padding: 0.6rem;
-  width: 100%;
-  text-transform: capitalize;
+background: #0a0f1f;
+border: 2px solid var(--accent-blue);
+color: var(--text-light);
+font-family: "Fira Code", monospace;
+padding: 0.6rem;
+width: 100%;
+text-transform: capitalize;
 }
 
 .filter-panel select:focus {
-  outline: none;
-  box-shadow: 0 0 6px var(--accent-blue);
+outline: none;
+box-shadow: 0 0 6px var(--accent-blue);
 }
 
 .tech-pill {
-  padding: 0.35rem 0.7rem;
-  border: 1px solid var(--accent-blue);
-  background: rgba(0, 191, 255, 0.08);
-  border-radius: 4px;
-  color: var(--accent-blue);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  transition: 0.25s ease;
-  margin: 0.25rem 0.5rem;
-  /* ✔️ spacing between tags */
+padding: 0.35rem 0.7rem;
+border: 1px solid var(--accent-blue);
+background: rgba(0, 191, 255, 0.08);
+border-radius: 4px;
+color: var(--accent-blue);
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: 0.45rem;
+transition: 0.25s ease;
+margin: 0.25rem 0.5rem;
 }
 
-
 .tech-pill.active {
-  background: var(--accent-blue);
-  color: #0a0f1f;
-  box-shadow: 0 0 6px var(--accent-blue);
+background: var(--accent-blue);
+color: #0a0f1f;
+box-shadow: 0 0 6px var(--accent-blue);
 }
 
 .type-pill {
-  padding: 0.35rem 0.7rem;
-  background: rgba(0, 191, 255, 0.05);
-  border: 1px solid var(--accent-blue);
-  border-radius: 3px;
-  cursor: pointer;
-  text-transform: lowercase;
-  font-size: 0.8rem;
-  margin: 0.25rem 0.5rem;
-  /* ✔️ spacing */
+padding: 0.35rem 0.7rem;
+background: rgba(0, 191, 255, 0.05);
+border: 1px solid var(--accent-blue);
+border-radius: 3px;
+cursor: pointer;
+text-transform: lowercase;
+font-size: 0.8rem;
+margin: 0.25rem 0.5rem;
 }
 
-
-/* === GLOBAL BUTTON STYLE (UNIFORM) === */
 button,
 .project-btn,
 .project-buttons a,
 .filter-toggle-btn,
 .apply-btn,
 .reset-btn {
-  padding: 0.45rem 0.9rem;
-  /* ✔️ smaller width */
-  min-width: max-content;
-  /* ✔️ button fits text only */
-  width: auto;
-  border: 2px solid var(--accent-blue);
-  background: transparent;
-  color: var(--text-light);
-  font-family: "Fira Code", monospace;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 0;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+padding: 0.45rem 0.9rem;
+min-width: max-content;
+width: auto;
+border: 2px solid var(--accent-blue);
+background: transparent;
+color: var(--text-light);
+font-family: "Fira Code", monospace;
+text-transform: uppercase;
+cursor: pointer;
+transition: all 0.3s ease;
+border-radius: 0;
+font-size: 0.9rem;
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
 }
 
 button:hover,
@@ -603,269 +518,446 @@ button:hover,
 .filter-toggle-btn:hover,
 .apply-btn:hover,
 .reset-btn:hover {
-  color: var(--accent-blue);
-  box-shadow: 0 0 6px var(--accent-blue);
-  transform: translateY(-1px);
+color: var(--accent-blue);
+box-shadow: 0 0 6px var(--accent-blue);
+transform: translateY(-1px);
 }
 
 .project-btn {
-  display: inline-flex !important;
-  width: auto !important;
-  min-width: max-content;
-  padding: 0.45rem 0.9rem;
+display: inline-flex !important;
+width: auto !important;
+min-width: max-content;
+padding: 0.45rem 0.9rem;
 }
 
 .project-btn {
-  width: auto !important;
-  max-width: fit-content !important;
-  min-width: fit-content !important;
+width: auto !important;
+max-width: fit-content !important;
+min-width: fit-content !important;
 }
 
-/* ===== SMOOTH CARD EXPANSION ===== */
 .project-card {
-  transition:
-    background 0.35s ease,
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
-  border-radius: 6px;
+transition:
+background 0.35s ease,
+transform 0.35s ease,
+box-shadow 0.35s ease;
+border-radius: 6px;
 }
 
 .expanded-card {
-  transform: scale(1.015);
-  border-left-width: 4px;
-  border-radius: 8px;
+transform: scale(1.015);
+border-left-width: 4px;
+border-radius: 8px;
 }
 
 .apply-btn {
-  margin-right: 0.5rem;
+margin-right: 0.5rem;
 }
 
-/* Details transition container */
-/* CLOSED STATE */
 .details {
-  opacity: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.015);
-  /* Neutral, less glare */
-  overflow: hidden;
-  padding: 0 1rem;
-  transition:
-    height 0.35s ease,
-    opacity 0.35s ease,
-    padding 0.35s ease;
+opacity: 0;
+height: 0;
+background: rgba(255, 255, 255, 0.015);
+overflow: hidden;
+padding: 0 1rem;
+transition:
+height 0.35s ease,
+opacity 0.35s ease,
+padding 0.35s ease;
 }
 
-/* OPEN STATE */
 .expanded-card .details {
-  opacity: 1;
-  height: auto;
-  /* Let content define size */
-  padding: 1rem;
-  display: block;
+opacity: 1;
+height: auto;
+padding: 1rem;
+display: block;
 }
 
-
-/* Button hover mini animation (just a polish) */
 .project-btn:hover {
-  transform: translateY(-2px) scale(1.03);
+transform: translateY(-2px) scale(1.03);
 }
 
-/* FILTER PANEL ANIMATION */
 .filter-panel {
-  display: none;
-  opacity: 0;
-  transform: translateY(-1px);
-  transition:
-    opacity 0.35s ease,
-    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+display: none;
+opacity: 0;
+transform: translateY(-1px);
+transition:
+opacity 0.35s ease,
+transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .filter-panel.open {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
+display: flex;
+opacity: 1;
+transform: translateY(0);
 }
 
 .filter-results-divider {
-  margin: 2.5rem 0 2rem;
-  text-align: center;
-  position: relative;
-  font-family: "Fira Code", monospace;
-  color: var(--accent-blue);
-  opacity: 0.9;
-  font-size: 0.95rem;
+margin: 2.5rem 0 2rem;
+text-align: center;
+position: relative;
+font-family: "Fira Code", monospace;
+color: var(--accent-blue);
+opacity: 0.9;
+font-size: 0.95rem;
 }
 
 .filter-results-divider::before,
 .filter-results-divider::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 40%;
-  height: 1px;
-  background: rgba(0, 191, 255, 0.3);
+content: "";
+position: absolute;
+top: 50%;
+width: 40%;
+height: 1px;
+background: rgba(0, 191, 255, 0.3);
 }
 
 .filter-results-divider::before {
-  left: 0;
+left: 0;
 }
 
 .filter-results-divider::after {
-  right: 0;
+right: 0;
 }
 
-/* ================================
-   RESPONSIVE FILTER PANEL SIZES
-   ================================ */
-
-/* Tablets & small laptops */
 @media (max-width: 992px) {
-  .filter-panel {
-    width: 90%;
-    margin: 0 auto 2rem auto;
-    padding: 1rem;
-  }
+.filter-panel {
+width: 90%;
+margin: 0 auto 2rem auto;
+padding: 1rem;
+}
 }
 
-/* Mobile - standard breakpoint */
+
 @media (max-width: 768px) {
-  .filter-panel {
-    width: 95%;
-    margin: 0 auto 2rem;
-    padding: 0.8rem;
-    border-left-width: 2px;
-  }
+.filter-panel {
+width: 95%;
+margin: 0 auto 2rem;
+padding: 0.8rem;
+border-left-width: 2px;
+}
 
-  .filter-group select,
-  .type-pill,
-  .tech-pill,
-  .apply-btn,
-  .reset-btn {
-    font-size: 0.85rem;
-    padding: 0.45rem 0.6rem;
-  }
+.filter-group select,
+.type-pill,
+.tech-pill,
+.apply-btn,
+.reset-btn {
+font-size: 0.85rem;
+padding: 0.45rem 0.6rem;
+}
 
-  .filter-actions {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
+.filter-actions {
+flex-direction: column;
+gap: 0.6rem;
+}
 }
 
 @media (max-width: 480px) {
-  .filter-panel {
-    max-width: 85%;
-    margin: 0;
-    margin-bottom: 1rem;
-  }
+.filter-panel {
+max-width: 85%;
+margin: 0;
+margin-bottom: 1rem;
+}
 }
 
-/* Ensure this section never hides under the fixed navbar */
 .projects-page {
-  scroll-margin-top: 100px;
-  padding-top: 8rem;
-  position: relative;
+scroll-margin-top: 100px;
+padding-top: 8rem;
+position: relative;
 }
 
-/* Restore original prompt appearance + mobile safety */
 .prompt {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  font-size: 0.9rem;
-  font-family: "Fira Code", monospace;
-  color: var(--accent-blue);
-  margin-bottom: 1.5rem;
-  padding-top: 0.5rem;
-  word-break: break-word;
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+gap: 0.4rem;
+font-size: 0.9rem;
+font-family: "Fira Code", monospace;
+color: var(--accent-blue);
+margin-bottom: 1.5rem;
+padding-top: 0.5rem;
+word-break: break-word;
 }
 
 .prompt .user {
-  color: #00ff7f;
+color: #00ff7f;
 }
 
 .prompt .path {
-  color: #33bfff;
+color: #33bfff;
 }
 
 .prompt .command {
-  color: var(--text-light);
+color: var(--text-light);
 }
 
 .prompt::after {
-  content: "█";
-  margin-left: 4px;
-  animation: blink-cursor 1s steps(1) infinite;
-  color: var(--accent-blue);
+content: "█";
+margin-left: 4px;
+animation: blink-cursor 1s steps(1) infinite;
+color: var(--accent-blue);
 }
 
 @keyframes blink-cursor {
-  50% {
-    opacity: 0;
-  }
+50% {
+opacity: 0;
+}
 }
 
-/* -------------------------
-   MOBILE SAFETY RULES
--------------------------- */
 @media (max-width: 768px) {
-  .projects-page {
-    padding-top: 6.5rem !important;
-    padding-left: 1.3rem;
-    padding-right: 1.3rem;
-  }
+.projects-page {
+padding-top: 6.5rem !important;
+padding-left: 1.3rem;
+padding-right: 1.3rem;
+}
 
-  .prompt {
-    font-size: 0.8rem;
-    gap: 0.3rem;
-    line-height: 1.3;
-  }
+.prompt {
+font-size: 0.8rem;
+gap: 0.3rem;
+line-height: 1.3;
+}
 }
 
 @media (max-width: 480px) {
-  .projects-page {
-    padding-top: 6rem !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+.projects-page {
+padding-top: 6rem !important;
+padding-left: 1rem;
+padding-right: 1rem;
+}
 
-  .prompt {
-    font-size: 0.75rem;
-  }
+.prompt {
+font-size: 0.75rem;
+}
 }
 
 .close-btn {
-  align-self: flex-end;
-  margin-bottom: 0.8rem;
+align-self: flex-end;
+margin-bottom: 0.8rem;
 }
 
 .project-card:hover {
-  transform: translateY(-2px);
+transform: translateY(-2px);
 }
 
 .expanded-card {
-  transform: scale(1.015);
+transform: scale(1.015);
 }
 
 .expanded-card {
-  transform: scale(1.015);
-  border-left-width: 4px;
-  border-radius: 8px;
+transform: scale(1.015);
+border-left-width: 4px;
+border-radius: 8px;
 }
 
 .expanded-card {
-  transform: scale(1.015);
-  border-left-width: 4px;
-  border-radius: 8px;
+transform: scale(1.015);
+border-left-width: 4px;
+border-radius: 8px;
 }
+
+/* Prevent scroll chaining / bounce inside expanded cards */
+.expanded-card {
+  overscroll-behavior: contain;
+    transform: none !important;
+}
+
+.details {
+  overscroll-behavior: contain;
+}
+
 
 .project-card {
-  transition:
-    background 0.35s ease,
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
+transition:
+background 0.35s ease,
+transform 0.35s ease,
+box-shadow 0.35s ease;
 }
 
 .tech-pill:hover{
-  transform: translateY(-1.5px);
+transform: translateY(-1.5px);
+}
+
+/* ---------- PROJECT STATUS ---------- */
+.project-status {
+  align-self: flex-start;
+  margin: 0.35rem 0 0.5rem;
+  padding: 0.15rem 0.55rem;
+
+  font-family: "Fira Code", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+
+  border-left: 3px solid;
+  background: rgba(255, 255, 255, 0.03);
+  opacity: 0.9;
+}
+
+/* Status variants */
+.project-status.active {
+  color: #00ff7f;
+  border-color: #00ff7f;
+}
+
+.project-status.production {
+  color: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.project-status.delivered {
+  color: #f5c542;
+  border-color: #f5c542;
+}
+
+.project-status.poc {
+  color: #ff8c42;
+  border-color: #ff8c42;
+}
+/* ---------- STATUS EXPLAINER ---------- */
+.project-status {
+  position: relative;
+  cursor: help;
+}
+
+.status-label {
+  font-family: "Fira Code", monospace;
+}
+
+.status-explainer {
+  margin-top: 0.3rem;
+  /* padding-left: 0.6rem; */
+
+  font-size: 0.75rem;
+  font-family: "Fira Code", monospace;
+  opacity: 0.85;
+
+  /* border-left: 2px solid currentColor; */
+}
+
+.tech-more-btn {
+  margin-top: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--accent-blue);
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.tech-more-btn:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ===============================
+   PROJECT TYPE PILL (REFINED)
+   =============================== */
+
+.type-pill {
+  align-self: flex-start;
+  margin: 0.35rem 0 0.6rem;
+  padding: 0.25rem 0.65rem;
+
+  font-family: "Fira Code", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.04);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  opacity: 0.9;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.type-pill::before {
+  content: "◆";
+  font-size: 0.55rem;
+  opacity: 0.85;
+}
+
+/* ---- BACKEND ---- */
+.type-backend {
+  color: #00bfff;
+  border-color: rgba(0, 191, 255, 0.45);
+  background: rgba(0, 191, 255, 0.08);
+}
+
+/* ---- CLOUD ---- */
+.type-cloud {
+  color: #6dd6ff;
+  border-color: rgba(109, 214, 255, 0.4);
+  background: rgba(109, 214, 255, 0.07);
+}
+
+/* ---- AI / ML ---- */
+.type-ai-ml {
+  color: #b388ff;
+  border-color: rgba(179, 136, 255, 0.45);
+  background: rgba(179, 136, 255, 0.08);
+}
+
+/* ---- FULL STACK ---- */
+.type-fullstack {
+  color: #00ff9c;
+  border-color: rgba(0, 255, 156, 0.45);
+  background: rgba(0, 255, 156, 0.07);
+}
+
+/* ---- FRONTEND ---- */
+.type-frontend {
+  color: #ffd166;
+  border-color: rgba(255, 209, 102, 0.45);
+  background: rgba(255, 209, 102, 0.07);
+}
+
+/* ---- EXPLORATORY ---- */
+.type-exploratory {
+  color: #8892b0;
+  border-color: rgba(136, 146, 176, 0.35);
+  background: rgba(136, 146, 176, 0.06);
+}
+
+.type-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 6px currentColor;
+  opacity: 1;
+}
+
+/* secondary pill (muted) */
+.secondary-pill { opacity: 0.95; margin-left: 0.45rem; font-size: 0.68rem; }
+.type-secondary-system-design {
+  color: #ff9f43;
+  border-color: rgba(255, 159, 67, 0.35);
+  background: rgba(255, 159, 67, 0.06);
+}
+.type-secondary-ai-ml {
+  color: #b388ff;
+  border-color: rgba(179, 136, 255, 0.32);
+  background: rgba(179, 136, 255, 0.04);
+}
+
+/* ===============================
+   TYPE PILL ROW FIX
+   =============================== */
+
+/* Ensure pills sit on the same line */
+.project-card .type-pill {
+  display: inline-flex;
+  vertical-align: middle;
+  margin: 0.35rem 0.45rem 0.6rem 0; /* right margin only */
+}
+
+/* Slightly mute secondary pill and keep it aligned */
+.project-card .secondary-pill {
+  opacity: 0.9;
 }
