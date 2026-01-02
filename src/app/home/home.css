@@ -96,9 +96,11 @@
 @keyframes blink { 50% { opacity: 0; } }
 
 /* Button */
+.about-btn,
 .contact-btn {
   margin-top: 2rem;
   padding: 0.6rem 1.8rem;
+  margin-left: 1rem;
   font-family: "Fira Code", monospace;
   font-size: 0.95rem;
   color: var(--text-light);
@@ -114,6 +116,7 @@
   position: relative;
   animation: borderPulse 4s infinite ease-in-out;
 }
+.about-btn:hover,
 .contact-btn:hover {
   color: var(--accent-blue);
   text-shadow: 0 0 6px rgba(0,191,255,0.8);
@@ -362,10 +365,11 @@
   letter-spacing: 0.03em;
   opacity: 0;
   animation: fadeUp 0.8s ease-out forwards;
-  animation-delay: 3.2s;
+  animation-delay: 1.5s;
 }
 
 /* ---------- CONTACT BUTTON ---------- */
+.about-btn, 
 .contact-btn {
   margin-top: 2rem;
   padding: 0.6rem 1.8rem;
@@ -428,6 +432,7 @@
   }
 
   /* Button */
+  .about-btn,
   .contact-btn {
     padding: 0.5rem 1.4rem;
     font-size: 0.85rem;
@@ -467,6 +472,7 @@
     font-size: 0.9rem;
   }
 
+  .about-btn,
   .contact-btn {
     font-size: 0.75rem;
     padding: 0.45rem 1rem;
