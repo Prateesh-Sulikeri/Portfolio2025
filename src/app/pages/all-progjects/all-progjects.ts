@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Notification } from '../../services/notification';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 interface Project {
   title: string;
@@ -15,9 +17,9 @@ interface Project {
   status: string;
 
   projectType: 'backend' | 'frontend' | 'fullstack' | 'cloud' | 'ai-ml' | 'exploratory' | 'system-design';
-
-  // optional, display-only secondary tag
   secondaryType?: string;
+
+  slug: string;
 
   live?: string;
   github?: string;
@@ -60,6 +62,18 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
   pendingTech: string[] = [];
   pendingLive = false;
 
+  // Deep-link helpers
+  private pendingOpenSlug: string | null = null;
+  private routeSub?: Subscription;
+
+  showAllTech = false;
+  MAX_VISIBLE_TECH = 8;
+
+  constructor(
+    private el: ElementRef,
+    private notification: Notification,
+    private route: ActivatedRoute
+  ) { }
 
   toggleFilters() {
     this.showFilters = !this.showFilters;
@@ -117,8 +131,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     this.showFilters = false;
   }
 
-
-
   // RESET button
   resetFilters() {
     this.filterCategory = 'all';
@@ -131,35 +143,46 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     this.pendingTech = [];
     this.pendingLive = false;
   }
-  constructor(
-    private el: ElementRef,
-    private notification: Notification // ADD THIS
-  ) { }
-
 
   ngOnInit() {
     this.isMobile = window.innerWidth <= 768;
     this.collectTechnologies();
+
+    // Subscribe once and capture requested slug — act later when view is ready
+    this.routeSub = this.route.queryParams.subscribe(params => {
+      this.pendingOpenSlug = params['open'] || null;
+    });
   }
 
   ngAfterViewInit(): void {
+    // Reset scroll to top on first render (preserve your original behavior)
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'auto' });
     });
 
     // Listen globally for outside clicks
     document.addEventListener('click', this.onWindowClick);
+
+    // If a deep-link slug was requested, handle it now when DOM is stable
+    if (this.pendingOpenSlug) {
+      // small delay to ensure any initial rendering / filter evaluation completes
+      setTimeout(() => {
+        this.openProjectBySlug(this.pendingOpenSlug!);
+        // clear pending slug so subsequent view init doesn't repeatedly open
+        this.pendingOpenSlug = null;
+      }, 120);
+    }
   }
 
   ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
     document.removeEventListener('click', this.onWindowClick);
   }
-
 
   // =================== DATA ===================
 
   professionalProjects: CompanyProjects[] = [
-      {
+    {
       name: 'Persistent Systems',
       projects: [
         {
@@ -176,6 +199,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           impact: 'Improved workflow efficiency + reduced response times',
           status: 'Delivered',
           projectType: 'fullstack',
+          slug: 'ems',
           tags: [
             { name: "FastAPI", icon: "devicon-fastapi-plain" },
             { name: "MySQL", icon: "devicon-mysql-plain" },
@@ -208,6 +232,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           impact: 'Enabled compliant multi-currency settlements with reduced rejection rates across routing flows; improved standards alignment and ensured stability of session-based settlement behavior.',
           status: 'Production',
           projectType: 'backend',
+          slug: 'currency-rejection',
           tags: [
             { name: "C++", icon: "devicon-cplusplus-plain" },
             { name: "IBM DB2", icon: "fas fa-database" },
@@ -234,6 +259,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           impact: 'Delivered 2025 SWIFT standards compliance; ensured production-ready FX trade flows and audit readiness',
           status: 'Production',
           projectType: 'backend',
+          slug: 'stds2025',
           tags: [
             { name: "C++", icon: "devicon-cplusplus-plain" },
             { name: "Java", icon: "devicon-java-plain" },
@@ -260,6 +286,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           impact: 'Improved CI visibility, reduced build cycle friction, accelerated investigation times for regressions and validation failures',
           status: 'POC / Internal Pilot',
           projectType: 'fullstack',
+          slug: 'poc1',
           tags: [
             { name: "Angular", icon: "devicon-angular-plain" },
             { name: "Spring Boot", icon: "devicon-spring-plain" },
@@ -278,7 +305,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
       section: 'Personal Projects',
       projects: [
         {
-          title: 'Go Rate-Limited Event Ingestor',
+          title: 'Go Rate Limited Event Ingestor',
           shortDescription: 'Go + Redis event ingestor with token bucket rate limiting, JWT auth, real-time dashboard, and concurrent batch processing.',
           longDescription: [
             'Built using Go (Gin) to ingest event payloads over HTTP; token bucket rate limiting handled through Redis to maintain shared state and prevent request spikes.',
@@ -299,6 +326,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           status: 'Active',
           projectType: 'backend',
           secondaryType: 'system-design',
+          slug: 'go-rate-limited-event-ingestor',
           github: 'https://github.com/Prateesh-Sulikeri/Go-event-ingestor',
           tags: [
             { name: "Go", icon: "devicon-go-plain-wordmark" },
@@ -329,6 +357,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           impact: 'Made it easy to fetch, filter, and reuse Reddit content programmatically for content workflows or automation scripts.',
           status: 'Delivered',
           projectType: 'backend',
+          slug: 'redditorials',
           github: 'https://github.com/Prateesh-Sulikeri/redditorials',
           tags: [
             { name: "Python", icon: "devicon-python-plain" },
@@ -358,6 +387,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           status: 'Active',
           projectType: 'backend',
           secondaryType: 'ai-ml',
+          slug: 'jinbo',
           live: 'https://jinbo.onrender.com/',
           github: 'https://github.com/Prateesh-Sulikeri/JinBo',
           tags: [
@@ -388,7 +418,7 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           status: 'Delivered',
           projectType: 'exploratory',
           secondaryType: 'ai-ml',
-
+          slug: 'clone-catch',
           github: 'https://github.com/Prateesh-Sulikeri/CloneCatch',
           tags: [
             { name: "Python", icon: "devicon-python-plain" },
@@ -418,10 +448,10 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
           status: 'Delivered',
           projectType: 'exploratory',
           secondaryType: 'backend',
-
+          slug: 'webscrapper',
           github: 'https://github.com/Prateesh-Sulikeri/Go-Webscrapper',
           tags: [
-            { name: "Go", icon: "devicon-go-plain" },
+            { name: "Go", icon: "devicon-go-plain-wordmark" },
             { name: "Web Scraping", icon: "fas fa-spider" },
             { name: "Concurrency", icon: "fas fa-stream" },
             { name: "goquery", icon: "fas fa-search" },
@@ -444,7 +474,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     python: 50
   };
 
-
   collectTechnologies() {
     const techCount = new Map<string, { count: number; icon: string }>();
 
@@ -459,7 +488,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
         })
       );
     };
-
 
     this.professionalProjects.forEach(c => addTags(c.projects));
     this.personalProjects.forEach(s => addTags(s.projects));
@@ -486,15 +514,11 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
 
   }
 
-  showAllTech = false;
-  MAX_VISIBLE_TECH = 8;
-
   get visibleTech() {
     return this.showAllTech
       ? this.availableTech
       : this.availableTech.slice(0, this.MAX_VISIBLE_TECH);
   }
-
 
   // look up icon based on name (fallback)
   findIcon(name: string) {
@@ -514,7 +538,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-
   togglePendingTech(name: string) {
     if (this.pendingTech.includes(name)) {
       this.pendingTech = this.pendingTech.filter(x => x !== name);
@@ -522,7 +545,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
       this.pendingTech.push(name);
     }
   }
-
 
   // =================== FILTERS ===================
 
@@ -551,7 +573,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     })).filter(x => x.projects.length);
   }
 
-
   // New getter: exploratory projects collected across both personal & professional (single combined section)
   get filteredExploratory() {
     return this.personalProjects.map(section => ({
@@ -562,7 +583,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
       )
     })).filter(x => x.projects.length);
   }
-
 
   passesFilters(p: Project): boolean {
     if (this.filterCategory === 'professional' && !this.inProfessional(p)) return false;
@@ -599,7 +619,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     }, 250);
   }
 
-
   closeExpanded(event?: Event) {
     if (event) event.stopPropagation();
     this.expandedProject = null;
@@ -609,7 +628,6 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     const card = (event.target as HTMLElement).closest('.expanded-card');
     if (!card) this.expandedProject = null;
   };
-
 
   statusClass(status: string): string {
     switch (status.toLowerCase()) {
@@ -652,9 +670,10 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
   onCardClick(event: any, project: Project) {
     if (!this.isMobile) this.toggleExpand(project);
   }
+
   /**
- * Human-friendly label for projectType
- */
+   * Human-friendly label for projectType
+   */
   projectTypeLabel(pt: string): string {
     if (!pt) return '';
     const key = pt.toLowerCase();
@@ -698,6 +717,55 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
   projectSecondaryClass(st: string): string {
     if (!st) return '';
     return 'type-secondary-' + st.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  }
+
+  private findProjectBySlug(slug: string): Project | null {
+    const allProjects = [
+      ...this.professionalProjects.flatMap(c => c.projects),
+      ...this.personalProjects.flatMap(s => s.projects)
+    ];
+
+    return allProjects.find(p => p.slug === slug) || null;
+  }
+
+  /**
+   * Open a project by slug in a timing-safe manner.
+   * - ensures project is visible by clearing filters (small UX decision to make deep-links reliable)
+   * - expands the project and scrolls to it
+   */
+  private openProjectBySlug(slug: string) {
+    if (!slug) return;
+
+    const project = this.findProjectBySlug(slug);
+    if (!project) return;
+
+    // Ensure filters won't hide the deep-linked project
+    // (keeps behavior deterministic for external resume links)
+    this.filterCategory = 'all';
+    this.filterTypes = [];
+    this.filterTech = [];
+    this.filterLiveOnly = false;
+
+    // Give the view a beat to re-evaluate before expanding/scrolling
+    setTimeout(() => {
+      this.expandedProject = project;
+
+      setTimeout(()=> {
+        this.notification.info(
+        'You are currently viewing a focused project. Click “Hide Details” or anywhere outside the card to explore other projects.',
+        6500
+      );
+      }, 2500);
+
+      // scroll to expanded card after DOM updates
+      setTimeout(() => {
+        const el = document.querySelector('.expanded-card') as HTMLElement;
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 120;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 200);
+    }, 50);
   }
 
 }
