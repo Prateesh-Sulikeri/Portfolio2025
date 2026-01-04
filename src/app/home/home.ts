@@ -11,7 +11,6 @@ import { TooltipDirective } from '../tooltip';
 })
 export class Home implements OnInit, OnDestroy, AfterViewInit {
 
-  currentRole = 'Backend Developer';
   private hasScrolled = false;
   private scrollListener?: () => void;
   private timer?: ReturnType<typeof setTimeout>;
