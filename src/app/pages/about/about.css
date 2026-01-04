@@ -1,6 +1,7 @@
 .about-section {
-  min-height: 100vh;
+  min-height: auto;
   padding: 8rem 2rem 4rem;
+  /* padding: 4rem 2rem; */
   max-width: 900px;
   margin: 0 auto;
   text-align: left;
