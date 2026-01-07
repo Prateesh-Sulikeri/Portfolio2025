@@ -847,7 +847,7 @@ transform: translateY(-1.5px);
 
 .tech-more-btn:hover {
   opacity: 1;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 /* ===============================

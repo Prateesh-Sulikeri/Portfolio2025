@@ -161,7 +161,6 @@
 }
 
 
-/* === Floating Icons (Final Fixed — AWS visible) === */
 .float-icon {
   position: absolute;
   color: rgba(0, 191, 255, 0.25);
@@ -169,11 +168,6 @@
   z-index: 1;
   animation: drift 26s ease-in-out infinite;
   opacity: 0.85;
-  transition:
-  transform 0.05s ease-out,
-  color 0.05s ease-out,
-  opacity 0.05s ease-out,
-  filter 0.05s ease-out;
   filter: drop-shadow(0 0 4px rgba(0,191,255,0.25));
 }
 
