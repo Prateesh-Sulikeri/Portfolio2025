@@ -16,13 +16,13 @@ display: flex;
 align-items: center;
 gap: 1rem;
 margin-bottom: 2rem;
+flex-wrap: wrap;
 }
 
 .section-title {
 font-size: 2rem;
 color: var(--accent-blue);
 margin: 0;
-white-space: nowrap;
 }
 
 .sub-header .section-title {
@@ -30,11 +30,12 @@ font-size: 1.6rem;
 }
 
 .section-line {
-flex: 1;
-height: 3px;
-background-color: var(--accent-blue);
-opacity: 0.6;
-box-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+  flex-grow: 1;
+  min-width: 60px;
+  height: 3px;
+  background-color: var(--accent-blue);
+  opacity: 0.6;
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
 }
 
 .company-title {
@@ -88,12 +89,13 @@ animation: blink-cursor 1s steps(1) infinite;
 opacity: 0;
 }
 }
-
 .company-wrapper {
-margin-bottom: 3.5rem;
-padding: 0 0 2rem 0;
-border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  position: relative;
+  padding-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
+
+
 
 .project-grid {
 display: grid;
@@ -960,4 +962,72 @@ transform: translateY(-1.5px);
 /* Slightly mute secondary pill and keep it aligned */
 .project-card .secondary-pill {
   opacity: 0.9;
+}
+
+/* ===============================
+   HEADING ROLES
+   =============================== */
+
+/* Page-level heading */
+.page-title {
+  font-size: 2rem;
+  white-space: normal;
+  line-height: 1.3;
+}
+
+/* Section / category headings */
+.section-title {
+  font-size: 1.6rem;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+/* Company / sub-section headings */
+.company-title {
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.7rem;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+  }
+
+  .company-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .company-title {
+    font-size: 1.1rem;
+  }
+}
+
+.sub-header {
+  margin-top: 2.5rem;
+}
+
+.sub-header .section-title {
+  font-size: 1.45rem;
+}
+
+@media (max-width: 768px) {
+  .section-line {
+    flex: 0 0 100%;
+    height: 2px;
+    margin-top: 0.6rem;
+  }
 }

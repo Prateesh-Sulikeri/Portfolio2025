@@ -149,3 +149,27 @@ section {
 .contact-section {
   padding-top: 6rem; /* ensures visible offset */
 }
+
+/* ============================
+   GLOBAL SECTION SPACING
+   ============================ */
+
+.section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 6.2rem 2rem;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1.5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .section {
+    padding: 3rem 1rem;
+  }
+}
