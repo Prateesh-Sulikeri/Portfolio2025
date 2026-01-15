@@ -1,6 +1,6 @@
 .dev-thoughts-section {
   min-height: 100vh;
-  padding: calc(8rem + var(--navbar-height, 64px)) 2rem 5rem;
+  padding: 8rem 2rem 5rem;
   max-width: 850px;
   margin: 0 auto;
   color: var(--text-light);
@@ -9,6 +9,28 @@
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
+  scroll-margin-top: 110px;
+}
+
+@media (max-width: 992px) {
+  .dev-thoughts-section {
+    padding: 7rem 1.5rem 3rem;
+    scroll-margin-top: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dev-thoughts-section {
+    padding: 6.5rem 1.5rem 2rem;
+    scroll-margin-top: 90px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dev-thoughts-section {
+    padding: 6rem 1rem 2rem;
+    scroll-margin-top: 80px;
+  }
 }
 
 /* === Terminal Prompt === */

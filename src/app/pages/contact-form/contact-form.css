@@ -6,15 +6,37 @@
 /* Section wrapper — keep consistent with other sections but not huge */
 .contact-form-section {
   min-height: 100vh;
-  padding: 10rem 1.5rem;         /* smaller top padding to avoid huge gaps */
+  padding: 8rem 1.5rem 5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;           /* center horizontally */
-  justify-content: flex-start;   /* start from top so title is not vertically centered */
+  align-items: center;
+  justify-content: flex-start;
   font-family: "Fira Code", monospace;
   color: var(--text-light);
   background: transparent;
   box-sizing: border-box;
+  scroll-margin-top: 110px;
+}
+
+@media (max-width: 992px) {
+  .contact-form-section {
+    padding: 7rem 1.5rem 3rem;
+    scroll-margin-top: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-form-section {
+    padding: 6.5rem 1.5rem 2rem;
+    scroll-margin-top: 90px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-form-section {
+    padding: 6rem 1rem 2rem;
+    scroll-margin-top: 80px;
+  }
 }
 
 /* Title — keep it visually aligned with the box on desktop, left-align on large screens */

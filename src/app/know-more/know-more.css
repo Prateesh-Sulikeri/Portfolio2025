@@ -1,10 +1,29 @@
 .know-more-section {
   min-height: 100vh;
-  padding: 8rem 2rem 5rem;
+  padding: 3.5rem 2rem;
   max-width: 1000px;
   margin: 0 auto;
   color: var(--text-light);
   font-family: "Fira Code", monospace;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+  .know-more-section {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .know-more-section {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .know-more-section {
+    padding: 1.5rem 1rem;
+  }
 }
 
 .section-title {
@@ -208,7 +227,7 @@
 
 .experience-details.expanded,
 .cert-details.expanded {
-  max-height: 500px;
+  max-height: 1200px;
   opacity: 1;
   margin-top: 1rem;
 }
@@ -407,7 +426,7 @@
   .experience-summary { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
   .experience-summary h3 { font-size: 1rem; line-height: 1.4; }
   .experience-summary .view-btn, .view-btn { width: 100%; padding: 0.6rem 1rem; font-size: 0.85rem; }
-  .experience-details.expanded { max-height: 800px; }
+  .experience-details.expanded { max-height: 1400px; }
   .experience-details li { font-size: 0.9rem; line-height: 1.5; }
   .cert-top { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .cert-image-container { width: 100%; max-width: none; flex: none; }

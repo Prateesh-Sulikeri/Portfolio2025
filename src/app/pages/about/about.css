@@ -8,6 +8,26 @@
   position: relative;
   overflow: hidden;
   background: transparent;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+  .about-section {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-section {
+    padding: 1.5rem 1rem;
+  }
 }
 
 /* ===== Prompt ===== */
