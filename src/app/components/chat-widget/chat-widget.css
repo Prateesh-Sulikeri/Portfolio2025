@@ -45,6 +45,24 @@
   animation: bounceWiggle 3s ease-in-out 1;
 }
 
+@media (max-width: 768px) {
+  .chat-button {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-button {
+    right: 1rem;
+    bottom: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+}
+
 /* Ensure hover works properly on desktop */
 @media (hover: hover) and (pointer: fine) {
   .chat-button:hover {
@@ -98,6 +116,24 @@
   background: var(--background-dark);
   color: var(--text-light);
   border-radius: 12px;
+}
+
+@media (max-width: 600px) {
+  .chat-panel {
+    width: calc(100vw - 32px);
+    height: 400px;
+    bottom: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-panel {
+    height: 350px;
+    bottom: 70px;
+  }
+}
+
+.chat-panel {
   border: 1px solid var(--accent-blue);
   display: flex;
   flex-direction: column;

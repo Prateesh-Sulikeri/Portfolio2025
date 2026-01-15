@@ -1,10 +1,29 @@
 .know-more-section {
   min-height: 100vh;
-  padding: 8rem 2rem 5rem;
+  padding: 3.5rem 2rem;
   max-width: 1000px;
   margin: 0 auto;
   color: var(--text-light);
   font-family: "Fira Code", monospace;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+  .know-more-section {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .know-more-section {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .know-more-section {
+    padding: 1.5rem 1rem;
+  }
 }
 
 .section-title {

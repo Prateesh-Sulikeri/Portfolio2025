@@ -115,6 +115,19 @@
 
   position: relative;
   animation: borderPulse 4s infinite ease-in-out;
+  display: inline-block;
+}
+
+@media (max-width: 600px) {
+  .about-btn,
+  .contact-btn {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+  }
 }
 .about-btn:hover,
 .contact-btn:hover {
@@ -289,10 +302,28 @@
   align-items: center;
   min-height: 100vh;
   text-align: center;
-  padding: 0 1rem;
+  padding: 2rem 1rem;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 992px) {
+  .home {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .home {
+    padding: 1.5rem 0.75rem;
+  }
 }
 
 /* Keep grid animation lightweight */
