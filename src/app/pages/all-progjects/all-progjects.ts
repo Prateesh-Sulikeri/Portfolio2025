@@ -181,161 +181,53 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
 
   // =================== DATA ===================
 
-  professionalProjects: CompanyProjects[] = [
-    {
-      name: 'Persistent Systems',
-      projects: [
-        {
-          title: 'Employee Management System',
-          shortDescription: 'FastAPI-based employee management solution for HR automation.',
-          longDescription: [
-            'REST APIs in FastAPI + MySQL',
-            'Linux deployment, modular design',
-            'Query optimisation & validations'
-          ],
-          teamSize: '3',
-          roles: 'Backend Developer (Intern)',
-          responsibilities: 'FastAPI + MySQL backend ownership',
-          impact: 'Improved workflow efficiency + reduced response times',
-          status: 'Delivered',
-          projectType: 'fullstack',
-          slug: 'ems',
-          tags: [
-            { name: "FastAPI", icon: "devicon-fastapi-plain" },
-            { name: "MySQL", icon: "devicon-mysql-plain" },
-            { name: "Linux", icon: "devicon-linux-plain" }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Xoriant Technologies',
-      projects: [
-        {
-          title: 'Session-Based Multi-Currency Validation & Settlement Routing',
-          shortDescription: 'Session-based multi-currency validation and auditing flows in an existing C++ settlement component, including cross-layer routing logic and compliance-driven behavior changes.',
-          longDescription: [
-            'Collaborated with Business Analysts to finalize requirements and translate functional specifications into implementation-ready designs for multi-currency settlement sessions.',
-            'Redesigned portions of the existing architecture to incorporate currency validation into multiple settlement sessions without regression or breaking downstream workflows.',
-            'Designed and implemented new RDM APIs (request–response flows, query structure, DB interaction patterns) required to support the new validation architecture, including separate UT coverage for API components.',
-            'Analyzed existing codebase for impact areas and integrated changes across core layers: Data layer parsing, business rules & validation layer, cache layer synchronization, and DB persistence.',
-            'Introduced a currency allow-list architecture to handle dynamic and static validation rules, designed for extensibility and reduced repetitive validation logic across sessions.',
-            'Developed multi-session routing logic to enforce distinct behaviors for session types (ex: morning vs. end-of-day settlement behavior) and ensure isolated failure domains.',
-            'Implemented Perl-based scripting functions and rule files for execution of settlement validation logic, ensuring compatibility with existing test harnesses and auto-execution setups.',
-            'Collaborated with onshore and offshore technical leads to optimize performance, reduce redundant validations, and maintain coding standards across multiple components.',
-            'Wrote extensive UTs (DB mocks + functional isolation), CTs for inter-component validation, and contributed to broader integration tests to ensure correctness post-deployment.',
-            'Supported build and release readiness: issue identification, regression fixes, behavior verification across integration environments, and documentation for handover.'
-          ],
-          teamSize: '8',
-          roles: 'Junior Backend Developer',
-          responsibilities: 'Design collaboration, code implementation, API development, unit/component testing, integration support, and release readiness.',
-          impact: 'Enabled compliant multi-currency settlements with reduced rejection rates across routing flows; improved standards alignment and ensured stability of session-based settlement behavior.',
-          status: 'Production',
-          projectType: 'backend',
-          slug: 'currency-rejection',
-          tags: [
-            { name: "C++", icon: "devicon-cplusplus-plain" },
-            { name: "IBM DB2", icon: "fas fa-database" },
-            { name: "IBM MQ", icon: "fas fa-network-wired" },
-            { name: "Perl", icon: "devicon-perl-plain" },
-            { name: "Messaging Systems", icon: "fas fa-exchange-alt" }
-          ]
-        },
-        {
-          title: 'Standards 2025 — FXTR.08 SWIFT Trade Message Compliance',
-          shortDescription: 'Implemented SWIFT FXTR.08 standards across trade lifecycle and settlement components.',
-          longDescription: [
-            'Owned end-to-end upgrade of FXTR.08 messaging flow for 2025 SWIFT standards compliance',
-            'Performed code analysis and refactoring across C++ and Java components handling trade lifecycle events',
-            'Integrated field/tag changes, validation rules, and updated audit behaviors impacting downstream systems',
-            'Implemented IBM MQ updates for new message schema routing and acknowledgement behaviors',
-            'Enhanced auditing logic and data visibility through IBM DB schema adjustments',
-            'Co-ordinated with product/architecture team for design alignment and compliance traceability',
-            'Executed integration and UAT validation across internal rails and SWIFT test environment'
-          ],
-          teamSize: '8',
-          roles: 'Junior Backend Developer',
-          responsibilities: 'Standards upgrade ownership, design collaboration, code changes, validation & testing',
-          impact: 'Delivered 2025 SWIFT standards compliance; ensured production-ready FX trade flows and audit readiness',
-          status: 'Production',
-          projectType: 'backend',
-          slug: 'stds2025',
-          tags: [
-            { name: "C++", icon: "devicon-cplusplus-plain" },
-            { name: "Java", icon: "devicon-java-plain" },
-            { name: "IBM MQ", icon: "fas fa-network-wired" },
-            { name: "IBM DB", icon: "fas fa-database" },
-            { name: "SWIFT Network", icon: "fas fa-exchange-alt" },
-            { name: "Compliance", icon: "fas fa-shield-alt" }
-          ]
-        },
-        {
-          title: 'Build & Analysis Monitoring Dashboard',
-          shortDescription: 'Internal CI observability dashboard for build health, UTC metrics, component insights, and quality trend analysis.',
-          longDescription: [
-            'Developed Spring Boot APIs for CI data aggregation, build/UTC metrics ingestion, and component report access',
-            'Built Angular dashboard with drill-down analytics, failure categorization, and interactive component-level summaries',
-            'Integrated realtime update channel (WebSockets) for live build status refresh — leveraging Java backend and/or Angular client event stream (based on environment)',
-            'Implemented pre-build validators: Jira ticket checks, configuration validation, and environment gating to reduce CI failures',
-            'Added UTC summaries, build duration trends, failure rate breakdown, and automated validation report generation',
-            'Automated environment setup and scheduled report pipelines using Python + Ansible'
-          ],
-          teamSize: '3',
-          roles: 'Full Stack Developer',
-          responsibilities: 'API design + Angular UI + automation scripts + validation flows + realtime status integration',
-          impact: 'Improved CI visibility, reduced build cycle friction, accelerated investigation times for regressions and validation failures',
-          status: 'POC / Internal Pilot',
-          projectType: 'fullstack',
-          slug: 'poc1',
-          tags: [
-            { name: "Angular", icon: "devicon-angular-plain" },
-            { name: "Spring Boot", icon: "devicon-spring-plain" },
-            { name: "WebSockets", icon: "fas fa-bolt" },
-            { name: "Python", icon: "devicon-python-plain" },
-            { name: "Ansible", icon: "devicon-ansible-plain" }
-          ]
-        },
-      ]
-    }
-
-  ];
+  professionalProjects: CompanyProjects[] = [];
 
   personalProjects: PersonalSection[] = [
     {
       section: 'Personal Projects',
       projects: [
         {
-          title: 'Go Rate Limited Event Ingestor',
-          shortDescription: 'Go + Redis event ingestor with token bucket rate limiting, JWT auth, real-time dashboard, and concurrent batch processing.',
+          title: 'Distributed Payment Gateway',
+          shortDescription: 'Production-grade distributed payment platform built using event-driven microservices, Kafka messaging, resilient payment orchestration, observability tooling, and AWS-hosted infrastructure.',
           longDescription: [
-            'Built using Go (Gin) to ingest event payloads over HTTP; token bucket rate limiting handled through Redis to maintain shared state and prevent request spikes.',
-            'Implemented JWT authentication middleware so only authorized clients can submit events; unauthorized traffic is rejected before hitting ingestion logic.',
-            'Used Redis both for limiter state and lightweight request bookkeeping so the service can run in more than one instance without losing rate context.',
-            'Event handling is decoupled from storage using goroutine worker pools and channel queues; this keeps ingestion responsive even if DB writes slow down.',
-            'Worker batches are flushed to a SQL database; retries use a `select {}`-based mechanism to handle backpressure and timeouts without blocking the main pipeline.',
-            'On flush failures (DB unreachable, timeout, etc.), events are held in memory/Redis and re-attempted with a controlled retry interval instead of infinite looping.',
-            'WebSockets layer streams real-time updates (new events, limiter status, queue length, and batch writes) to subscribers for visibility into ingest behavior.',
-            'Small dashboard built with HTML/CSS/JS + Go to visualize throughput, queue size, limiter tokens, and refill timings; intended for debugging and local observability.',
-            'Shell scripts simulate traffic in multiple modes (steady, burst, wave) so limiter behavior and buffering strategies can be validated and graphed.',
-            'Deployment is a local binary but architecture supports containerizing later; primarily built for local/edge ingestion and experimentation.'
+            'Designed and built a production-grade distributed payment processing platform from scratch, architecting 6 independent microservices (Payment, Mock Bank, Merchant, Webhook, Settlement, API Gateway) with strict service boundary separation, isolated databases, and asynchronous inter-service communication over Kafka.',
+
+            'Implemented idempotent Kafka consumers with Dead Letter Topic (DLT) recovery, ensuring correct payment state transitions (PENDING → SUCCESS → SETTLED) under at-least-once delivery semantics and simulated consumer crash/restart scenarios.',
+
+            'Engineered fault tolerance using Resilience4j: circuit breakers, retries with exponential backoff, time limiters, and per-merchant rate limiting via Spring Cloud Gateway, tested against bank timeout, UPI limit breach, CVV mismatch, and session expiry failure modes.',
+
+            'Built webhook delivery infrastructure using the Transactional Outbox Pattern for guaranteed event publishing consistency between database commits and Kafka, with configurable retry queues for failed deliveries.',
+
+            'Deployed the entire platform on AWS Free Tier EC2 using Docker Compose, self-hosting Kafka, PostgreSQL, Redis, Prometheus, and Grafana to simulate a production-grade fintech environment within real infrastructure constraints.',
+
+            'Added full observability: distributed tracing with Micrometer and Zipkin across all services, and Prometheus/Grafana dashboards tracking payments/sec, p99 latency, Kafka consumer lag, and circuit breaker state.'
           ],
+
           teamSize: '1',
-          roles: 'Backend Developer',
-          responsibilities: 'Service architecture, Redis integration, JWT auth, retry/flush design, dashboard, scripts, documentation.',
-          impact: 'Useful as a prototype for traffic shaping and controlled ingestion before scaling to message queues or larger pipelines.',
+          roles: 'Principle Architect, Backend & Distributed Systems Engineer',
+          responsibilities: 'Microservice architecture, Kafka event workflows, resiliency engineering, observability, AWS deployment, infrastructure orchestration, and distributed systems design.',
+          impact: 'Built a production-style fintech backend simulating real-world payment processing, resiliency patterns, failure recovery, and distributed observability.',
           status: 'Active',
-          projectType: 'backend',
-          secondaryType: 'system-design',
-          slug: 'go-rate-limited-event-ingestor',
-          github: 'https://github.com/Prateesh-Sulikeri/Go-event-ingestor',
+
+          projectType: 'system-design',
+          secondaryType: 'cloud',
+
+          slug: 'distributed-payment-gateway',
+
+          github: 'https://github.com/Prateesh-Sulikeri/distributed-payment-gateway',
+
           tags: [
-            { name: "Go", icon: "devicon-go-plain-wordmark" },
-            { name: "Gin", icon: "devicon-go-plain" },
+            { name: "Java 21", icon: "devicon-java-plain" },
+            { name: "Spring Boot", icon: "devicon-spring-plain" },
+            { name: "Apache Kafka", icon: "fas fa-stream" },
+            { name: "PostgreSQL", icon: "devicon-postgresql-plain" },
             { name: "Redis", icon: "devicon-redis-plain" },
-            { name: "SQL", icon: "fas fa-database" },
-            { name: "JWT", icon: "fas fa-key" },
-            { name: "WebSockets", icon: "fas fa-signal" },
-            { name: "Concurrency", icon: "fas fa-stream" }
+            { name: "Docker", icon: "devicon-docker-plain" },
+            { name: "AWS EC2", icon: "devicon-amazonwebservices-plain-wordmark" },
+            { name: "Prometheus", icon: "fas fa-chart-line" },
+            { name: "Grafana", icon: "fas fa-chart-area" },
+            { name: "Resilience4j", icon: "fas fa-shield-alt" }
           ]
         },
         {
@@ -750,11 +642,11 @@ export class AllProgjects implements AfterViewInit, OnInit, OnDestroy {
     setTimeout(() => {
       this.expandedProject = project;
 
-      setTimeout(()=> {
+      setTimeout(() => {
         this.notification.info(
-        'You are currently viewing a focused project. Click “Hide Details” or anywhere outside the card to explore other projects.',
-        6500
-      );
+          'You are currently viewing a focused project. Click “Hide Details” or anywhere outside the card to explore other projects.',
+          6500
+        );
       }, 2500);
 
       // scroll to expanded card after DOM updates

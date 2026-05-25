@@ -84,9 +84,9 @@ export class KnowMore implements AfterViewInit, OnInit, OnDestroy {
     {
       category: 'backend-languages',
       skills: [
-        { name: 'Go (GoLang)', icon: 'devicon-go-original-wordmark' },
         { name: 'Java (Spring Boot)', icon: 'devicon-java-plain' },
         { name: 'C++', icon: 'devicon-cplusplus-plain' },
+        { name: 'Python', icon: 'devicon-python-plain' },
       ]
     },
     {
