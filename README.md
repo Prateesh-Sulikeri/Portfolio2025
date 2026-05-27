@@ -1,4 +1,4 @@
-# TO-do
+# To-do
 
 # Completed in feature_branch:
 1. EmailJS full integration with feedback mechanism
